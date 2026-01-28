@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이씨뱅큐 | 자금현황 Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2332;
+            --bg-card-hover: #1f2937;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-purple: #8b5cf6;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #2d3748;
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-green: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --gradient-amber: linear-gradient(135deg, #f59e0b 0%, #f43f5e 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.25;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-blue);
+            top: -150px;
+            right: -50px;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--accent-emerald);
+            bottom: -80px;
+            left: -80px;
+            animation-delay: -7s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.03); }
+        }
+
+        /* Header */
+        .header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            background: rgba(10, 15, 26, 0.85);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+        }
+
+        .logo-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .logo-text span {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .update-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .upload-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: var(--gradient-blue);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+        }
+
+        .upload-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            padding: 28px 32px;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        /* KPI Cards Row */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 20px 22px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--card-accent, var(--gradient-blue));
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(59, 130, 246, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .kpi-card.blue { --card-accent: var(--gradient-blue); }
+        .kpi-card.green { --card-accent: var(--gradient-green); }
+        .kpi-card.amber { --card-accent: var(--gradient-amber); }
+        .kpi-card.purple { --card-accent: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .kpi-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .kpi-icon svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-blue);
+        }
+
+        .kpi-value {
+            font-size: 26px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .kpi-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .kpi-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .kpi-change.positive {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-emerald);
+        }
+
+        .kpi-change.negative {
+            background: rgba(244, 63, 94, 0.12);
+            color: var(--accent-rose);
+        }
+
+        /* Chart Sections */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 22px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .chart-title span {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: 8px;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 260px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 40px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 72px;
+            height: 72px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .empty-icon svg {
+            width: 36px;
+            height: 36px;
+            color: var(--accent-blue);
+        }
+
+        .empty-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .empty-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Loading State */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 15, 26, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 44px;
+            height: 44px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 14px;
+                padding: 16px;
+            }
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo-icon">ICB</div>
+            <div class="logo-text">
+                <h1>아이씨뱅큐 자금현황</h1>
+                <span>Daily Treasury Dashboard</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="update-time" id="updateTime">최종 업데이트: -</div>
+            <input type="file" id="fileInput" accept=".xlsx,.xls">
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                엑셀 업로드
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="12" y1="18" x2="12" y2="12"/>
+                    <line x1="9" y1="15" x2="15" y2="15"/>
+                </svg>
+            </div>
+            <h2 class="empty-title">엑셀 파일을 업로드하세요</h2>
+            <p class="empty-desc">
+                일일 자금현황 엑셀 파일(.xlsx)을 업로드하면<br>
+                대시보드가 자동으로 생성됩니다.
+            </p>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div id="dashboardContent" style="display: none;">
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-header">
+                        <span class="kpi-label">USD 보유잔액</span>
+                        <div class="kpi-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v12M8 10h8M8 14h8"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value" id="usdBalance">-</div>
+                    <div class="kpi-sub">CDA 누적 매입</div>
+                </div>
+
+                <div class="kpi-card green">
+                    <div class="kpi-header">
+                        <span class="kpi-label">평균 매입단가</span>
+                        <div class="kpi-icon" style="background: rgba(16, 185, 129, 0.1);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-emerald);">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value" id="avgRate">-</div>
+                    <div class="kpi-sub" id="rateComparison">시장 환율 대비 -</div>
+                </div>
+
+                <div class="kpi-card amber">
+                    <div class="kpi-header">
+                        <span class="kpi-label">당일 시장환율</span>
+                        <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.1);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-amber);">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                                <polyline points="16 7 22 7 22 13"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value" id="marketRate">-</div>
+                    <div class="kpi-sub" id="marketRateChange">전일 대비 -</div>
+                </div>
+
+                <div class="kpi-card purple">
+                    <div class="kpi-header">
+                        <span class="kpi-label">KRW 보유잔액</span>
+                        <div class="kpi-icon" style="background: rgba(139, 92, 246, 0.1);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-purple);">
+                                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                <path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                <path d="M2 10h2M20 10h2M2 14h2M20 14h2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value" id="krwBalance">-</div>
+                    <div class="kpi-sub" id="krwChange">전일 대비 -</div>
+                </div>
+            </div>
+
+            <!-- Charts Row 1 -->
+            <div class="chart-grid">
+                <!-- KRW Cash Flow Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">KRW 현금흐름 추세 <span>최근 90일</span></h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="krwChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- USD Position Chart -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">USD 잔액 추이 <span>CDA 누적</span></h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="usdChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row 2 -->
+            <div class="chart-grid">
+                <!-- Average Rate Trend -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">평균단가 매입 추이 <span>CDA 단가 변동</span></h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="avgRateChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Exchange Rate Comparison -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">환율 비교 분석 <span>평균단가 vs 시장환율</span></h3>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--accent-cyan);"></div>
+                                시장환율
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: var(--accent-amber);"></div>
+                                평균단가
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="rateCompareChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Global data storage
+        let dashboardData = {
+            dailyBalance: [],
+            fxPosition: []
+        };
+
+        // Chart instances
+        let krwChart, usdChart, avgRateChart, rateCompareChart;
+
+        // File upload handler
+        document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+
+        function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            showLoading(true);
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+                    
+                    parseWorkbook(workbook);
+                    renderDashboard();
+                    
+                    document.getElementById('updateTime').textContent = 
+                        '최종 업데이트: ' + new Date().toLocaleString('ko-KR');
+                    
+                    showLoading(false);
+                } catch (error) {
+                    console.error('Error parsing file:', error);
+                    alert('파일 파싱 중 오류가 발생했습니다: ' + error.message);
+                    showLoading(false);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function parseWorkbook(workbook) {
+            // Parse 일자별잔액
+            const balanceSheet = workbook.Sheets['일자별잔액'];
+            if (balanceSheet) {
+                const balanceData = XLSX.utils.sheet_to_json(balanceSheet);
+                dashboardData.dailyBalance = balanceData.map(row => ({
+                    date: parseDate(row['날짜']),
+                    balance: parseFloat(row['잔액']) || 0
+                })).filter(row => row.date);
+            }
+
+            // Parse 외화현황
+            const fxSheet = workbook.Sheets['외화현황'];
+            if (fxSheet) {
+                const fxData = XLSX.utils.sheet_to_json(fxSheet);
+                console.log('외화현황 raw:', fxData);
+                
+                if (fxData.length > 0) {
+                    // 컬럼명 찾기 (공백/유니코드 차이 대응)
+                    const keys = Object.keys(fxData[0]);
+                    console.log('외화현황 컬럼:', keys);
+                    
+                    const findKey = (searchTerms) => {
+                        return keys.find(k => searchTerms.some(term => k.includes(term))) || null;
+                    };
+                    
+                    const dateKey = findKey(['날짜', '일자', 'date']);
+                    const balanceKey = findKey(['잔액', 'balance']);
+                    const avgRateKey = findKey(['평균단가', '평균', 'avg']);
+                    const marketRateKey = findKey(['당일', '환율', '시장', 'market']);
+                    
+                    console.log('매핑된 키:', { dateKey, balanceKey, avgRateKey, marketRateKey });
+                    
+                    dashboardData.fxPosition = fxData.map(row => ({
+                        date: parseDate(dateKey ? row[dateKey] : null),
+                        balance: parseFloat(balanceKey ? row[balanceKey] : 0) || 0,
+                        avgRate: parseFloat(avgRateKey ? row[avgRateKey] : 0) || 0,
+                        marketRate: parseFloat(marketRateKey ? row[marketRateKey] : 0) || 0
+                    })).filter(row => row.date && row.balance > 0);
+                }
+            }
+
+            console.log('Parsed fxPosition:', dashboardData.fxPosition);
+        }
+
+        function parseDate(value) {
+            if (!value) return null;
+            if (value instanceof Date) return value;
+            if (typeof value === 'number') {
+                const date = new Date((value - 25569) * 86400 * 1000);
+                return date;
+            }
+            return new Date(value);
+        }
+
+        function renderDashboard() {
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('dashboardContent').style.display = 'block';
+
+            updateKPIs();
+            renderKRWChart();
+            renderUSDChart();
+            renderAvgRateChart();
+            renderRateCompareChart();
+        }
+
+        function updateKPIs() {
+            const fx = dashboardData.fxPosition;
+            const balance = dashboardData.dailyBalance;
+
+            if (fx.length > 0) {
+                const latest = fx[fx.length - 1];
+                const prev = fx.length > 1 ? fx[fx.length - 2] : null;
+
+                // USD Balance
+                document.getElementById('usdBalance').textContent = 
+                    '$' + formatNumber(latest.balance, 2);
+
+                // Average Rate
+                document.getElementById('avgRate').textContent = 
+                    '₩' + formatNumber(latest.avgRate, 2);
+
+                // Rate Comparison (시장환율 - 평균단가)
+                const rateDiff = latest.marketRate - latest.avgRate;
+                const rateCompEl = document.getElementById('rateComparison');
+                if (rateDiff > 0) {
+                    // 시장환율이 더 높음 = 우리가 싸게 샀음 = 절감
+                    rateCompEl.innerHTML = `<span class="kpi-change positive">▼ ₩${formatNumber(Math.abs(rateDiff), 1)} 절감</span>`;
+                } else {
+                    rateCompEl.innerHTML = `<span class="kpi-change negative">▲ ₩${formatNumber(Math.abs(rateDiff), 1)}</span>`;
+                }
+
+                // Market Rate
+                document.getElementById('marketRate').textContent = 
+                    '₩' + formatNumber(latest.marketRate, 2);
+
+                // Market Rate Change
+                if (prev) {
+                    const marketChange = latest.marketRate - prev.marketRate;
+                    const marketChangeEl = document.getElementById('marketRateChange');
+                    if (marketChange >= 0) {
+                        marketChangeEl.innerHTML = `<span class="kpi-change negative">▲ ${formatNumber(Math.abs(marketChange), 1)}</span> 전일 대비`;
+                    } else {
+                        marketChangeEl.innerHTML = `<span class="kpi-change positive">▼ ${formatNumber(Math.abs(marketChange), 1)}</span> 전일 대비`;
+                    }
+                }
+            }
+
+            if (balance.length > 0) {
+                const latestBal = balance[balance.length - 1];
+                const prevBal = balance.length > 1 ? balance[balance.length - 2] : null;
+
+                // KRW Balance (단위: 백만원)
+                const balanceInMillion = latestBal.balance;
+                if (Math.abs(balanceInMillion) >= 1000) {
+                    document.getElementById('krwBalance').textContent = 
+                        formatNumber(balanceInMillion / 100, 1) + '억';
+                } else {
+                    document.getElementById('krwBalance').textContent = 
+                        formatNumber(balanceInMillion, 0) + '백만';
+                }
+
+                // KRW Change
+                if (prevBal) {
+                    const krwChange = latestBal.balance - prevBal.balance;
+                    const krwChangeEl = document.getElementById('krwChange');
+                    const changeDisplay = Math.abs(krwChange) >= 100 
+                        ? formatNumber(Math.abs(krwChange) / 100, 1) + '억'
+                        : formatNumber(Math.abs(krwChange), 0) + '백만';
+                    if (krwChange >= 0) {
+                        krwChangeEl.innerHTML = `<span class="kpi-change positive">▲ ${changeDisplay}</span> 전일 대비`;
+                    } else {
+                        krwChangeEl.innerHTML = `<span class="kpi-change negative">▼ ${changeDisplay}</span> 전일 대비`;
+                    }
+                }
+            }
+        }
+
+        function renderKRWChart() {
+            const ctx = document.getElementById('krwChart').getContext('2d');
+            const data = dashboardData.dailyBalance.slice(-90);
+
+            if (krwChart) krwChart.destroy();
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 220);
+            gradient.addColorStop(0, 'rgba(139, 92, 246, 0.3)');
+            gradient.addColorStop(1, 'rgba(139, 92, 246, 0)');
+
+            krwChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => formatDateLabel(d.date)),
+                    datasets: [{
+                        data: data.map(d => d.balance),
+                        borderColor: '#8b5cf6',
+                        backgroundColor: gradient,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: '#8b5cf6',
+                        borderWidth: 2
+                    }]
+                },
+                options: createChartOptions('', '백만')
+            });
+        }
+
+        function renderUSDChart() {
+            const ctx = document.getElementById('usdChart').getContext('2d');
+            const data = dashboardData.fxPosition;
+
+            if (usdChart) usdChart.destroy();
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 220);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+
+            usdChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => formatDateLabel(d.date)),
+                    datasets: [{
+                        data: data.map(d => d.balance),
+                        borderColor: '#3b82f6',
+                        backgroundColor: gradient,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#3b82f6',
+                        borderWidth: 2
+                    }]
+                },
+                options: createChartOptions('$', '', true)
+            });
+        }
+
+        function renderAvgRateChart() {
+            const ctx = document.getElementById('avgRateChart').getContext('2d');
+            const data = dashboardData.fxPosition;
+
+            if (avgRateChart) avgRateChart.destroy();
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, 220);
+            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
+            gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
+
+            avgRateChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => formatDateLabel(d.date)),
+                    datasets: [{
+                        data: data.map(d => d.avgRate),
+                        borderColor: '#10b981',
+                        backgroundColor: gradient,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#10b981',
+                        borderWidth: 2
+                    }]
+                },
+                options: createChartOptions('₩', '')
+            });
+        }
+
+        function renderRateCompareChart() {
+            const ctx = document.getElementById('rateCompareChart').getContext('2d');
+            const data = dashboardData.fxPosition;
+
+            if (rateCompareChart) rateCompareChart.destroy();
+
+            rateCompareChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => formatDateLabel(d.date)),
+                    datasets: [{
+                        label: '시장환율',
+                        data: data.map(d => d.marketRate),
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'transparent',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#06b6d4',
+                        borderWidth: 2
+                    }, {
+                        label: '평균단가',
+                        data: data.map(d => d.avgRate),
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'transparent',
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#f59e0b',
+                        borderWidth: 2,
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1a2332',
+                            borderColor: '#2d3748',
+                            borderWidth: 1,
+                            titleColor: '#f1f5f9',
+                            bodyColor: '#94a3b8',
+                            padding: 10,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ₩' + formatNumber(context.raw, 2);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#64748b', font: { size: 10 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(45, 55, 72, 0.5)' },
+                            ticks: {
+                                color: '#64748b',
+                                callback: v => '₩' + formatNumber(v, 0)
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createChartOptions(prefix = '', suffix = '', isUSD = false) {
+            return {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#1a2332',
+                        borderColor: '#2d3748',
+                        borderWidth: 1,
+                        titleColor: '#f1f5f9',
+                        bodyColor: '#94a3b8',
+                        padding: 10,
+                        callbacks: {
+                            label: function(context) {
+                                if (isUSD) {
+                                    return prefix + formatNumber(context.raw, 2);
+                                }
+                                return prefix + formatNumber(context.raw, 0) + suffix;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#64748b', font: { size: 10 }, maxTicksLimit: 10 }
+                    },
+                    y: {
+                        grid: { color: 'rgba(45, 55, 72, 0.5)' },
+                        ticks: {
+                            color: '#64748b',
+                            callback: function(v) {
+                                if (isUSD) {
+                                    return prefix + (v / 1000).toFixed(0) + 'K';
+                                }
+                                return prefix + formatNumber(v, 0) + suffix;
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        function formatNumber(num, decimals = 0) {
+            return num.toLocaleString('ko-KR', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            });
+        }
+
+        function formatDateLabel(date) {
+            if (!date) return '';
+            return (date.getMonth() + 1) + '/' + date.getDate();
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').classList.toggle('active', show);
+        }
+
+        // Auto-load data.json from same folder (for SharePoint hosting)
+        async function autoLoadData() {
+            showLoading(true);
+            try {
+                // 같은 폴더의 data.json 로드 시도
+                const response = await fetch('./data.json');
+                if (response.ok) {
+                    const jsonData = await response.json();
+                    console.log('Loaded data.json:', jsonData);
+                    
+                    // JSON 데이터를 dashboardData로 변환
+                    if (jsonData.dailyBalance) {
+                        dashboardData.dailyBalance = jsonData.dailyBalance.map(row => ({
+                            date: new Date(row.날짜 || row.date),
+                            balance: parseFloat(row.잔액 || row.balance) || 0
+                        })).filter(row => row.date);
+                    }
+                    
+                    if (jsonData.fxPosition) {
+                        dashboardData.fxPosition = jsonData.fxPosition.map(row => ({
+                            date: new Date(row.날짜 || row.date),
+                            balance: parseFloat(row.잔액 || row.balance) || 0,
+                            avgRate: parseFloat(row.평균단가 || row.avgRate) || 0,
+                            marketRate: parseFloat(row['당일 환율'] || row.marketRate) || 0
+                        })).filter(row => row.date && row.balance > 0);
+                    }
+                    
+                    console.log('Parsed dashboardData:', dashboardData);
+                    
+                    // 대시보드 렌더링
+                    renderDashboard();
+                    
+                    // 업데이트 시간 표시
+                    const updateTime = jsonData.lastUpdated || new Date().toLocaleString('ko-KR');
+                    document.getElementById('updateTime').textContent = '최종 업데이트: ' + updateTime;
+                    
+                    showLoading(false);
+                    return true;
+                }
+            } catch (err) {
+                console.log('data.json not found, waiting for manual upload:', err.message);
+            }
+            showLoading(false);
+            return false;
+        }
+        
+        // 페이지 로드 시 자동으로 data.json 로드 시도
+        autoLoadData();
+    </script>
+</body>
+</html>
