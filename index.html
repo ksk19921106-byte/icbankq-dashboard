@@ -305,6 +305,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .chart-title {
@@ -317,6 +319,35 @@
             color: var(--text-muted);
             font-weight: 400;
             margin-left: 8px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .filter-btn {
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
         }
 
         .chart-legend {
@@ -562,7 +593,15 @@
                 <!-- KRW Cash Flow Chart -->
                 <div class="chart-card">
                     <div class="chart-header">
-                        <h3 class="chart-title">KRW 현금흐름 추세 <span>최근 90일</span></h3>
+                        <h3 class="chart-title">KRW 현금흐름 추세</h3>
+                        <div class="filter-buttons" data-chart="krw">
+                            <button class="filter-btn" data-days="30">30일</button>
+                            <button class="filter-btn" data-days="60">60일</button>
+                            <button class="filter-btn active" data-days="90">90일</button>
+                            <button class="filter-btn" data-days="120">120일</button>
+                            <button class="filter-btn" data-days="365">1년</button>
+                            <button class="filter-btn" data-days="all">전체</button>
+                        </div>
                     </div>
                     <div class="chart-container">
                         <canvas id="krwChart"></canvas>
@@ -572,7 +611,14 @@
                 <!-- USD Position Chart -->
                 <div class="chart-card">
                     <div class="chart-header">
-                        <h3 class="chart-title">USD 잔액 추이 <span>CDA 누적</span></h3>
+                        <h3 class="chart-title">USD 잔액 추이</h3>
+                        <div class="filter-buttons" data-chart="usd">
+                            <button class="filter-btn" data-days="30">30일</button>
+                            <button class="filter-btn" data-days="60">60일</button>
+                            <button class="filter-btn active" data-days="90">90일</button>
+                            <button class="filter-btn" data-days="120">120일</button>
+                            <button class="filter-btn" data-days="all">전체</button>
+                        </div>
                     </div>
                     <div class="chart-container">
                         <canvas id="usdChart"></canvas>
@@ -585,7 +631,14 @@
                 <!-- Average Rate Trend -->
                 <div class="chart-card">
                     <div class="chart-header">
-                        <h3 class="chart-title">평균단가 매입 추이 <span>CDA 단가 변동</span></h3>
+                        <h3 class="chart-title">평균단가 매입 추이</h3>
+                        <div class="filter-buttons" data-chart="avgRate">
+                            <button class="filter-btn" data-days="30">30일</button>
+                            <button class="filter-btn" data-days="60">60일</button>
+                            <button class="filter-btn active" data-days="90">90일</button>
+                            <button class="filter-btn" data-days="120">120일</button>
+                            <button class="filter-btn" data-days="all">전체</button>
+                        </div>
                     </div>
                     <div class="chart-container">
                         <canvas id="avgRateChart"></canvas>
@@ -595,7 +648,14 @@
                 <!-- Exchange Rate Comparison -->
                 <div class="chart-card">
                     <div class="chart-header">
-                        <h3 class="chart-title">환율 비교 분석 <span>평균단가 vs 시장환율</span></h3>
+                        <h3 class="chart-title">환율 비교 분석</h3>
+                        <div class="filter-buttons" data-chart="rateCompare">
+                            <button class="filter-btn" data-days="30">30일</button>
+                            <button class="filter-btn" data-days="60">60일</button>
+                            <button class="filter-btn active" data-days="90">90일</button>
+                            <button class="filter-btn" data-days="120">120일</button>
+                            <button class="filter-btn" data-days="all">전체</button>
+                        </div>
                         <div class="chart-legend">
                             <div class="legend-item">
                                 <div class="legend-dot" style="background: var(--accent-cyan);"></div>
@@ -625,8 +685,40 @@
         // Chart instances
         let krwChart, usdChart, avgRateChart, rateCompareChart;
 
+        // Filter state (days to show)
+        let filterState = {
+            krw: 90,
+            usd: 90,
+            avgRate: 90,
+            rateCompare: 90
+        };
+
         // File upload handler
         document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+
+        // Filter button event listeners
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('filter-btn')) {
+                const btn = e.target;
+                const chartType = btn.closest('.filter-buttons').dataset.chart;
+                const days = btn.dataset.days;
+                
+                // Update active state
+                btn.closest('.filter-buttons').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update filter state
+                filterState[chartType] = days === 'all' ? 'all' : parseInt(days);
+                
+                // Re-render the specific chart
+                switch(chartType) {
+                    case 'krw': renderKRWChart(); break;
+                    case 'usd': renderUSDChart(); break;
+                    case 'avgRate': renderAvgRateChart(); break;
+                    case 'rateCompare': renderRateCompareChart(); break;
+                }
+            }
+        });
 
         function handleFileUpload(e) {
             const file = e.target.files[0];
@@ -796,7 +888,10 @@
 
         function renderKRWChart() {
             const ctx = document.getElementById('krwChart').getContext('2d');
-            const data = dashboardData.dailyBalance.slice(-90);
+            const days = filterState.krw;
+            const data = days === 'all' 
+                ? dashboardData.dailyBalance 
+                : dashboardData.dailyBalance.slice(-days);
 
             if (krwChart) krwChart.destroy();
 
@@ -814,7 +909,7 @@
                         backgroundColor: gradient,
                         fill: true,
                         tension: 0.4,
-                        pointRadius: 0,
+                        pointRadius: data.length > 100 ? 0 : 2,
                         pointHoverRadius: 5,
                         pointHoverBackgroundColor: '#8b5cf6',
                         borderWidth: 2
@@ -826,7 +921,10 @@
 
         function renderUSDChart() {
             const ctx = document.getElementById('usdChart').getContext('2d');
-            const data = dashboardData.fxPosition;
+            const days = filterState.usd;
+            const data = days === 'all' 
+                ? dashboardData.fxPosition 
+                : dashboardData.fxPosition.slice(-days);
 
             if (usdChart) usdChart.destroy();
 
@@ -844,7 +942,7 @@
                         backgroundColor: gradient,
                         fill: true,
                         tension: 0.4,
-                        pointRadius: 3,
+                        pointRadius: data.length > 50 ? 2 : 3,
                         pointBackgroundColor: '#3b82f6',
                         borderWidth: 2
                     }]
@@ -855,7 +953,10 @@
 
         function renderAvgRateChart() {
             const ctx = document.getElementById('avgRateChart').getContext('2d');
-            const data = dashboardData.fxPosition;
+            const days = filterState.avgRate;
+            const data = days === 'all' 
+                ? dashboardData.fxPosition 
+                : dashboardData.fxPosition.slice(-days);
 
             if (avgRateChart) avgRateChart.destroy();
 
@@ -873,7 +974,7 @@
                         backgroundColor: gradient,
                         fill: true,
                         tension: 0.4,
-                        pointRadius: 3,
+                        pointRadius: data.length > 50 ? 2 : 3,
                         pointBackgroundColor: '#10b981',
                         borderWidth: 2
                     }]
@@ -884,7 +985,10 @@
 
         function renderRateCompareChart() {
             const ctx = document.getElementById('rateCompareChart').getContext('2d');
-            const data = dashboardData.fxPosition;
+            const days = filterState.rateCompare;
+            const data = days === 'all' 
+                ? dashboardData.fxPosition 
+                : dashboardData.fxPosition.slice(-days);
 
             if (rateCompareChart) rateCompareChart.destroy();
 
@@ -898,7 +1002,7 @@
                         borderColor: '#06b6d4',
                         backgroundColor: 'transparent',
                         tension: 0.4,
-                        pointRadius: 3,
+                        pointRadius: data.length > 50 ? 2 : 3,
                         pointBackgroundColor: '#06b6d4',
                         borderWidth: 2
                     }, {
@@ -907,7 +1011,7 @@
                         borderColor: '#f59e0b',
                         backgroundColor: 'transparent',
                         tension: 0.4,
-                        pointRadius: 3,
+                        pointRadius: data.length > 50 ? 2 : 3,
                         pointBackgroundColor: '#f59e0b',
                         borderWidth: 2,
                         borderDash: [5, 5]
