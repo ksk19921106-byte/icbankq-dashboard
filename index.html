@@ -1132,30 +1132,36 @@
                     console.log('Loaded data.json:', jsonData);
                     
                     // JSON 데이터를 dashboardData로 변환
-                    if (jsonData.dailyBalance) {
+                    if (jsonData.dailyBalance && jsonData.dailyBalance.length > 0) {
                         dashboardData.dailyBalance = jsonData.dailyBalance.map(row => ({
-                            date: new Date(row.날짜 || row.date),
-                            balance: parseFloat(row.잔액 || row.balance) || 0
-                        })).filter(row => row.date);
+                            date: parseExcelDate(row['날짜'] || row.date),
+                            balance: parseFloat(row['잔액'] || row.balance) || 0
+                        })).filter(row => row.date && !isNaN(row.date.getTime()));
+                        console.log('dailyBalance parsed:', dashboardData.dailyBalance.length, 'rows');
                     }
                     
-                    if (jsonData.fxPosition) {
+                    if (jsonData.fxPosition && jsonData.fxPosition.length > 0) {
                         dashboardData.fxPosition = jsonData.fxPosition.map(row => ({
-                            date: new Date(row.날짜 || row.date),
-                            balance: parseFloat(row.잔액 || row.balance) || 0,
-                            avgRate: parseFloat(row.평균단가 || row.avgRate) || 0,
-                            marketRate: parseFloat(row['당일 환율'] || row.marketRate) || 0
-                        })).filter(row => row.date && row.balance > 0);
+                            date: parseExcelDate(row['날짜'] || row.date),
+                            balance: parseFloat(row['잔액'] || row.balance) || 0,
+                            avgRate: parseFloat(row['평균단가'] || row.avgRate) || 0,
+                            marketRate: parseFloat(row['당일환율'] || row['당일 환율'] || row.marketRate) || 0
+                        })).filter(row => row.date && !isNaN(row.date.getTime()) && row.balance > 0);
+                        console.log('fxPosition parsed:', dashboardData.fxPosition.length, 'rows');
                     }
                     
                     console.log('Parsed dashboardData:', dashboardData);
                     
                     // 대시보드 렌더링
-                    renderDashboard();
-                    
-                    // 업데이트 시간 표시
-                    const updateTime = jsonData.lastUpdated || new Date().toLocaleString('ko-KR');
-                    document.getElementById('updateTime').textContent = '최종 업데이트: ' + updateTime;
+                    if (dashboardData.dailyBalance.length > 0 || dashboardData.fxPosition.length > 0) {
+                        renderDashboard();
+                        
+                        // 업데이트 시간 표시
+                        const updateTime = jsonData.lastUpdated || new Date().toLocaleString('ko-KR');
+                        document.getElementById('updateTime').textContent = '최종 업데이트: ' + updateTime;
+                    } else {
+                        console.log('No valid data found');
+                    }
                     
                     showLoading(false);
                     return true;
@@ -1165,6 +1171,30 @@
             }
             showLoading(false);
             return false;
+        }
+        
+        // Excel 시리얼 넘버 또는 날짜 문자열을 Date로 변환
+        function parseExcelDate(value) {
+            if (!value) return null;
+            
+            // 이미 Date 객체인 경우
+            if (value instanceof Date) return value;
+            
+            // 숫자인 경우 (Excel 시리얼 넘버)
+            if (typeof value === 'number' || /^\d+$/.test(value)) {
+                const serial = parseFloat(value);
+                // Excel 시리얼 넘버를 Date로 변환 (1900년 1월 1일 기준)
+                const date = new Date((serial - 25569) * 86400 * 1000);
+                return date;
+            }
+            
+            // 문자열 날짜인 경우 (예: "2026-01-28")
+            if (typeof value === 'string') {
+                const date = new Date(value);
+                if (!isNaN(date.getTime())) return date;
+            }
+            
+            return null;
         }
         
         // 페이지 로드 시 자동으로 data.json 로드 시도
