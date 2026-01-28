@@ -1181,15 +1181,25 @@
             if (value instanceof Date) return value;
             
             // 숫자인 경우 (Excel 시리얼 넘버)
-            if (typeof value === 'number' || /^\d+$/.test(value)) {
+            if (typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)) {
                 const serial = parseFloat(value);
-                // Excel 시리얼 넘버를 Date로 변환 (1900년 1월 1일 기준)
-                const date = new Date((serial - 25569) * 86400 * 1000);
-                return date;
+                if (serial > 40000) {
+                    // Excel 시리얼 넘버를 Date로 변환 (시간대 보정)
+                    const utc_days = Math.floor(serial - 25569);
+                    const date = new Date(utc_days * 86400 * 1000);
+                    // UTC 기준으로 년/월/일 추출해서 로컬 날짜로 생성
+                    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+                }
             }
             
             // 문자열 날짜인 경우 (예: "2026-01-28")
             if (typeof value === 'string') {
+                // YYYY-MM-DD 형식
+                const match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
+                if (match) {
+                    return new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]));
+                }
+                // 그 외 형식
                 const date = new Date(value);
                 if (!isNaN(date.getTime())) return date;
             }
