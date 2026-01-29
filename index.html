@@ -911,6 +911,26 @@
             const data = filterDataByDays(dashboardData.fxPosition, currentFilters.usd);
             if (data.length === 0) return;
 
+            // 외상대금 송금일 찾기
+            const paymentDatesMap = new Map();
+            dashboardData.payments.forEach(p => {
+                const dateStr = p.date.toISOString().split('T')[0];
+                paymentDatesMap.set(dateStr, p);
+            });
+
+            // 차트 데이터의 각 날짜와 매칭
+            const paymentMarkers = data.map((d, index) => {
+                const dateStr = d.date.toISOString().split('T')[0];
+                if (paymentDatesMap.has(dateStr)) {
+                    return {
+                        x: index,
+                        y: d.balance,
+                        payment: paymentDatesMap.get(dateStr)
+                    };
+                }
+                return null;
+            }).filter(m => m !== null);
+
             if (charts.usd) charts.usd.destroy();
             charts.usd = new Chart(ctx, {
                 type: 'line',
@@ -923,12 +943,175 @@
                         backgroundColor: 'rgba(5, 150, 105, 0.1)',
                         fill: true,
                         tension: 0.4,
-                        pointRadius: 2,
+                        pointRadius: data.map((d, i) => {
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            return paymentDatesMap.has(dateStr) ? 8 : 2;
+                        }),
+                        pointBackgroundColor: data.map((d, i) => {
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            return paymentDatesMap.has(dateStr) ? '#dc2626' : '#059669';
+                        }),
+                        pointBorderColor: data.map((d, i) => {
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            return paymentDatesMap.has(dateStr) ? '#ffffff' : '#059669';
+                        }),
+                        pointBorderWidth: data.map((d, i) => {
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            return paymentDatesMap.has(dateStr) ? 2 : 0;
+                        }),
                         borderWidth: 2
                     }]
                 },
-                options: createChartOptions('$', '', true)
+                options: {
+                    ...createChartOptions('$', '', true),
+                    plugins: {
+                        ...createChartOptions('$', '', true).plugins,
+                        tooltip: {
+                            backgroundColor: '#ffffff',
+                            borderColor: '#e2e8f0',
+                            borderWidth: 1,
+                            titleColor: '#1e293b',
+                            bodyColor: '#475569',
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                title: function(context) {
+                                    const index = context[0].dataIndex;
+                                    const d = data[index];
+                                    const dateStr = d.date.toISOString().split('T')[0];
+                                    
+                                    if (paymentDatesMap.has(dateStr)) {
+                                        const month = d.date.getMonth() + 1;
+                                        const day = d.date.getDate();
+                                        return `${month}월 ${day}일 외상대금 송금`;
+                                    }
+                                    return context[0].label;
+                                },
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    const d = data[index];
+                                    const dateStr = d.date.toISOString().split('T')[0];
+                                    
+                                    if (paymentDatesMap.has(dateStr)) {
+                                        const payment = paymentDatesMap.get(dateStr);
+                                        const lines = [
+                                            `송금 총액: $${formatNumber(payment.totalUSD, 2)}`,
+                                            `환차손익: ${payment.fxGainLoss >= 0 ? '+' : ''}₩${formatNumber(Math.abs(payment.fxGainLoss), 0)}`,
+                                            ``,
+                                            `[ 송금 업체 ]`
+                                        ];
+                                        
+                                        payment.vendors.forEach((v, i) => {
+                                            lines.push(`${i + 1}. ${v.vendor}: $${formatNumber(v.amountUSD, 2)}`);
+                                        });
+                                        
+                                        return lines;
+                                    }
+                                    
+                                    return `USD 잔액: $${formatNumber(context.raw, 2)}`;
+                                },
+                                labelTextColor: function(context) {
+                                    return '#475569';
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, activeElements) => {
+                        if (activeElements.length > 0) {
+                            const index = activeElements[0].index;
+                            const d = data[index];
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            
+                            if (paymentDatesMap.has(dateStr)) {
+                                showPaymentDetailPopup(paymentDatesMap.get(dateStr));
+                            }
+                        }
+                    }
+                }
             });
+        }
+
+        function showPaymentDetailPopup(payment) {
+            const month = payment.date.getMonth() + 1;
+            const day = payment.date.getDate();
+            
+            const vendorList = payment.vendors.map((v, i) => 
+                `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+                    <span style="color: #475569;">${i + 1}. ${v.vendor}</span>
+                    <span style="font-weight: 600; font-family: 'JetBrains Mono', monospace;">$${formatNumber(v.amountUSD, 2)}</span>
+                </div>`
+            ).join('');
+            
+            const fxClass = payment.fxGainLoss >= 0 ? '#059669' : '#dc2626';
+            const fxSign = payment.fxGainLoss >= 0 ? '+' : '';
+            
+            const popup = document.createElement('div');
+            popup.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                border-radius: 16px;
+                padding: 28px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                z-index: 10000;
+                max-width: 500px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                animation: popupFadeIn 0.2s ease;
+            `;
+            
+            popup.innerHTML = `
+                <style>
+                    @keyframes popupFadeIn {
+                        from { opacity: 0; transform: translate(-50%, -48%); }
+                        to { opacity: 1; transform: translate(-50%, -50%); }
+                    }
+                </style>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #1e293b;">${month}월 ${day}일 외상대금 송금 내역</h3>
+                    <button onclick="this.closest('div').parentElement.remove(); document.getElementById('popupOverlay').remove();" 
+                            style="background: none; border: none; font-size: 24px; color: #94a3b8; cursor: pointer; padding: 0; width: 32px; height: 32px; line-height: 1;">×</button>
+                </div>
+                
+                <div style="background: #f8fafc; padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: #64748b; font-size: 13px;">송금 총액</span>
+                        <span style="font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #1e293b;">$${formatNumber(payment.totalUSD, 2)}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #64748b; font-size: 13px;">환차손익</span>
+                        <span style="font-size: 16px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: ${fxClass};">${fxSign}₩${formatNumber(Math.abs(payment.fxGainLoss), 0)}</span>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 12px;">
+                    <div style="color: #64748b; font-size: 12px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">송금 업체 (${payment.vendors.length}개)</div>
+                    ${vendorList}
+                </div>
+            `;
+            
+            const overlay = document.createElement('div');
+            overlay.id = 'popupOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+                backdrop-filter: blur(4px);
+            `;
+            overlay.onclick = () => {
+                popup.remove();
+                overlay.remove();
+            };
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(popup);
         }
 
         function renderAvgRateChart() {
