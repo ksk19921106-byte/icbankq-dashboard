@@ -572,7 +572,7 @@
 
                 <div class="kpi-card amber">
                     <div class="kpi-header">
-                        <span class="kpi-label">당일 시장환율</span>
+                        <span class="kpi-label">직전 매입환율</span>
                         <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.1);">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-amber);">
                                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
@@ -581,7 +581,7 @@
                         </div>
                     </div>
                     <div class="kpi-value" id="marketRate">-</div>
-                    <div class="kpi-sub" id="marketRateChange">전일 대비 -</div>
+                    <div class="kpi-sub" id="marketRateDate">(- 기준)</div>
                 </div>
 
                 <div class="kpi-card purple">
@@ -870,15 +870,12 @@
                 document.getElementById('marketRate').textContent = 
                     '₩' + formatNumber(latest.marketRate, 2);
 
-                // Market Rate Change
-                if (prev) {
-                    const marketChange = latest.marketRate - prev.marketRate;
-                    const marketChangeEl = document.getElementById('marketRateChange');
-                    if (marketChange >= 0) {
-                        marketChangeEl.innerHTML = `<span class="kpi-change negative">▲ ${formatNumber(Math.abs(marketChange), 1)}</span> 전일 대비`;
-                    } else {
-                        marketChangeEl.innerHTML = `<span class="kpi-change positive">▼ ${formatNumber(Math.abs(marketChange), 1)}</span> 전일 대비`;
-                    }
+                // 직전 매입환율 날짜 표시
+                const marketRateDateEl = document.getElementById('marketRateDate');
+                if (latest.date) {
+                    const month = latest.date.getMonth() + 1;
+                    const day = latest.date.getDate();
+                    marketRateDateEl.textContent = `(${month}/${day} 기준)`;
                 }
             }
 
