@@ -9,23 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #f8fafc;
-            --bg-secondary: #f1f5f9;
-            --bg-card: #ffffff;
-            --bg-card-hover: #f8fafc;
-            --accent-blue: #2563eb;
-            --accent-cyan: #0891b2;
-            --accent-emerald: #059669;
-            --accent-amber: #d97706;
-            --accent-rose: #dc2626;
-            --accent-purple: #7c3aed;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
-            --border-color: #e2e8f0;
-            --gradient-blue: linear-gradient(135deg, #2563eb 0%, #0891b2 100%);
-            --gradient-green: linear-gradient(135deg, #059669 0%, #0891b2 100%);
-            --gradient-amber: linear-gradient(135deg, #d97706 0%, #dc2626 100%);
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2332;
+            --bg-card-hover: #1f2937;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-purple: #8b5cf6;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #2d3748;
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-green: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --gradient-amber: linear-gradient(135deg, #f59e0b 0%, #f43f5e 100%);
         }
 
         * {
@@ -58,7 +58,7 @@
             position: absolute;
             border-radius: 50%;
             filter: blur(100px);
-            opacity: 0.12;
+            opacity: 0.25;
             animation: float 20s ease-in-out infinite;
         }
 
@@ -94,7 +94,7 @@
             align-items: center;
             border-bottom: 1px solid var(--border-color);
             backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(10, 15, 26, 0.85);
         }
 
         .logo-section {
@@ -261,18 +261,6 @@
             color: var(--text-muted);
         }
 
-        .minus-banner {
-            margin-top: 10px;
-            padding: 6px 10px;
-            background: rgba(244, 63, 94, 0.15);
-            border: 1px solid rgba(244, 63, 94, 0.3);
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--accent-rose);
-            text-align: center;
-        }
-
         .kpi-change {
             display: inline-flex;
             align-items: center;
@@ -432,7 +420,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(10, 15, 26, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -503,7 +491,7 @@
             <div class="logo-icon">ICB</div>
             <div class="logo-text">
                 <h1>아이씨뱅큐 자금현황</h1>
-                <span>기준일: <span id="todayDate">-</span></span>
+                <span>Daily Treasury Dashboard</span>
             </div>
         </div>
         <div class="header-actions">
@@ -542,42 +530,52 @@
         <!-- Dashboard Content -->
         <div id="dashboardContent" style="display: none;">
             <!-- KPI Cards -->
-            <div class="kpi-grid" style="grid-template-columns: 2fr 1fr 1fr;">
-                <!-- USD 보유잔액 + 평균 매입단가 합친 카드 -->
-                <div class="kpi-card blue" style="display: flex; gap: 30px; align-items: center;">
-                    <div style="flex: 1;">
-                        <div class="kpi-header">
-                            <span class="kpi-label">USD 보유잔액</span>
-                            <div class="kpi-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M12 6v12M8 10h8M8 14h8"/>
-                                </svg>
-                            </div>
+            <div class="kpi-grid">
+                <div class="kpi-card blue">
+                    <div class="kpi-header">
+                        <span class="kpi-label">USD 보유잔액</span>
+                        <div class="kpi-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v12M8 10h8M8 14h8"/>
+                            </svg>
                         </div>
-                        <div class="kpi-value" id="usdBalance">-</div>
-                        <div class="kpi-sub" id="usdKrwValue">원화환산액: -</div>
                     </div>
-                    <div style="width: 1px; height: 80px; background: var(--border-color);"></div>
-                    <div style="flex: 1;">
-                        <div class="kpi-header">
-                            <span class="kpi-label">평균 매입단가</span>
-                            <div class="kpi-icon" style="background: rgba(5, 150, 105, 0.1);">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-emerald);">
-                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="kpi-value" id="avgRate">-</div>
-                        <div class="kpi-sub" id="rateComparison">시장 환율 대비 -</div>
-                    </div>
+                    <div class="kpi-value" id="usdBalance">-</div>
+                    <div class="kpi-sub">CDA 누적 매입</div>
                 </div>
 
-                <!-- 순 현금+달러 원화 환산 총액 -->
+                <div class="kpi-card green">
+                    <div class="kpi-header">
+                        <span class="kpi-label">평균 매입단가</span>
+                        <div class="kpi-icon" style="background: rgba(16, 185, 129, 0.1);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-emerald);">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value" id="avgRate">-</div>
+                    <div class="kpi-sub" id="rateComparison">시장 환율 대비 -</div>
+                </div>
+
+                <div class="kpi-card amber">
+                    <div class="kpi-header">
+                        <span class="kpi-label">당일 시장환율</span>
+                        <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.1);">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-amber);">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                                <polyline points="16 7 22 7 22 13"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="kpi-value" id="marketRate">-</div>
+                    <div class="kpi-sub" id="marketRateChange">전일 대비 -</div>
+                </div>
+
                 <div class="kpi-card purple">
                     <div class="kpi-header">
-                        <span class="kpi-label">순 현금+달러 원화 환산 총액</span>
-                        <div class="kpi-icon" style="background: rgba(124, 58, 237, 0.1);">
+                        <span class="kpi-label">KRW 보유잔액</span>
+                        <div class="kpi-icon" style="background: rgba(139, 92, 246, 0.1);">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-purple);">
                                 <rect x="2" y="4" width="20" height="16" rx="2"/>
                                 <path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -587,24 +585,6 @@
                     </div>
                     <div class="kpi-value" id="krwBalance">-</div>
                     <div class="kpi-sub" id="krwChange">전일 대비 -</div>
-                    <div class="minus-banner" id="minusBanner" style="display: none;">
-                        ⚠️ 원화 마이너스 통장으로 달러 CDA 매입 중
-                    </div>
-                </div>
-
-                <!-- 총 가용자금 (19.5억 + 총 보유잔액) -->
-                <div class="kpi-card amber">
-                    <div class="kpi-header">
-                        <span class="kpi-label">총 가용자금</span>
-                        <div class="kpi-icon" style="background: rgba(217, 119, 6, 0.1);">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-amber);">
-                                <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/>
-                                <path d="M9 12l2 2 4-4"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="kpi-value" id="totalFunds">-</div>
-                    <div class="kpi-sub">예금 19.5억 포함</div>
                 </div>
             </div>
 
@@ -846,17 +826,6 @@
                 document.getElementById('usdBalance').textContent = 
                     '$' + formatNumber(latest.balance, 2);
 
-                // USD 원화환산액 (USD 잔액 × 당일 시장환율)
-                const usdKrwValue = latest.balance * latest.marketRate;
-                const usdKrwValueEl = document.getElementById('usdKrwValue');
-                if (usdKrwValue >= 100000000) {
-                    // 1억 이상이면 억 단위로 표시
-                    usdKrwValueEl.textContent = '원화환산액: ' + formatNumber(usdKrwValue / 100000000, 2) + '억';
-                } else {
-                    // 백만 단위로 표시
-                    usdKrwValueEl.textContent = '원화환산액: ' + formatNumber(usdKrwValue / 1000000, 0) + '백만';
-                }
-
                 // Average Rate
                 document.getElementById('avgRate').textContent = 
                     '₩' + formatNumber(latest.avgRate, 2);
@@ -875,12 +844,15 @@
                 document.getElementById('marketRate').textContent = 
                     '₩' + formatNumber(latest.marketRate, 2);
 
-                // 직전 매입환율 날짜 표시
-                const marketRateDateEl = document.getElementById('marketRateDate');
-                if (latest.date) {
-                    const month = latest.date.getMonth() + 1;
-                    const day = latest.date.getDate();
-                    marketRateDateEl.textContent = `(${month}/${day} 기준)`;
+                // Market Rate Change
+                if (prev) {
+                    const marketChange = latest.marketRate - prev.marketRate;
+                    const marketChangeEl = document.getElementById('marketRateChange');
+                    if (marketChange >= 0) {
+                        marketChangeEl.innerHTML = `<span class="kpi-change negative">▲ ${formatNumber(Math.abs(marketChange), 1)}</span> 전일 대비`;
+                    } else {
+                        marketChangeEl.innerHTML = `<span class="kpi-change positive">▼ ${formatNumber(Math.abs(marketChange), 1)}</span> 전일 대비`;
+                    }
                 }
             }
 
@@ -896,24 +868,6 @@
                 } else {
                     document.getElementById('krwBalance').textContent = 
                         formatNumber(balanceInMillion, 0) + '백만';
-                }
-
-                // 총 가용자금 계산 (19.5억 + 총 보유잔액)
-                const depositAmount = 1950; // 19.5억 = 1950백만
-                const totalFunds = depositAmount + balanceInMillion;
-                const totalFundsEl = document.getElementById('totalFunds');
-                if (Math.abs(totalFunds) >= 1000) {
-                    totalFundsEl.textContent = formatNumber(totalFunds / 100, 1) + '억';
-                } else {
-                    totalFundsEl.textContent = formatNumber(totalFunds, 0) + '백만';
-                }
-
-                // 마이너스 통장 배너 표시/숨김
-                const minusBanner = document.getElementById('minusBanner');
-                if (balanceInMillion < 0) {
-                    minusBanner.style.display = 'block';
-                } else {
-                    minusBanner.style.display = 'none';
                 }
 
                 // KRW Change
@@ -1073,11 +1027,11 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            backgroundColor: '#ffffff',
-                            borderColor: '#e2e8f0',
+                            backgroundColor: '#1a2332',
+                            borderColor: '#2d3748',
                             borderWidth: 1,
-                            titleColor: '#1e293b',
-                            bodyColor: '#475569',
+                            titleColor: '#f1f5f9',
+                            bodyColor: '#94a3b8',
                             padding: 10,
                             callbacks: {
                                 label: function(context) {
@@ -1092,7 +1046,7 @@
                             ticks: { color: '#64748b', font: { size: 10 } }
                         },
                         y: {
-                            grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                            grid: { color: 'rgba(45, 55, 72, 0.5)' },
                             ticks: {
                                 color: '#64748b',
                                 callback: v => '₩' + formatNumber(v, 0)
@@ -1114,11 +1068,11 @@
                 plugins: {
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: '#ffffff',
-                        borderColor: '#e2e8f0',
+                        backgroundColor: '#1a2332',
+                        borderColor: '#2d3748',
                         borderWidth: 1,
-                        titleColor: '#1e293b',
-                        bodyColor: '#475569',
+                        titleColor: '#f1f5f9',
+                        bodyColor: '#94a3b8',
                         padding: 10,
                         callbacks: {
                             label: function(context) {
@@ -1136,7 +1090,7 @@
                         ticks: { color: '#64748b', font: { size: 10 }, maxTicksLimit: 10 }
                     },
                     y: {
-                        grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                        grid: { color: 'rgba(45, 55, 72, 0.5)' },
                         ticks: {
                             color: '#64748b',
                             callback: function(v) {
@@ -1230,12 +1184,11 @@
             if (typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)) {
                 const serial = parseFloat(value);
                 if (serial > 40000) {
-                    // Excel 시리얼 넘버를 Date로 변환
-                    // Excel: 1 = 1900-01-01, JavaScript epoch: 1970-01-01
-                    // 25569 = 1970-01-01의 Excel 시리얼 값
-                    const excelEpoch = new Date(1899, 11, 30); // 1899-12-30
-                    const date = new Date(excelEpoch.getTime() + serial * 86400000);
-                    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                    // Excel 시리얼 넘버를 Date로 변환 (시간대 보정)
+                    const utc_days = Math.floor(serial - 25569);
+                    const date = new Date(utc_days * 86400 * 1000);
+                    // UTC 기준으로 년/월/일 추출해서 로컬 날짜로 생성
+                    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
                 }
             }
             
@@ -1254,19 +1207,7 @@
             return null;
         }
         
-        // 어제 날짜 표시
-        function setYesterdayDate() {
-            const today = new Date();
-            const yesterday = new Date(today);
-            yesterday.setDate(today.getDate() - 1);
-            const year = yesterday.getFullYear();
-            const month = yesterday.getMonth() + 1;
-            const day = yesterday.getDate();
-            document.getElementById('todayDate').textContent = `${year}년 ${month}월 ${day}일`;
-        }
-        
-        // 페이지 로드 시 실행
-        setYesterdayDate();
+        // 페이지 로드 시 자동으로 data.json 로드 시도
         autoLoadData();
     </script>
 </body>
