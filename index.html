@@ -1320,57 +1320,71 @@
         // Auto-load data.json from same folder (for SharePoint/Power Automate hosting)
         async function autoLoadData() {
             showLoading(true);
-            try {
-                // GitHub Pages용 절대 경로 (정확한 raw URL)
-                const dataUrl = 'https://raw.githubusercontent.com/ksk19921106-byte/icbankq-dashboard/refs/heads/main/data.json';
-                const response = await fetch(dataUrl);
-                if (response.ok) {
-                    const jsonData = await response.json();
-                    console.log('Loaded data.json:', jsonData);
-                    
-                    // dailyBalance
-                    if (jsonData.dailyBalance && jsonData.dailyBalance.length > 0) {
-                        dashboardData.dailyBalance = jsonData.dailyBalance.map(row => ({
-                            date: parseExcelDate(row.date),
-                            balance: parseFloat(row.balance) || 0
-                        })).filter(row => row.date && !isNaN(row.date.getTime()));
+            
+            // 여러 경로를 순차적으로 시도
+            const possibleUrls = [
+                './data.json',  // 상대 경로 (같은 폴더)
+                'data.json',    // 현재 위치
+                'https://raw.githubusercontent.com/ksk19921106-byte/icbankq-dashboard/refs/heads/main/data.json',  // GitHub raw
+                'https://ksk19921106-byte.github.io/icbankq-dashboard/data.json'  // GitHub Pages
+            ];
+            
+            for (const dataUrl of possibleUrls) {
+                try {
+                    console.log('Trying to load:', dataUrl);
+                    const response = await fetch(dataUrl);
+                    if (response.ok) {
+                        console.log('✅ Successfully loaded from:', dataUrl);
+                        console.log('✅ Successfully loaded from:', dataUrl);
+                        const jsonData = await response.json();
+                        console.log('Loaded data.json:', jsonData);
+                        
+                        // dailyBalance
+                        if (jsonData.dailyBalance && jsonData.dailyBalance.length > 0) {
+                            dashboardData.dailyBalance = jsonData.dailyBalance.map(row => ({
+                                date: parseExcelDate(row.날짜 || row.date),
+                                balance: parseFloat(row.잔액 || row.balance) || 0
+                            })).filter(row => row.date && !isNaN(row.date.getTime()));
+                        }
+                        
+                        // fxPosition
+                        if (jsonData.fxPosition && jsonData.fxPosition.length > 0) {
+                            dashboardData.fxPosition = jsonData.fxPosition.map(row => ({
+                                date: parseExcelDate(row.날짜 || row.date),
+                                balance: parseFloat(row.잔액 || row.balance) || 0,
+                                avgRate: parseFloat(row.평균단가 || row.avgRate) || 0,
+                                marketRate: parseFloat(row.당일환율 || row['당일 환율'] || row.marketRate) || 0
+                            })).filter(row => row.date && !isNaN(row.date.getTime()) && row.balance > 0);
+                        }
+                        
+                        // payments
+                        if (jsonData.payments && jsonData.payments.length > 0) {
+                            dashboardData.payments = jsonData.payments.map(row => ({
+                                date: parseExcelDate(row.날짜 || row.date),
+                                totalUSD: parseFloat(row.외상대 || row.totalUSD) || 0,
+                                ourAvgRate: parseFloat(row['외상대 매입 평균단가'] || row.ourAvgRate) || 0,
+                                vendorAvgRate: parseFloat(row['외상대 매입 평균단가'] || row.vendorAvgRate) || 0,
+                                fxGainLoss: parseFloat(row.외환차손익 || row.fxGainLoss) || 0,
+                                vendorCount: parseInt(row.vendorCount) || 0,
+                                vendors: row.vendors || (row.매입처 ? [{ vendor: row.매입처, amountUSD: parseFloat(row.외상대 || 0) }] : [])
+                            })).filter(p => p.date && !isNaN(p.date.getTime()) && p.totalUSD > 0);
+                        }
+                        
+                        if (dashboardData.dailyBalance.length > 0 || dashboardData.fxPosition.length > 0) {
+                            renderDashboard();
+                            const updateTime = jsonData.lastUpdated || new Date().toLocaleString('ko-KR');
+                            document.getElementById('updateTime').textContent = '최종 업데이트: ' + updateTime;
+                        }
+                        
+                        showLoading(false);
+                        return true;
                     }
-                    
-                    // fxPosition
-                    if (jsonData.fxPosition && jsonData.fxPosition.length > 0) {
-                        dashboardData.fxPosition = jsonData.fxPosition.map(row => ({
-                            date: parseExcelDate(row.date),
-                            balance: parseFloat(row.balance) || 0,
-                            avgRate: parseFloat(row.avgRate) || 0,
-                            marketRate: parseFloat(row.marketRate) || 0
-                        })).filter(row => row.date && !isNaN(row.date.getTime()) && row.balance > 0);
-                    }
-                    
-                    // payments
-                    if (jsonData.payments && jsonData.payments.length > 0) {
-                        dashboardData.payments = jsonData.payments.map(row => ({
-                            date: parseExcelDate(row.date),
-                            totalUSD: parseFloat(row.totalUSD) || 0,
-                            ourAvgRate: parseFloat(row.ourAvgRate) || 0,
-                            vendorAvgRate: parseFloat(row.vendorAvgRate) || 0,
-                            fxGainLoss: parseFloat(row.fxGainLoss) || 0,
-                            vendorCount: parseInt(row.vendorCount) || 0,
-                            vendors: row.vendors || []
-                        })).filter(p => p.date && !isNaN(p.date.getTime()) && p.totalUSD > 0);
-                    }
-                    
-                    if (dashboardData.dailyBalance.length > 0 || dashboardData.fxPosition.length > 0) {
-                        renderDashboard();
-                        const updateTime = jsonData.lastUpdated || new Date().toLocaleString('ko-KR');
-                        document.getElementById('updateTime').textContent = '최종 업데이트: ' + updateTime;
-                    }
-                    
-                    showLoading(false);
-                    return true;
+                } catch (err) {
+                    console.log('❌ Failed to load from:', dataUrl, err.message);
                 }
-            } catch (err) {
-                console.log('data.json not found, waiting for manual upload:', err.message);
             }
+            
+            console.log('⚠️ All data.json URLs failed, waiting for manual upload');
             showLoading(false);
             return false;
         }
