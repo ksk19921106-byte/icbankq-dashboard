@@ -637,7 +637,6 @@
                     const workbook = XLSX.read(data, { type: 'array', cellDates: true });
 
                     console.log('Available sheets:', workbook.SheetNames);
-                    alert('엑셀 시트 목록: ' + workbook.SheetNames.join(', '));
 
                     // 1. 일자별잔액 시트 (KRW)
                     const krwSheetName = workbook.SheetNames.find(name => 
@@ -682,11 +681,9 @@
                             console.log('Latest KRW data:', dashboardData.dailyBalance[dashboardData.dailyBalance.length - 1]);
                         } else {
                             console.error('❌ KRW dailyBalance is EMPTY! Check row data above.');
-                            alert('순 현금 잔액 데이터를 불러올 수 없습니다. F12 콘솔을 확인해주세요.');
                         }
                     } else {
                         console.warn('KRW sheet not found!');
-                        alert('일자별잔액 시트를 찾을 수 없습니다.');
                     }
 
                     // 2. 외화포지션/외화현황 시트 (USD)
@@ -730,7 +727,6 @@
                         }
                     } else {
                         console.warn('USD sheet not found!');
-                        alert('USD 관련 시트를 찾을 수 없습니다. 시트 이름: ' + workbook.SheetNames.join(', '));
                     }
 
                     // 3. 외환차손익 시트
@@ -1321,6 +1317,62 @@
             return null;
         }
 
+        // Auto-load data.json from same folder (for SharePoint/Power Automate hosting)
+        async function autoLoadData() {
+            showLoading(true);
+            try {
+                const response = await fetch('./data.json');
+                if (response.ok) {
+                    const jsonData = await response.json();
+                    console.log('Loaded data.json:', jsonData);
+                    
+                    // dailyBalance
+                    if (jsonData.dailyBalance && jsonData.dailyBalance.length > 0) {
+                        dashboardData.dailyBalance = jsonData.dailyBalance.map(row => ({
+                            date: parseExcelDate(row.date),
+                            balance: parseFloat(row.balance) || 0
+                        })).filter(row => row.date && !isNaN(row.date.getTime()));
+                    }
+                    
+                    // fxPosition
+                    if (jsonData.fxPosition && jsonData.fxPosition.length > 0) {
+                        dashboardData.fxPosition = jsonData.fxPosition.map(row => ({
+                            date: parseExcelDate(row.date),
+                            balance: parseFloat(row.balance) || 0,
+                            avgRate: parseFloat(row.avgRate) || 0,
+                            marketRate: parseFloat(row.marketRate) || 0
+                        })).filter(row => row.date && !isNaN(row.date.getTime()) && row.balance > 0);
+                    }
+                    
+                    // payments
+                    if (jsonData.payments && jsonData.payments.length > 0) {
+                        dashboardData.payments = jsonData.payments.map(row => ({
+                            date: parseExcelDate(row.date),
+                            totalUSD: parseFloat(row.totalUSD) || 0,
+                            ourAvgRate: parseFloat(row.ourAvgRate) || 0,
+                            vendorAvgRate: parseFloat(row.vendorAvgRate) || 0,
+                            fxGainLoss: parseFloat(row.fxGainLoss) || 0,
+                            vendorCount: parseInt(row.vendorCount) || 0,
+                            vendors: row.vendors || []
+                        })).filter(p => p.date && !isNaN(p.date.getTime()) && p.totalUSD > 0);
+                    }
+                    
+                    if (dashboardData.dailyBalance.length > 0 || dashboardData.fxPosition.length > 0) {
+                        renderDashboard();
+                        const updateTime = jsonData.lastUpdated || new Date().toLocaleString('ko-KR');
+                        document.getElementById('updateTime').textContent = '최종 업데이트: ' + updateTime;
+                    }
+                    
+                    showLoading(false);
+                    return true;
+                }
+            } catch (err) {
+                console.log('data.json not found, waiting for manual upload:', err.message);
+            }
+            showLoading(false);
+            return false;
+        }
+
         function setYesterdayDate() {
             const today = new Date();
             const yesterday = new Date(today);
@@ -1332,6 +1384,7 @@
         }
 
         setYesterdayDate();
+        autoLoadData();
     </script>
 </body>
 </html>
