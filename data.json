@@ -1,1 +1,1899 @@
-{"dailyBalance":[{"@odata.etag":"","ItemInternalId":"37d1502b-78ca-40de-81c0-4bfd5a8a2aa7","날짜":"45658","잔액":"1921"},{"@odata.etag":"","ItemInternalId":"c0fa1b96-7155-4a8f-a57c-d94baa682fc2","날짜":"45659","잔액":"1510"},{"@odata.etag":"","ItemInternalId":"6c3c8037-74b8-41cf-b70f-fe9ffee53767","날짜":"45660","잔액":"1188"},{"@odata.etag":"","ItemInternalId":"6f2811f0-97ac-4fdb-b1e2-3e3a1162b1a7","날짜":"45661","잔액":"1188"},{"@odata.etag":"","ItemInternalId":"0c1172ab-b2d3-4a7f-be5b-c7503c3cdb60","날짜":"45662","잔액":"1204"},{"@odata.etag":"","ItemInternalId":"25146aea-f5fb-4b86-8b0a-20ddc8b90ed1","날짜":"45663","잔액":"1355"},{"@odata.etag":"","ItemInternalId":"b9b6fade-fcac-4ebd-a927-5ad2c00f0371","날짜":"45664","잔액":"1131"},{"@odata.etag":"","ItemInternalId":"78c386b8-71bb-4a6a-9cc6-c9c0e0b3e1ae","날짜":"45665","잔액":"1202"},{"@odata.etag":"","ItemInternalId":"cf934129-522c-41af-a3ac-2b55e4da4a1f","날짜":"45666","잔액":"1242"},{"@odata.etag":"","ItemInternalId":"17a44ff0-2d1c-44da-ac97-3661f81a3bdd","날짜":"45667","잔액":"1222"},{"@odata.etag":"","ItemInternalId":"5fdb1d78-7637-438a-98f4-479ca2bb6e64","날짜":"45670","잔액":"1286"},{"@odata.etag":"","ItemInternalId":"99ed231b-3074-4bc9-abff-b3f66b725860","날짜":"45671","잔액":"870"},{"@odata.etag":"","ItemInternalId":"a270eedc-e8dd-4ea4-8d8c-46c239db61ce","날짜":"45672","잔액":"159"},{"@odata.etag":"","ItemInternalId":"1eb6bb39-8dc4-4b22-825c-f755e7a729ab","날짜":"45673","잔액":"233"},{"@odata.etag":"","ItemInternalId":"de0aa93d-9bda-4720-8a8a-ddf7fe0909c7","날짜":"45674","잔액":"280"},{"@odata.etag":"","ItemInternalId":"64230797-8d48-4ec8-9baa-1dd4b6de2407","날짜":"45675","잔액":"282"},{"@odata.etag":"","ItemInternalId":"e91bf3cc-cd2f-461f-992a-69617b0c225e","날짜":"45676","잔액":"281"},{"@odata.etag":"","ItemInternalId":"e29209b2-2f86-437b-880f-90a301dcb2fc","날짜":"45677","잔액":"57"},{"@odata.etag":"","ItemInternalId":"52eab737-717a-4886-b8c2-7043e593837d","날짜":"45678","잔액":"115"},{"@odata.etag":"","ItemInternalId":"5505490c-4a7f-49ff-931a-757670906594","날짜":"45679","잔액":"260"},{"@odata.etag":"","ItemInternalId":"e0fd7b51-9c38-4226-9200-562bf102b742","날짜":"45680","잔액":"224"},{"@odata.etag":"","ItemInternalId":"3559e4bc-35fb-42e0-83a9-53561a0cbf64","날짜":"45681","잔액":"423"},{"@odata.etag":"","ItemInternalId":"b515cb58-13bc-407a-ac18-99ac263bcddc","날짜":"45682","잔액":"427"},{"@odata.etag":"","ItemInternalId":"258facde-0373-47e5-9fe4-96f75838d3b0","날짜":"45683","잔액":"427"},{"@odata.etag":"","ItemInternalId":"79102b0d-a8a0-4d09-aac6-888d416916ef","날짜":"45684","잔액":"440"},{"@odata.etag":"","ItemInternalId":"95b583b8-2af0-4c36-913e-f97fd119adf7","날짜":"45685","잔액":"507"},{"@odata.etag":"","ItemInternalId":"3e53b642-f4ba-428d-80ad-1326c2882b43","날짜":"45687","잔액":"509"},{"@odata.etag":"","ItemInternalId":"38caaff3-2f77-43eb-b109-821e9ce86c11","날짜":"45688","잔액":"96"},{"@odata.etag":"","ItemInternalId":"c5389d81-e407-4403-940f-cac9add1cefe","날짜":"45689","잔액":"99"},{"@odata.etag":"","ItemInternalId":"02b70b04-3da6-4cfb-85a3-4a827b1d02df","날짜":"45690","잔액":"108"},{"@odata.etag":"","ItemInternalId":"a12081cd-923e-485d-8672-1e5d1713aaf3","날짜":"45691","잔액":"249"},{"@odata.etag":"","ItemInternalId":"60813063-36b8-4796-ac6d-6fa202f053bb","날짜":"45692","잔액":"294"},{"@odata.etag":"","ItemInternalId":"caa65a47-8ded-4569-85e0-49d3573b72f7","날짜":"45693","잔액":"348"},{"@odata.etag":"","ItemInternalId":"3104bb16-a79d-4820-b9ce-c8a281f916fc","날짜":"45694","잔액":"250"},{"@odata.etag":"","ItemInternalId":"9f28ffe5-d682-4d6b-85b0-d088a12f32db","날짜":"45695","잔액":"363"},{"@odata.etag":"","ItemInternalId":"027e73c8-21bc-46eb-af45-b72b26e0a6d9","날짜":"45696","잔액":"365"},{"@odata.etag":"","ItemInternalId":"91edd446-ac5d-4f17-8e76-5b24910d6b4e","날짜":"45697","잔액":"367"},{"@odata.etag":"","ItemInternalId":"0c48a3f7-e53a-4a4a-8456-c069631c1ec1","날짜":"45698","잔액":"313"},{"@odata.etag":"","ItemInternalId":"ad580007-f0c3-41d8-bcd6-127c2f391b58","날짜":"45699","잔액":"420"},{"@odata.etag":"","ItemInternalId":"7ea21384-05a2-4ffc-bf0a-225004766bee","날짜":"45700","잔액":"265"},{"@odata.etag":"","ItemInternalId":"2ea27339-33bf-4f4d-83c2-58b99415831d","날짜":"45701","잔액":"-11"},{"@odata.etag":"","ItemInternalId":"533cd267-8935-4fe5-86f5-c50675b131e1","날짜":"45702","잔액":"-386"},{"@odata.etag":"","ItemInternalId":"f1c00dfe-8cd1-4310-9978-8def8b07500b","날짜":"45703","잔액":"-386"},{"@odata.etag":"","ItemInternalId":"7fd42e3f-6ba8-4204-b073-e793f8b2e0a4","날짜":"45704","잔액":"-388"},{"@odata.etag":"","ItemInternalId":"5c45965a-58a6-44d9-9bd9-6a8969f46d7c","날짜":"45705","잔액":"-304"},{"@odata.etag":"","ItemInternalId":"c4e9f81f-7a80-4831-b769-68476d6e42f7","날짜":"45706","잔액":"-223"},{"@odata.etag":"","ItemInternalId":"7023bd72-bb32-4bae-8112-ee96275632f2","날짜":"45707","잔액":"-177"},{"@odata.etag":"","ItemInternalId":"2450c228-f47d-4683-beb2-5b94a4cbd93b","날짜":"45708","잔액":"-82"},{"@odata.etag":"","ItemInternalId":"2886c121-c4e2-4a6f-9c83-5616d3b50157","날짜":"45709","잔액":"-304"},{"@odata.etag":"","ItemInternalId":"1796ecae-9ff3-42a3-b8d0-c05557cc7d89","날짜":"45712","잔액":"-280"},{"@odata.etag":"","ItemInternalId":"2c854669-7870-47cf-884b-62392c68919f","날짜":"45713","잔액":"-201"},{"@odata.etag":"","ItemInternalId":"995a37ed-ec23-48b4-97f9-a93ee26d54cc","날짜":"45714","잔액":"-323"},{"@odata.etag":"","ItemInternalId":"1913f52c-31ba-4f2a-a591-6ce0601ff17a","날짜":"45715","잔액":"-359"},{"@odata.etag":"","ItemInternalId":"4fdcac9e-ef6c-49be-82d6-e0a474f9091f","날짜":"45716","잔액":"252"},{"@odata.etag":"","ItemInternalId":"1c9ed60a-40a3-400a-8344-fa2421ab0738","날짜":"45717","잔액":"253"},{"@odata.etag":"","ItemInternalId":"5176547d-fda3-487b-8ac1-3dfa5bbfac6b","날짜":"45718","잔액":"254"},{"@odata.etag":"","ItemInternalId":"6ef175e7-390e-463d-9911-941126a088d8","날짜":"45719","잔액":"282"},{"@odata.etag":"","ItemInternalId":"39ccf030-4cb0-4b80-8ca3-40df9a7273cd","날짜":"45720","잔액":"496"},{"@odata.etag":"","ItemInternalId":"21f44fbc-ea78-4677-8949-964f1020bb53","날짜":"45721","잔액":"603"},{"@odata.etag":"","ItemInternalId":"de910858-a6b9-4c66-a2ac-1c230d6a9744","날짜":"45722","잔액":"648"},{"@odata.etag":"","ItemInternalId":"d7b216f3-b718-44e4-afb2-da6908c0e3dd","날짜":"45723","잔액":"586"},{"@odata.etag":"","ItemInternalId":"b24bb616-6367-40ca-81fc-949e64981cb8","날짜":"45724","잔액":"586"},{"@odata.etag":"","ItemInternalId":"d5f36f36-e3ad-4ab5-968f-8c72bd2ea827","날짜":"45725","잔액":"588"},{"@odata.etag":"","ItemInternalId":"7846c86a-3116-4d7a-944f-5b44e88416f1","날짜":"45726","잔액":"592"},{"@odata.etag":"","ItemInternalId":"3071cf20-69cc-4a61-8e62-a885078c527c","날짜":"45727","잔액":"660"},{"@odata.etag":"","ItemInternalId":"4b002f81-522d-4fef-8403-866fa11646c7","날짜":"45728","잔액":"718"},{"@odata.etag":"","ItemInternalId":"e34be234-6371-438b-84c6-c76f2392992f","날짜":"45729","잔액":"754"},{"@odata.etag":"","ItemInternalId":"a4f30ad1-7e0a-4a5c-aa61-9d2cbda9c828","날짜":"45730","잔액":"31"},{"@odata.etag":"","ItemInternalId":"fc1d6b73-af60-4e42-9285-78efd33f270a","날짜":"45731","잔액":"31"},{"@odata.etag":"","ItemInternalId":"dfa32d4e-f988-4f5a-84ed-04f1770896e6","날짜":"45732","잔액":"29"},{"@odata.etag":"","ItemInternalId":"e9c9d9ed-b313-40f2-8243-7574bcc1214d","날짜":"45733","잔액":"-28"},{"@odata.etag":"","ItemInternalId":"504c61c7-29cb-40f8-8a49-d10c3685ff3c","날짜":"45734","잔액":"18"},{"@odata.etag":"","ItemInternalId":"30391f01-981f-45ab-821f-bc3af77d1be7","날짜":"45735","잔액":"74"},{"@odata.etag":"","ItemInternalId":"2e1804e0-cd53-4953-a876-c48939d387a8","날짜":"45736","잔액":"163"},{"@odata.etag":"","ItemInternalId":"8ed2b248-0f5b-4caf-b4fa-be90eb71e4ca","날짜":"45737","잔액":"-8"},{"@odata.etag":"","ItemInternalId":"e591a984-adbc-454f-a060-2a42abe8c368","날짜":"45738","잔액":"-8"},{"@odata.etag":"","ItemInternalId":"63aadfa3-3e16-4efb-b213-3cd1261a1c34","날짜":"45739","잔액":"-8"},{"@odata.etag":"","ItemInternalId":"da243c2f-177e-4c67-a067-b05173d56b66","날짜":"45740","잔액":"-34"},{"@odata.etag":"","ItemInternalId":"b77b3778-8083-43b9-bd69-fda8c925f4ea","날짜":"45741","잔액":"124"},{"@odata.etag":"","ItemInternalId":"6aea7421-b6a2-498f-abfe-b46d988ab3f5","날짜":"45742","잔액":"168"},{"@odata.etag":"","ItemInternalId":"5324db9c-db0f-4ad6-9554-88452a68ade3","날짜":"45743","잔액":"-16"},{"@odata.etag":"","ItemInternalId":"a38d35ce-d8c9-486b-bbf0-73becc195650","날짜":"45744","잔액":"-684"},{"@odata.etag":"","ItemInternalId":"9fb7fdd1-2594-4b4e-9df4-c88ae9e68b3c","날짜":"45745","잔액":"-675"},{"@odata.etag":"","ItemInternalId":"08dfe340-e197-47d2-b0b9-778faa89e381","날짜":"45746","잔액":"-670"},{"@odata.etag":"","ItemInternalId":"c0b2dfb8-ff47-4056-947d-c3f92b8b2d11","날짜":"45747","잔액":"659"},{"@odata.etag":"","ItemInternalId":"ffac7265-0bbd-4126-8132-d260da4c0993","날짜":"45748","잔액":"866"},{"@odata.etag":"","ItemInternalId":"46823feb-8655-4778-bf44-5c6b2bb06484","날짜":"45749","잔액":"945"},{"@odata.etag":"","ItemInternalId":"3dab15f9-a395-48c7-8fb5-f90849f4f7a1","날짜":"45750","잔액":"895"},{"@odata.etag":"","ItemInternalId":"539f5d6d-9240-4961-8618-35d843b128b8","날짜":"45751","잔액":"752"},{"@odata.etag":"","ItemInternalId":"48253cff-b8b7-4092-b9bd-adc6f5942f68","날짜":"45752","잔액":"755"},{"@odata.etag":"","ItemInternalId":"3d45af5e-9765-411e-aa6a-089ffe8b2a19","날짜":"45753","잔액":"756"},{"@odata.etag":"","ItemInternalId":"4efa6e13-d658-423e-825f-725c5fa99ece","날짜":"45754","잔액":"877"},{"@odata.etag":"","ItemInternalId":"b56d3fca-c65b-4110-9a31-7243d5d6a4c9","날짜":"45755","잔액":"939"},{"@odata.etag":"","ItemInternalId":"6ea2e0e5-5ef0-435b-8cff-ac12a64c4a9a","날짜":"45756","잔액":"1015"},{"@odata.etag":"","ItemInternalId":"63677dff-06d9-45f4-af37-becb3ccc28d9","날짜":"45757","잔액":"989"},{"@odata.etag":"","ItemInternalId":"7cced398-c1da-48a4-9b13-af75792558db","날짜":"45758","잔액":"875"},{"@odata.etag":"","ItemInternalId":"cb0d103b-e173-457b-86e9-e2827e36148c","날짜":"45761","잔액":"345"},{"@odata.etag":"","ItemInternalId":"efd29c1c-d59d-4db8-be32-5b01265d9869","날짜":"45762","잔액":"289"},{"@odata.etag":"","ItemInternalId":"a6c829fa-06fc-479c-9d9f-2eac64db081c","날짜":"45763","잔액":"352"},{"@odata.etag":"","ItemInternalId":"46f0e9a4-6e33-43c7-b755-e8e5054ad040","날짜":"45764","잔액":"452"},{"@odata.etag":"","ItemInternalId":"ca572547-32be-433b-b864-09c360588762","날짜":"45765","잔액":"367"},{"@odata.etag":"","ItemInternalId":"6a428e55-77ee-457f-a1ad-c92c427d71ef","날짜":"45767","잔액":"364"},{"@odata.etag":"","ItemInternalId":"99df3fd0-ae96-4668-96bf-2d76e206cd13","날짜":"45768","잔액":"449"},{"@odata.etag":"","ItemInternalId":"c27f9263-1885-4c3a-8288-87bf6016c0ce","날짜":"45769","잔액":"508"},{"@odata.etag":"","ItemInternalId":"1a382748-74ff-4159-af1a-83a320e5cc7b","날짜":"45770","잔액":"474"},{"@odata.etag":"","ItemInternalId":"7bf3fa2b-d629-4ea4-a132-baeea7e26c20","날짜":"45771","잔액":"550"},{"@odata.etag":"","ItemInternalId":"e4419531-2cd0-4fe1-8b5d-a4af2750f0b1","날짜":"45772","잔액":"-247"},{"@odata.etag":"","ItemInternalId":"56579bc6-73f5-4d83-a6ac-a4ac60c80120","날짜":"45774","잔액":"-247"},{"@odata.etag":"","ItemInternalId":"d333a522-f554-4e3d-8dc8-ab36d0f7d1d1","날짜":"45775","잔액":"-164"},{"@odata.etag":"","ItemInternalId":"9f5aef74-3de7-4c55-94d7-8b388d911aca","날짜":"45776","잔액":"137"},{"@odata.etag":"","ItemInternalId":"d6f16581-3271-4220-8643-a4609a7b7db0","날짜":"45777","잔액":"412"},{"@odata.etag":"","ItemInternalId":"be8c5d3f-1269-406c-aed1-02c2c12de376","날짜":"45778","잔액":"418"},{"@odata.etag":"","ItemInternalId":"cc902b36-cdc4-44e6-ae1e-65cbf2ef906b","날짜":"45779","잔액":"447"},{"@odata.etag":"","ItemInternalId":"502a2208-ee1b-458a-94f9-d74c28850cb8","날짜":"45780","잔액":"455"},{"@odata.etag":"","ItemInternalId":"0ed07901-5539-4d35-b87f-67173ed63bb5","날짜":"45781","잔액":"455"},{"@odata.etag":"","ItemInternalId":"cd56be53-e4b3-4e65-98eb-e4aad2eb2a0b","날짜":"45782","잔액":"461"},{"@odata.etag":"","ItemInternalId":"a67d8e30-ac39-4bda-ac1c-8327ad0b94f6","날짜":"45783","잔액":"477"},{"@odata.etag":"","ItemInternalId":"29c10a67-1f95-46fc-8519-ef8e5b743e7c","날짜":"45784","잔액":"525"},{"@odata.etag":"","ItemInternalId":"f7e740cd-1dbb-4b4d-b9e8-c1d5dde42461","날짜":"45785","잔액":"627"},{"@odata.etag":"","ItemInternalId":"c022cc2f-14df-4160-9cbf-4d4af80fff50","날짜":"45786","잔액":"420"},{"@odata.etag":"","ItemInternalId":"aec35906-6d88-4ccc-84d9-69ccec0f46c0","날짜":"45787","잔액":"420"},{"@odata.etag":"","ItemInternalId":"1be6a8b4-d5ad-4b2b-badb-5bc251fd6f47","날짜":"45788","잔액":"421"},{"@odata.etag":"","ItemInternalId":"aaec675a-edb3-4839-ae40-500178bb82f4","날짜":"45789","잔액":"445"},{"@odata.etag":"","ItemInternalId":"812a515e-644e-4d7e-95da-47507f95e82d","날짜":"45790","잔액":"554"},{"@odata.etag":"","ItemInternalId":"ca72025b-17f3-419d-b4c0-d7b2bbc48455","날짜":"45791","잔액":"525"},{"@odata.etag":"","ItemInternalId":"7d59d1a3-0166-48a5-9a78-66fb8c77e888","날짜":"45792","잔액":"-423"},{"@odata.etag":"","ItemInternalId":"94f63437-4aca-4c0f-9643-29bea918fb77","날짜":"45793","잔액":"-493"},{"@odata.etag":"","ItemInternalId":"3791233e-8a5e-42d0-947c-899d54b5b297","날짜":"45794","잔액":"-493"},{"@odata.etag":"","ItemInternalId":"35957006-5cb8-4593-9934-3337604af6e4","날짜":"45795","잔액":"-493"},{"@odata.etag":"","ItemInternalId":"3e0e8652-f8ad-4349-b13d-64300879ce90","날짜":"45796","잔액":"-476"},{"@odata.etag":"","ItemInternalId":"5c24333b-b73d-494a-afe7-d6b94e87e614","날짜":"45797","잔액":"-387"},{"@odata.etag":"","ItemInternalId":"faba5a62-3936-4e64-a7d9-fbc6ce039473","날짜":"45798","잔액":"-339"},{"@odata.etag":"","ItemInternalId":"45e85f8b-278e-41de-be18-910f9ed78a41","날짜":"45799","잔액":"-307"},{"@odata.etag":"","ItemInternalId":"dac61edc-043b-4c1b-91d7-c26d846eba69","날짜":"45800","잔액":"-246"},{"@odata.etag":"","ItemInternalId":"f04ae243-01f0-48c0-9411-f755cd730b53","날짜":"45801","잔액":"-246"},{"@odata.etag":"","ItemInternalId":"07cfc7b0-2644-4245-b034-d9d142f3910d","날짜":"45803","잔액":"-171"},{"@odata.etag":"","ItemInternalId":"169169e6-9377-4ad3-9b7e-2b60bcc00bb7","날짜":"45804","잔액":"-309"},{"@odata.etag":"","ItemInternalId":"eef244fd-e42a-41c2-9da4-d8fd098266c5","날짜":"45805","잔액":"-366"},{"@odata.etag":"","ItemInternalId":"73b662f3-e603-4e62-9d48-13cea26e635e","날짜":"45806","잔액":"-118"},{"@odata.etag":"","ItemInternalId":"eab0a014-0a5c-4f50-9b6f-319beaea5b22","날짜":"45807","잔액":"100"},{"@odata.etag":"","ItemInternalId":"079dcfd5-8505-4830-918e-dcfd6ee7a464","날짜":"45808","잔액":"119"},{"@odata.etag":"","ItemInternalId":"1983e34d-58da-4586-9d93-bae36dced3fe","날짜":"45809","잔액":"124"},{"@odata.etag":"","ItemInternalId":"004063b8-0159-4fbe-bbc7-954c1b6e9cd8","날짜":"45810","잔액":"302"},{"@odata.etag":"","ItemInternalId":"18231eae-6379-4a25-9b60-7c2022293cd6","날짜":"45811","잔액":"308"},{"@odata.etag":"","ItemInternalId":"3ea4da2b-3c47-4ea3-98d9-739a641368c9","날짜":"45812","잔액":"360"},{"@odata.etag":"","ItemInternalId":"d095fe6c-01dd-4d69-b31b-29946c9f9c98","날짜":"45813","잔액":"89"},{"@odata.etag":"","ItemInternalId":"c7592700-897d-40d0-b0df-3cfa0383ad26","날짜":"45815","잔액":"89"},{"@odata.etag":"","ItemInternalId":"477c41a8-c942-4a6b-b96c-71a805f6dc44","날짜":"45816","잔액":"91"},{"@odata.etag":"","ItemInternalId":"248bede2-dca1-4bb5-ad1e-78e5cd2bc296","날짜":"45817","잔액":"185"},{"@odata.etag":"","ItemInternalId":"e295b346-4855-45fa-bd4c-63d4b4b61214","날짜":"45818","잔액":"187"},{"@odata.etag":"","ItemInternalId":"e46b1433-cfa7-4542-ad5f-fef6bddc87a3","날짜":"45819","잔액":"218"},{"@odata.etag":"","ItemInternalId":"36e5d621-f656-456b-8ee6-0c3f53831613","날짜":"45820","잔액":"46"},{"@odata.etag":"","ItemInternalId":"ccc3a3de-428a-4b52-bf31-8dd373e1a6c7","날짜":"45821","잔액":"123"},{"@odata.etag":"","ItemInternalId":"58882aed-1951-4de1-82c6-19d6c1205537","날짜":"45822","잔액":"123"},{"@odata.etag":"","ItemInternalId":"e95d4371-f083-4bb8-8001-8c68cfbe56b5","날짜":"45823","잔액":"123"},{"@odata.etag":"","ItemInternalId":"e46c3180-0dcb-4059-a85f-568752c41902","날짜":"45824","잔액":"-382"},{"@odata.etag":"","ItemInternalId":"49d4d23b-dec5-4aad-af0d-ca55e2f84987","날짜":"45825","잔액":"-263"},{"@odata.etag":"","ItemInternalId":"193b8566-026a-4e48-b99e-d5c4005c55f6","날짜":"45826","잔액":"-214"},{"@odata.etag":"","ItemInternalId":"375c25be-3ada-4d53-a52f-365def1685dd","날짜":"45827","잔액":"-286"},{"@odata.etag":"","ItemInternalId":"ce75010e-7c70-43f7-ac13-ccf6910ccf3f","날짜":"45828","잔액":"-193"},{"@odata.etag":"","ItemInternalId":"1d483bde-299f-4abd-916e-ab977711faf9","날짜":"45829","잔액":"-193"},{"@odata.etag":"","ItemInternalId":"91b0a392-dae1-4c4a-8536-2b1403aa9a7b","날짜":"45830","잔액":"-193"},{"@odata.etag":"","ItemInternalId":"d90d5598-713f-4113-b384-9e824cd676f8","날짜":"45831","잔액":"-153"},{"@odata.etag":"","ItemInternalId":"0721ac45-acc9-464a-a4d3-cd9c44f50afc","날짜":"45832","잔액":"25"},{"@odata.etag":"","ItemInternalId":"f297443f-5e74-4609-a97d-53348eab6323","날짜":"45833","잔액":"127"},{"@odata.etag":"","ItemInternalId":"a70eb89f-1885-47ce-8466-61a8383f93de","날짜":"45834","잔액":"8"},{"@odata.etag":"","ItemInternalId":"e5e0c1db-4484-473d-932c-d567dc797954","날짜":"45835","잔액":"-107"},{"@odata.etag":"","ItemInternalId":"5f5c385b-7be2-44ad-a57d-a3fb5bfb256b","날짜":"45836","잔액":"-106"},{"@odata.etag":"","ItemInternalId":"3d7dfee3-9ac1-418f-b55b-263da581347e","날짜":"45837","잔액":"-106"},{"@odata.etag":"","ItemInternalId":"5629ab5a-b074-429e-b1d5-4280ae700555","날짜":"45838","잔액":"62"},{"@odata.etag":"","ItemInternalId":"1278db0a-b656-490a-99d3-5cded905b364","날짜":"45839","잔액":"313"},{"@odata.etag":"","ItemInternalId":"d3fa13b2-dcf7-4dd9-8082-45a745416785","날짜":"45840","잔액":"406"},{"@odata.etag":"","ItemInternalId":"a75a4e4a-544f-47ed-99e6-d3e8926bc158","날짜":"45841","잔액":"571"},{"@odata.etag":"","ItemInternalId":"1f8f7211-03aa-47ef-90d6-b171b0554e9c","날짜":"45842","잔액":"478"},{"@odata.etag":"","ItemInternalId":"13868e1b-1f45-40bc-84ca-4b564d655965","날짜":"45843","잔액":"479"},{"@odata.etag":"","ItemInternalId":"f9c0e678-94a3-4fe1-a2a7-eeab4b56554d","날짜":"45845","잔액":"519"},{"@odata.etag":"","ItemInternalId":"836783a2-e6a2-45c1-b967-dd292f36eb0b","날짜":"45846","잔액":"317"},{"@odata.etag":"","ItemInternalId":"ca092cef-2f6c-40a6-aa83-eb2e34d318a3","날짜":"45847","잔액":"405"},{"@odata.etag":"","ItemInternalId":"05fda0a8-3a99-49ae-9415-3549579ecc89","날짜":"45848","잔액":"359"},{"@odata.etag":"","ItemInternalId":"8467dedb-08c7-4732-b0b3-5ecb1af9e986","날짜":"45849","잔액":"436"},{"@odata.etag":"","ItemInternalId":"ec362e9a-6891-4680-9811-39a1530b4488","날짜":"45850","잔액":"446"},{"@odata.etag":"","ItemInternalId":"b82bb4b2-034e-4365-9b59-83f5d74dbf38","날짜":"45851","잔액":"447"},{"@odata.etag":"","ItemInternalId":"aeee7b3d-5de4-45c7-9c10-d4e0dafc50ff","날짜":"45852","잔액":"516"},{"@odata.etag":"","ItemInternalId":"90f02db0-049d-4047-adb7-44579564dd5c","날짜":"45853","잔액":"141"},{"@odata.etag":"","ItemInternalId":"b16b3f18-cb17-4b57-81b8-c1c6a1845f4a","날짜":"45854","잔액":"200"},{"@odata.etag":"","ItemInternalId":"3ca37997-4d8d-4732-9688-4988d6ad0c41","날짜":"45855","잔액":"291"},{"@odata.etag":"","ItemInternalId":"daaa854e-65ab-4e7a-9d57-7c5915d595e6","날짜":"45856","잔액":"166"},{"@odata.etag":"","ItemInternalId":"53a1f9fc-f50e-405e-b27e-e4c8d003fe06","날짜":"45857","잔액":"166"},{"@odata.etag":"","ItemInternalId":"51fb57da-8d16-4a6d-bdd5-de58019f21de","날짜":"45858","잔액":"165"},{"@odata.etag":"","ItemInternalId":"d16f4dc1-78fb-4a4a-a417-1960d4879f3b","날짜":"45859","잔액":"277"},{"@odata.etag":"","ItemInternalId":"ec10c6d1-83d9-4ddd-8001-6b68380de170","날짜":"45860","잔액":"60"},{"@odata.etag":"","ItemInternalId":"a20605fe-0b28-44ec-8f56-bc58c2e4023b","날짜":"45861","잔액":"-94"},{"@odata.etag":"","ItemInternalId":"8cf3ff9f-41b5-4d37-99e2-cbe7b39a98a5","날짜":"45862","잔액":"-23"},{"@odata.etag":"","ItemInternalId":"8edc7c35-0e45-4f13-8aa3-415770626519","날짜":"45863","잔액":"-443"},{"@odata.etag":"","ItemInternalId":"f2b0c315-b8c5-4bfe-ad98-4cfc5d60df12","날짜":"45865","잔액":"-440"},{"@odata.etag":"","ItemInternalId":"d2dc86be-1a13-494d-8d5f-e6e0095bdb3b","날짜":"45866","잔액":"-355"},{"@odata.etag":"","ItemInternalId":"1e58f50d-6dd7-4570-9c20-b868df63ec8f","날짜":"45867","잔액":"-210"},{"@odata.etag":"","ItemInternalId":"502fdd19-de2b-4d98-bc43-f86e142e10f9","날짜":"45868","잔액":"62"},{"@odata.etag":"","ItemInternalId":"b877e17d-2dd3-4d8c-ac78-2b6317a5df72","날짜":"45869","잔액":"141"},{"@odata.etag":"","ItemInternalId":"0dd220eb-c3b8-43c4-9036-037c45b63fa4","날짜":"45870","잔액":"224"},{"@odata.etag":"","ItemInternalId":"00b0183b-f86b-4a4d-9248-c41ddaffaf26","날짜":"45871","잔액":"226"},{"@odata.etag":"","ItemInternalId":"a115854e-d830-44cf-841c-1a6466a55322","날짜":"45872","잔액":"227"},{"@odata.etag":"","ItemInternalId":"e4dd4d9c-fd4a-4543-8572-86e20ee5082a","날짜":"45873","잔액":"119"},{"@odata.etag":"","ItemInternalId":"cddf8d43-2ead-4382-a2ec-863a7ca20fe1","날짜":"45874","잔액":"198"},{"@odata.etag":"","ItemInternalId":"68a7f97f-9c27-49c4-8e75-3545d0e1cadd","날짜":"45875","잔액":"331"},{"@odata.etag":"","ItemInternalId":"295ad7b9-4a65-4fb1-91b8-5c0021f1f929","날짜":"45876","잔액":"461"},{"@odata.etag":"","ItemInternalId":"eedb1220-10d7-499e-9783-07deefab623a","날짜":"45877","잔액":"427"},{"@odata.etag":"","ItemInternalId":"b811a5bb-e649-415e-a155-5affecbd437f","날짜":"45879","잔액":"427"},{"@odata.etag":"","ItemInternalId":"b9dc2730-8706-4a4d-9a47-fa9b93fc7778","날짜":"45880","잔액":"446"},{"@odata.etag":"","ItemInternalId":"811f4bd0-7313-483f-9b04-ba54781345ff","날짜":"45881","잔액":"529"},{"@odata.etag":"","ItemInternalId":"3955fd19-1246-4f12-99e7-9e89a3997ffe","날짜":"45882","잔액":"-162"},{"@odata.etag":"","ItemInternalId":"b6071aa4-4316-46d0-be6b-5660be6bd833","날짜":"45883","잔액":"-133"},{"@odata.etag":"","ItemInternalId":"761c81a2-3d24-45b2-82e2-45141789b1f2","날짜":"45884","잔액":"-133"},{"@odata.etag":"","ItemInternalId":"a6973272-37bc-4dd0-b15d-8c9d581cdd49","날짜":"45885","잔액":"-132"},{"@odata.etag":"","ItemInternalId":"745f768f-708f-496e-9a5f-8c611e947409","날짜":"45886","잔액":"-120"},{"@odata.etag":"","ItemInternalId":"ef0eab32-aeba-4aab-a978-6cbb19bfaeba","날짜":"45887","잔액":"29"},{"@odata.etag":"","ItemInternalId":"4dd10f08-eed0-4651-9743-82fac2a3451c","날짜":"45888","잔액":"-369"},{"@odata.etag":"","ItemInternalId":"937dae64-0073-4180-96de-63a3f7dcdb97","날짜":"45889","잔액":"-458"},{"@odata.etag":"","ItemInternalId":"ca9e9eae-4402-4d69-ab96-a9f736b24a83","날짜":"45890","잔액":"-420"},{"@odata.etag":"","ItemInternalId":"daddf58d-2580-4adc-9213-e10ea0d413d0","날짜":"45891","잔액":"-299"},{"@odata.etag":"","ItemInternalId":"727f0d62-774e-4095-a16d-5263cbffd056","날짜":"45892","잔액":"-299"},{"@odata.etag":"","ItemInternalId":"eab3c892-0c4e-455d-943f-3a4c5f9d5c06","날짜":"45894","잔액":"-298"},{"@odata.etag":"","ItemInternalId":"3426e107-9195-43f3-a60c-dafdf4e858ad","날짜":"45895","잔액":"-264"},{"@odata.etag":"","ItemInternalId":"f462b2a7-b7b8-4927-a07c-57855b697fb4","날짜":"45896","잔액":"-425"},{"@odata.etag":"","ItemInternalId":"79cae7b7-3da8-477d-9f7c-934f6daac478","날짜":"45897","잔액":"-221"},{"@odata.etag":"","ItemInternalId":"f76a79dd-5553-4bba-a5cd-c96c10ce4b9a","날짜":"45898","잔액":"155"},{"@odata.etag":"","ItemInternalId":"7430cde7-1fe6-4c3f-9610-19172b0cb45b","날짜":"45899","잔액":"169"},{"@odata.etag":"","ItemInternalId":"90645082-106d-4f69-81b2-9637a9806551","날짜":"45900","잔액":"182"},{"@odata.etag":"","ItemInternalId":"644ddd3a-7661-43b3-87a2-be032946334c","날짜":"45901","잔액":"389"},{"@odata.etag":"","ItemInternalId":"17b9cda4-0394-4a88-ac3c-4a6d2209f50c","날짜":"45902","잔액":"433"},{"@odata.etag":"","ItemInternalId":"a29cf19e-fe81-44ec-969f-2de021841fea","날짜":"45903","잔액":"478"},{"@odata.etag":"","ItemInternalId":"4ba8a0a9-9766-42b8-942d-671ec7ce0ac9","날짜":"45904","잔액":"446"},{"@odata.etag":"","ItemInternalId":"4d91055e-3901-465b-b8d9-41b694735a49","날짜":"45905","잔액":"587"},{"@odata.etag":"","ItemInternalId":"6defc639-9e30-4486-8110-d0226671b9ec","날짜":"45906","잔액":"588"},{"@odata.etag":"","ItemInternalId":"e9a1bf6b-1ee1-457f-9966-ac8440306498","날짜":"45907","잔액":"593"},{"@odata.etag":"","ItemInternalId":"605f7275-7be4-46b4-bb7c-1feffc65c74d","날짜":"45908","잔액":"667"},{"@odata.etag":"","ItemInternalId":"fb1e501c-8f54-422c-8dda-6d5da2adb576","날짜":"45909","잔액":"735"},{"@odata.etag":"","ItemInternalId":"8dabf57f-7ae3-4211-8cd5-91720bf66974","날짜":"45910","잔액":"420"},{"@odata.etag":"","ItemInternalId":"b37aacbe-885c-4c2e-abe0-3703dfde17d7","날짜":"45911","잔액":"536"},{"@odata.etag":"","ItemInternalId":"dccbc341-aa40-4b99-b387-651c8dbe9b7f","날짜":"45912","잔액":"589"},{"@odata.etag":"","ItemInternalId":"b9ba4ad4-8465-4cd9-9497-293852164d44","날짜":"45915","잔액":"201"},{"@odata.etag":"","ItemInternalId":"3cbe4cd8-9b66-4062-b974-b2ab295455bb","날짜":"45916","잔액":"283"},{"@odata.etag":"","ItemInternalId":"3640ae95-201d-4cf5-92e1-cfef83056ada","날짜":"45917","잔액":"354"},{"@odata.etag":"","ItemInternalId":"139f1a8f-e58c-4649-a0db-6ff51f14ae04","날짜":"45918","잔액":"174"},{"@odata.etag":"","ItemInternalId":"6af00fd6-ae18-4271-bfd0-f246dd808f91","날짜":"45919","잔액":"337"},{"@odata.etag":"","ItemInternalId":"3313afbd-595a-45e8-937f-7143a58ed4c7","날짜":"45920","잔액":"339"},{"@odata.etag":"","ItemInternalId":"8eb6ad8d-d580-4ffc-86d9-3ae6cd9e5a58","날짜":"45921","잔액":"339"},{"@odata.etag":"","ItemInternalId":"0f422b74-97db-4a83-ac8c-963bb2c63428","날짜":"45922","잔액":"393"},{"@odata.etag":"","ItemInternalId":"d3fb7422-781f-474e-9650-18d21f9043b6","날짜":"45923","잔액":"464"},{"@odata.etag":"","ItemInternalId":"7e623fff-6aa1-41cb-8036-6273218b48e9","날짜":"45924","잔액":"513"},{"@odata.etag":"","ItemInternalId":"44c3ef60-0d88-41f0-beca-58078ad26772","날짜":"45925","잔액":"652"},{"@odata.etag":"","ItemInternalId":"19622101-21e2-46e4-a625-1cf6e7190f23","날짜":"45926","잔액":"521"},{"@odata.etag":"","ItemInternalId":"53a5f6fc-7790-4c8b-b494-eff74f55e405","날짜":"45927","잔액":"523"},{"@odata.etag":"","ItemInternalId":"98f219b4-3929-4477-be5b-32619b32e5f8","날짜":"45928","잔액":"523"},{"@odata.etag":"","ItemInternalId":"535378f7-f1bb-4f7b-9d2c-fbb03a44a849","날짜":"45929","잔액":"646"},{"@odata.etag":"","ItemInternalId":"29679919-3517-470d-894c-927a3d781f1e","날짜":"45930","잔액":"920"},{"@odata.etag":"","ItemInternalId":"637d01d0-ac8e-47d2-86fc-91161421fd3e","날짜":"45931","잔액":"1051"},{"@odata.etag":"","ItemInternalId":"502bd050-7be3-479e-9fed-e8361b4aa84d","날짜":"45932","잔액":"1117"},{"@odata.etag":"","ItemInternalId":"c4833baa-d45f-4195-997a-4e7dc86c6864","날짜":"45934","잔액":"1118"},{"@odata.etag":"","ItemInternalId":"707c8bae-ad6f-4da2-adf1-bf20d2198d00","날짜":"45935","잔액":"1118"},{"@odata.etag":"","ItemInternalId":"e2084d50-0a1b-4c67-aa41-d8f44f6811f1","날짜":"45938","잔액":"1119"},{"@odata.etag":"","ItemInternalId":"d24e93d6-a4b1-406c-8e29-03e90bdf0a77","날짜":"45940","잔액":"992"},{"@odata.etag":"","ItemInternalId":"602a1656-ccdb-44be-8e4b-f972f68843af","날짜":"45943","잔액":"1015"},{"@odata.etag":"","ItemInternalId":"6ed57394-4ca8-4306-a8fa-a185f1483475","날짜":"45944","잔액":"793"},{"@odata.etag":"","ItemInternalId":"2e04420b-bca6-42ba-a01a-df692966fe79","날짜":"45945","잔액":"227"},{"@odata.etag":"","ItemInternalId":"94a9d00b-5e07-4493-a7d2-43ccec739895","날짜":"45946","잔액":"316"},{"@odata.etag":"","ItemInternalId":"ff915dff-15b9-4cad-9a55-baddbdc773cd","날짜":"45947","잔액":"418"},{"@odata.etag":"","ItemInternalId":"a3521a37-e926-44f4-b679-4b42accb573c","날짜":"45948","잔액":"419"},{"@odata.etag":"","ItemInternalId":"06a021b3-43f5-4344-a230-2b454c9e674b","날짜":"45949","잔액":"419"},{"@odata.etag":"","ItemInternalId":"ccb96449-fff9-4865-91dd-68f0e2cf8155","날짜":"45950","잔액":"557"},{"@odata.etag":"","ItemInternalId":"3a5419af-f7e5-4484-ae3e-ce38e1496f7c","날짜":"45951","잔액":"620"},{"@odata.etag":"","ItemInternalId":"41c930f8-0e81-44d2-ba97-8a8c71d79ee7","날짜":"45952","잔액":"565"},{"@odata.etag":"","ItemInternalId":"45426254-a9df-4f91-a574-ff05ad873266","날짜":"45953","잔액":"577"},{"@odata.etag":"","ItemInternalId":"13140d00-fcd9-4023-b9d1-6f34c07e4858","날짜":"45954","잔액":"696"},{"@odata.etag":"","ItemInternalId":"371983b3-c64a-471f-ab72-2506ebe51ac7","날짜":"45955","잔액":"696"},{"@odata.etag":"","ItemInternalId":"ec090d95-eaa8-4a38-8d9c-fc1b724ac87e","날짜":"45956","잔액":"697"},{"@odata.etag":"","ItemInternalId":"552a43f9-9272-486d-affb-e5578e0da062","날짜":"45957","잔액":"45"},{"@odata.etag":"","ItemInternalId":"3d438254-fcdc-420e-a966-e4db69a28c0b","날짜":"45958","잔액":"308"},{"@odata.etag":"","ItemInternalId":"724811f4-f530-4990-8b9e-8279aa87f207","날짜":"45959","잔액":"201"},{"@odata.etag":"","ItemInternalId":"0f4aac13-b462-41bf-aa10-6da7b09b338d","날짜":"45960","잔액":"227"},{"@odata.etag":"","ItemInternalId":"082b2938-ac82-44f1-bc5c-ccbd5e1ad5e0","날짜":"45961","잔액":"748"},{"@odata.etag":"","ItemInternalId":"e773f4f4-3e98-4ffb-b6ce-d27918d195ce","날짜":"45962","잔액":"752"},{"@odata.etag":"","ItemInternalId":"dd8bd57b-17cb-4383-9d38-6c41293177e3","날짜":"45963","잔액":"768"},{"@odata.etag":"","ItemInternalId":"569bd888-3e36-4e40-99f5-efa142c250c0","날짜":"45965","잔액":"881"},{"@odata.etag":"","ItemInternalId":"569b4948-cd0d-4d14-97b7-443d498ae2dc","날짜":"45966","잔액":"971"},{"@odata.etag":"","ItemInternalId":"453c4804-1d1e-46b1-823c-6643f548a367","날짜":"45969","잔액":"1142"},{"@odata.etag":"","ItemInternalId":"3ccde82b-d34d-4970-baff-a421b1084d32","날짜":"45970","잔액":"1145"},{"@odata.etag":"","ItemInternalId":"6bfe1c82-a6db-490a-bc90-de56594520d6","날짜":"45971","잔액":"1140"},{"@odata.etag":"","ItemInternalId":"2523e8b5-3ca0-41e5-abe2-e312e33ffd8f","날짜":"45972","잔액":"1285"},{"@odata.etag":"","ItemInternalId":"3dc0a23b-60ba-4566-8bd2-781cd9630914","날짜":"45973","잔액":"1390"},{"@odata.etag":"","ItemInternalId":"5f92df29-b209-4868-a766-407c52b45cd7","날짜":"45974","잔액":"1426"},{"@odata.etag":"","ItemInternalId":"be0b1dd7-b4ad-432a-be37-e98371702d6f","날짜":"45975","잔액":"573"},{"@odata.etag":"","ItemInternalId":"71ed9821-d391-46da-b635-70480f6b9c87","날짜":"45976","잔액":"600"},{"@odata.etag":"","ItemInternalId":"1a17d722-06e7-463d-afbf-6e4cbd4328c7","날짜":"45977","잔액":"602"},{"@odata.etag":"","ItemInternalId":"24ab9975-b71f-4ddf-b8fb-2a372cf8d409","날짜":"45978","잔액":"687"},{"@odata.etag":"","ItemInternalId":"8d13fbdc-cd07-450f-aee8-0e892bed1940","날짜":"45979","잔액":"758"},{"@odata.etag":"","ItemInternalId":"5c87dafa-5db7-4a03-8361-c904d68ed45d","날짜":"45980","잔액":"518"},{"@odata.etag":"","ItemInternalId":"5f57e458-5c29-4bce-8a4e-11e779a4982e","날짜":"45981","잔액":"603"},{"@odata.etag":"","ItemInternalId":"a7540502-159d-487b-a4e7-08e435db3274","날짜":"45982","잔액":"764"},{"@odata.etag":"","ItemInternalId":"e9f6e1ea-36ba-46c1-9dc0-75608161a81d","날짜":"45983","잔액":"764"},{"@odata.etag":"","ItemInternalId":"73a241f7-0c22-48a5-8884-4c25a40a6d35","날짜":"45984","잔액":"765"},{"@odata.etag":"","ItemInternalId":"274a05bf-d095-4e36-94e1-1bb60b32f35e","날짜":"45985","잔액":"866"},{"@odata.etag":"","ItemInternalId":"699bef26-cb9a-4289-b79b-935d5493ea74","날짜":"45986","잔액":"1111"},{"@odata.etag":"","ItemInternalId":"f300806e-673a-4ca3-bf4a-89b2d6894696","날짜":"45987","잔액":"1227"},{"@odata.etag":"","ItemInternalId":"60b683e3-0dc0-43c2-957b-6ff42ff873be","날짜":"45988","잔액":"981"},{"@odata.etag":"","ItemInternalId":"70b5964d-5b1a-4ddc-8d7f-8b5f41021e97","날짜":"45989","잔액":"1016"},{"@odata.etag":"","ItemInternalId":"feff25b8-f9d5-4181-b8bd-4a65946469e3","날짜":"45990","잔액":"1017"},{"@odata.etag":"","ItemInternalId":"90cb2a0c-d346-45c6-b8ab-97bd6fe1a715","날짜":"45991","잔액":"1018"},{"@odata.etag":"","ItemInternalId":"16c14a9a-a876-43b2-b2ad-27fdc19525e8","날짜":"45992","잔액":"1275"},{"@odata.etag":"","ItemInternalId":"1164e1f8-53a2-4361-9e55-4bfc2f4f3bd4","날짜":"45993","잔액":"1362"},{"@odata.etag":"","ItemInternalId":"713a1b4b-f81b-45fe-b61f-18f3222ee11d","날짜":"45994","잔액":"1448"},{"@odata.etag":"","ItemInternalId":"966fabcb-2ffb-440b-9a45-0147d88efa18","날짜":"45995","잔액":"1524"},{"@odata.etag":"","ItemInternalId":"8b58caac-d701-4469-b12d-cdea51611a06","날짜":"45996","잔액":"1381"},{"@odata.etag":"","ItemInternalId":"61bfbd28-5f0a-423d-845d-b09c898cc5ee","날짜":"45997","잔액":"1384"},{"@odata.etag":"","ItemInternalId":"40c927b5-98ee-4b3a-b841-6d11f4fd3c57","날짜":"45998","잔액":"1387"},{"@odata.etag":"","ItemInternalId":"c8037261-5530-4236-ba4c-1224e0c90954","날짜":"45999","잔액":"1460"},{"@odata.etag":"","ItemInternalId":"28cf22ca-6ac6-4520-934a-4ee4d0499a74","날짜":"46000","잔액":"1525"},{"@odata.etag":"","ItemInternalId":"67a755e8-a1fa-4573-a96d-02baf60e543f","날짜":"46001","잔액":"1498"},{"@odata.etag":"","ItemInternalId":"b426cf6d-b111-4bad-8413-a31fb6038240","날짜":"46002","잔액":"1283"},{"@odata.etag":"","ItemInternalId":"aa960d02-8a2b-4e03-99d0-f03c7a4ebb17","날짜":"46003","잔액":"1177"},{"@odata.etag":"","ItemInternalId":"2c106488-97c4-487f-8eea-9aadaea5613c","날짜":"46004","잔액":"1179"},{"@odata.etag":"","ItemInternalId":"412fc92a-40ab-455e-8ce6-c0339aa4f1c7","날짜":"46005","잔액":"1179"},{"@odata.etag":"","ItemInternalId":"870b9b0b-6bc0-41ea-90fa-d37ac598eafe","날짜":"46006","잔액":"711"},{"@odata.etag":"","ItemInternalId":"8087edee-f4ff-4e43-9f1c-637b05ffcada","날짜":"46007","잔액":"808"},{"@odata.etag":"","ItemInternalId":"a0a1b7a6-1b55-4f4c-88e1-84e827912e82","날짜":"46008","잔액":"870"},{"@odata.etag":"","ItemInternalId":"c3301577-11a6-494a-a648-cb9287f41d7f","날짜":"46009","잔액":"959"},{"@odata.etag":"","ItemInternalId":"8faf42d7-d940-4ab7-8c38-4915464d19ca","날짜":"46010","잔액":"987"},{"@odata.etag":"","ItemInternalId":"49fe7d29-819d-409e-963c-8bfde17a491a","날짜":"46011","잔액":"987"},{"@odata.etag":"","ItemInternalId":"eae46008-059d-4930-95ba-7909e7834d03","날짜":"46012","잔액":"987"},{"@odata.etag":"","ItemInternalId":"ea716ed9-ad28-427b-bb6a-c0236549f662","날짜":"46013","잔액":"1190"},{"@odata.etag":"","ItemInternalId":"c9fa3e6b-98d5-4d4e-86f2-aa860ab9478d","날짜":"46014","잔액":"1210"},{"@odata.etag":"","ItemInternalId":"ee010ad0-9e19-4d86-ac0a-c55c5d9179ff","날짜":"46015","잔액":"1266"},{"@odata.etag":"","ItemInternalId":"015f821e-d8fc-4630-80e1-f327b0e19bb2","날짜":"46017","잔액":"1058"},{"@odata.etag":"","ItemInternalId":"5dac53f7-6709-4484-be70-fd7fe790e172","날짜":"46020","잔액":"1026"},{"@odata.etag":"","ItemInternalId":"d11e3e6c-4652-4ead-9745-a21ce3cabfc6","날짜":"46021","잔액":"1496"},{"@odata.etag":"","ItemInternalId":"9b1e3148-c79e-4809-b7bb-9d8d13b4a90b","날짜":"46022","잔액":"1270"},{"@odata.etag":"","ItemInternalId":"b2671a97-1466-4836-995f-26e05bec5312","날짜":"46024","잔액":"1042"},{"@odata.etag":"","ItemInternalId":"40e7917b-4582-439e-a8cc-ca1ab9db86bb","날짜":"46027","잔액":"1160"},{"@odata.etag":"","ItemInternalId":"a2baa14c-3882-473c-8c72-c0c04f3b47b2","날짜":"46028","잔액":"1198"},{"@odata.etag":"","ItemInternalId":"2e44493d-6566-4f37-bf15-aecebe9092c8","날짜":"46029","잔액":"1327"},{"@odata.etag":"","ItemInternalId":"3a5e026e-cc82-48e1-a73e-722feed395d0","날짜":"46030","잔액":"906"},{"@odata.etag":"","ItemInternalId":"4216edbe-cff0-4ff9-ae01-fcf24a38d982","날짜":"46031","잔액":"972"},{"@odata.etag":"","ItemInternalId":"8edc96b0-873e-4d40-b06d-ab1d55adf9d8","날짜":"46034","잔액":"928"},{"@odata.etag":"","ItemInternalId":"a66bc979-7948-48e0-934c-589e2e67e0a3","날짜":"46035","잔액":"1054"},{"@odata.etag":"","ItemInternalId":"63ad1b35-06ab-421c-a2dc-29bc9a10884e","날짜":"46036","잔액":"987"},{"@odata.etag":"","ItemInternalId":"d8ba3108-4d50-48d0-9d09-bd87b278c673","날짜":"46037","잔액":"960"},{"@odata.etag":"","ItemInternalId":"0459a0b6-3609-47a3-91c2-17d3e91ea2e0","날짜":"46038","잔액":"432"},{"@odata.etag":"","ItemInternalId":"f8fa49a6-2923-4e83-8f57-03e961d33e53","날짜":"46041","잔액":"481"},{"@odata.etag":"","ItemInternalId":"d226bea7-0b3d-4d7f-aded-afd78d9fed18","날짜":"46042","잔액":"553"},{"@odata.etag":"","ItemInternalId":"bcd52b4a-058c-47b9-8cec-ac700493a88b","날짜":"46043","잔액":"603"},{"@odata.etag":"","ItemInternalId":"8a7f3a2d-4cdd-4e04-8a89-c05628e4c2e7","날짜":"46044","잔액":"655"},{"@odata.etag":"","ItemInternalId":"ef133728-2e23-4ac8-9d62-d15833e5e00e","날짜":"46045","잔액":"786"},{"@odata.etag":"","ItemInternalId":"2ef3e370-50a1-4ac8-ad81-fbc2a24cd9be","날짜":"46048","잔액":"747"},{"@odata.etag":"","ItemInternalId":"b12da98f-9cff-4a09-9428-c62954374bbb","날짜":"46049","잔액":"759"},{"@odata.etag":"","ItemInternalId":"1af706d7-73af-452d-a54c-1e65cc5a3334","날짜":"46050","잔액":"527"},{"@odata.etag":"","ItemInternalId":"abd27b4b-80c7-4df1-91e2-4c1fad5b3731","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"73e91406-1c76-45b8-84ef-bee17cde725a","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"8c79d116-2cd0-44a8-be14-3172faeb14da","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"b305dc93-ede6-4698-9546-3351df1b0d1f","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"e2f66cfd-b378-470e-bbfd-0d78f41986af","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"c2e6a05e-df67-4149-a5f6-77c0931ae6e8","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"da6bc04a-e65d-4ac6-862a-ad6ec5d368af","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"d1a6f31e-d7fe-4821-9b3f-ef2fd8f179fd","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"ed58b65c-f994-457c-992a-5e58b4ccd58e","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"900dde8a-5457-4020-9b78-f0263ce02831","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"51da0788-cd12-4826-b969-c50268f66899","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"c1873995-ca2f-4bd8-a48c-fd96236be3d4","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"9635cc10-867a-4c89-be84-1dde2580d621","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"44d70eb4-bee8-4758-8293-4aedde73e008","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"6765de42-fa8d-4c0d-aaff-7de7c56ac31f","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"1c97810f-6374-4a9b-8448-beee654b0256","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"0cc89ca0-e000-410d-80f0-8849aec775db","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"b2de011f-a209-4bf9-b8b9-ed49fcd844f4","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"67032988-91c8-4e69-baf4-9e30e2f38a08","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"01501378-7854-4e04-bbfc-8d79a771e99b","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"d37ec1b6-f37e-4a02-b371-652a21ecc478","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"86fe50d7-5fd0-4843-b77b-ad27b544f968","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"407d22cd-2210-44b4-b0de-c933e64daa7f","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"9bf3224c-7553-4c29-a8b3-57c57787fe7c","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"5ffbdd89-7c4c-4559-b48d-dbbb9199e501","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"8cbbb6fb-8152-4890-9879-a415f551a74e","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"4a7af394-2828-4547-ab64-49652a632a37","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"761fc9f8-407f-4e70-b88b-e1c0f1147d1e","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"9e6e01a6-5bf0-48fb-b056-cd0780ea21cf","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"b29c5ec9-8967-4dac-ae5b-4dc3b179e79b","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"6b261525-fe3b-452a-9be1-ebeb1bfa840f","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"3952619c-b7cf-4a78-b791-171f06b7b2bb","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"98352a98-8272-4475-98c0-5e0ea22a0d99","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"09c68493-79e0-4081-b176-11df6efa1768","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"88971c5c-4f4c-4982-b6e8-c918b8b1ae4a","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"a1aa0046-62e0-4764-beac-a9d994d38365","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"8ea8ed1b-83b9-4315-b08c-d27cca8cf779","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"defee00e-9c8f-4348-8091-20b21c5e0337","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"f5fdd1e3-ad15-4993-abc8-02f86cfa5ea7","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"631d8f18-4617-4b4f-8b16-d2b7a2ce2a45","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"b904fc80-7fbf-4ef8-b957-7f10020ba2ad","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"3af4efa7-930e-47e1-abd1-f2f5a51b8730","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"bcfaae7a-40fb-44ab-938f-204070735835","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"3cc5bdbb-057a-44f0-b1e0-135ea386d9b6","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"1336c55e-3376-4e60-9ac7-b6e5cf7681be","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"fa7e2373-1136-4f48-bed3-0a8ba93a1ad0","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"ecb146fa-c021-47e9-a1d4-4691e62da9e5","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"ef63e434-6035-4bb7-9e19-b60ece913798","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"f0b1711f-97c3-4c9b-8018-b6ff65621d3a","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"0ac45f69-1d6c-44e5-a4dd-647ed4dfc15f","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"55c04b5f-a31f-4c2a-b375-41d571723c2d","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"456b49be-6b63-4de5-b83c-54054caa23d7","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"eba400b9-66ef-40d9-837a-b61da74083b8","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"35eecf20-8535-41b6-ab96-c2926c9086a2","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"011aa9b4-b418-4281-9866-3341e7ab4d87","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"00854f9f-160d-466f-8a96-54ebf0957606","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"7ab54dcd-17ea-458a-97fe-c246427c6f64","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"f99f9858-9091-41b2-ad13-dad7e0d985bb","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"e49c9c5b-d3e9-4571-abeb-3a153125b286","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"c6024212-028b-45e3-9d7d-073615a8fd2b","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"f1d17929-90e2-45ad-bd01-0f46307b54ae","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"c0a1a5b9-3eaf-4f31-8009-c303f3c8568c","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"b68ad7c8-5476-43ec-ab90-1a32a4e9c811","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"bc0e86ef-893b-45f6-9122-83b1bb8e4cc6","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"d6f70a4f-105c-4bd8-928f-0dd306a93b07","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"0b41df9a-783e-4aac-b3f8-88ef8a560646","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"9c8d87ea-4921-48de-8aca-4910b5db534a","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"d4d14f19-9121-488c-a72e-5b277a74d6e6","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"f313e090-b19e-4000-912d-dc851bf40a4c","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"a6203d9f-bd73-4122-a5a9-2b33129314a3","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"fb540bfa-081b-42f1-8c5a-6fa49d4c5f0f","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"0a716449-596c-4350-8f62-75bcb3c430c2","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"79269b21-43e0-45c2-a3f2-0e61c183162b","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"68991e38-0d2e-4acf-8b6f-ed2c9a26ec52","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"51c81f24-0ccd-44fb-9918-fa0eab68583a","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"ed453856-d79f-4ab6-bc07-4d20a8083206","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"31d5bd98-c680-4a21-8bbe-7e18267210e7","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"9bcf6bca-af95-4fa5-860d-4311d7fe71e1","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"2b36123b-ee30-449c-87f4-132fd3117c32","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"d0c900e9-3f32-4b30-a845-21cbcd8486c7","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"d357ff96-9e50-4f1a-a809-24b758dfb4cb","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"e08c0ea3-fcc0-4945-917a-222011ae993c","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"313be4a4-4628-42f3-960f-ba27b016666c","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"851c5ba5-f88c-4ed9-ba4f-888cb70642e9","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"5acbfcfb-bfbe-42bf-bacc-7a484b126156","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"da3879ef-209a-44c9-b9d5-21ac5f101f41","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"46c7fe6e-18f9-4270-9899-ebaed620d9f1","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"3a8b3f0d-0600-4de9-97c4-aa1aeae03164","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"8817e49b-1338-4be5-a03b-1feecc38b758","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"dfd16129-0b8e-4a27-8338-7a4cfc4005b1","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"1b85747d-2c50-4984-980b-d0c2530aaf75","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"38b4908d-d682-4bb4-8c0c-ef04796f8ce7","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"9af4e149-8dc2-4c59-8e38-09fc14757793","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"0bf2b8bf-9491-44ef-81d2-b02c47ed886a","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"39a668a8-efa9-413f-b39a-bd5186cda899","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"615b225e-6c44-4544-8d35-729b381c8340","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"ecfb4c87-dcdb-4d59-8305-703ba0ee67ac","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"3c23d849-3b9f-4e7f-84ac-0bd468daa44d","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"418be165-8b7a-4ea7-9056-58c58924c048","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"f144656f-1240-44f1-8d8d-ea0cfc102081","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"66acd570-5284-4959-a839-b9b36e14f52b","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"44659246-d93e-4a36-90d1-bc3e803294a4","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"a27e84c1-457a-4eee-949f-4dca3b8feba6","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"fd1451cb-428b-45ca-a628-d1caf8fead60","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"624f2bed-0f20-47a2-a504-b234848381cb","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"2b5565a4-18bf-49e8-9c10-8ffe4a949be2","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"0329c25c-db01-4d1a-a2a5-20921c5cf94d","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"17c36e95-d4ff-4874-b6b8-667d2743f795","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"8204ec1f-80d6-4098-a082-95f8019c4d5b","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"d81ef383-6b48-48ab-9a51-a03af9e842d2","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"df4f7ad6-1e32-4439-a32d-f7e1063297fd","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"7ae5ca21-7f9b-48a1-bc14-7dcdc9ab6962","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"bc7b6ad1-a758-436f-b327-57de63f7abf9","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"59ebd666-700c-4966-9fc0-300cfbcf4c35","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"7c874b61-97cb-4ec3-ab08-1049fe2f0cfa","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"47d371e4-c454-4a3c-ac86-e87a177070a2","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"5da84742-ecf6-4f79-a582-20c360bccea2","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"375ac831-0975-4cd2-a698-a091631f0128","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"fdd86fd6-eea7-4e44-adfa-69d18da1876e","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"e36f74ab-cad8-4def-8b21-30a0d1bdcdd5","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"0ff05cbc-23c5-4be8-b189-f46947ed3c45","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"774d080a-4a29-47be-a4fe-85a0b0c879fa","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"1de58e9e-eebc-4fd8-ba94-753788cec369","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"9743e5a0-c68b-4590-9e22-7b071935ea2c","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"94765c6f-e841-4e1d-9c84-bfc0ae6e2c9a","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"b87f22b7-e8da-4277-8c08-dab67e243da8","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"397d1ad3-a36d-442c-a2e5-201870037bb8","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"4742b22c-88fb-49c6-87ca-0d383c96dd3d","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"e9f36106-0306-4a02-be7c-70bf24ee4424","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"b13a4c3d-6129-4248-a00c-a8d264efa767","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"cca39a9a-d737-41c9-a6f5-274302c53dd9","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"7139b878-8679-4635-ba4d-d7da6a01d00a","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"02008191-3d69-4b8f-9718-fcc8723dba0e","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"fdd40ea8-c788-4fd0-9901-c5402f1997c3","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"4e4e83a0-cf5e-422a-9322-d32114bd2de8","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"79f2ac16-fdb7-4330-8f62-5683f60b13a7","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"ef75ca8a-54b5-4a14-8357-db490bde14c1","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"b4c58c12-2462-481c-b933-80bb0c3f28e5","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"d746b95a-2709-4085-93d2-7983a1912e14","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"3856b044-ee6b-4c4e-914c-c7d131c8730b","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"66d3672a-7635-45a3-b7a3-6cf24deda5ae","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"09f77c90-3033-44c4-9fab-f81d2763d4a6","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"422bd1c6-8553-4c6b-9401-f36ba69abe59","날짜":"","잔액":""},{"@odata.etag":"","ItemInternalId":"c4db2e95-a8a3-409d-8050-a172660b3545","날짜":"","잔액":""}],"fxPosition":[{"@odata.etag":"","ItemInternalId":"014cd0cf-238d-4350-8efe-9adec3b1037f","날짜":"45972","잔액":"20000","평균단가":"1464.72","당일환율":"1464.72"},{"@odata.etag":"","ItemInternalId":"0e6c6a42-a1bd-4576-97fc-e3944deabf0b","날짜":"45975","잔액":"40000","평균단가":"1462.59","당일환율":"1460.45"},{"@odata.etag":"","ItemInternalId":"a747a1c5-7eda-440c-946c-0ac1f6c246c1","날짜":"45975","잔액":"60000","평균단가":"1460.03","당일환율":"1454.9"},{"@odata.etag":"","ItemInternalId":"13286ed0-fdf0-4f8d-bf47-2cdc90d61e6c","날짜":"45985","잔액":"70000","평균단가":"1462.09","당일환율":"1474.48"},{"@odata.etag":"","ItemInternalId":"cb3fa74c-78cd-4501-a4e1-32aad7ec0585","날짜":"45986","잔액":"105000","평균단가":"1466.78","당일환율":"1476.15"},{"@odata.etag":"","ItemInternalId":"49b9d98b-6c7a-4cf1-b641-10439df1fe27","날짜":"45987","잔액":"140000","평균단가":"1464.77","당일환율":"1458.73"},{"@odata.etag":"","ItemInternalId":"dbaf18d2-5ce1-423a-bb44-8bb52471c148","날짜":"45988","잔액":"175000","평균단가":"1465.39","당일환율":"1467.85"},{"@odata.etag":"","ItemInternalId":"1aa52e45-3245-4cfa-a7d5-37ff576e748c","날짜":"45989","잔액":"210000","평균단가":"1465.6","당일환율":"1466.65"},{"@odata.etag":"","ItemInternalId":"4f8a03cd-7a43-4ef5-b26f-f137ac2c9888","날짜":"45992","잔액":"245000","평균단가":"1465.89","당일환율":"1467.65"},{"@odata.etag":"","ItemInternalId":"33b0507e-f681-4034-a30a-d7bc72ff047c","날짜":"45993","잔액":"280000","평균단가":"1466.14","당일환율":"1467.85"},{"@odata.etag":"","ItemInternalId":"d0e3f764-134f-4c46-b239-8905829d649f","날짜":"45994","잔액":"315000","평균단가":"1466.43","당일환율":"1468.75"},{"@odata.etag":"","ItemInternalId":"43472bf5-e8c2-4f52-92b5-2d2d5454c31e","날짜":"45995","잔액":"350000","평균단가":"1466.66","당일환율":"1468.75"},{"@odata.etag":"","ItemInternalId":"f3694955-458e-4bf5-ad93-11e2b1b550ce","날짜":"45996","잔액":"385000","평균단가":"1467.31","당일환율":"1473.75"},{"@odata.etag":"","ItemInternalId":"d0b559f6-98a3-40a9-929d-4c1cacb676d7","날짜":"45999","잔액":"420000","평균단가":"1467.52","당일환율":"1469.88"},{"@odata.etag":"","ItemInternalId":"c68430eb-de09-4000-9117-fba37ad88909","날짜":"46000","잔액":"455000","평균단가":"1467.85","당일환율":"1471.78"},{"@odata.etag":"","ItemInternalId":"7e0f28fd-711b-44f4-8b43-496bab9e8a55","날짜":"46001","잔액":"490000","평균단가":"1468.02","당일환율":"1470.23"},{"@odata.etag":"","ItemInternalId":"aa3433e6-1503-463c-819b-fe75ce814c55","날짜":"46002","잔액":"525000","평균단가":"1467.94","당일환율":"1466.85"},{"@odata.etag":"","ItemInternalId":"2b5f054b-4937-42a1-b8cc-28a0d2f1b6ee","날짜":"46003","잔액":"560000","평균단가":"1468.3","당일환율":"1473.65"},{"@odata.etag":"","ItemInternalId":"8a20f755-ef25-4a81-a608-811c6f875919","날짜":"46006","잔액":"256547.1","평균단가":"1468.8","당일환율":"1476.83"},{"@odata.etag":"","ItemInternalId":"774f7be3-8249-4c5f-af91-db2bfc430434","날짜":"46007","잔액":"291547.1","평균단가":"1468.92","당일환율":"1470.98"},{"@odata.etag":"","ItemInternalId":"cdc059cc-37fa-4e35-b974-6bbe05f10c42","날짜":"46008","잔액":"326547.1","평균단가":"1469.54","당일환율":"1480.63"},{"@odata.etag":"","ItemInternalId":"ba3b58ff-ce9a-4684-8cbb-346f4aaa3e8b","날짜":"46009","잔액":"361547.1","평균단가":"1470","당일환율":"1478.85"},{"@odata.etag":"","ItemInternalId":"9aa0ff57-c80f-4c4e-b566-afd7a28633e9","날짜":"46010","잔액":"396547.1","평균단가":"1470.43","당일환율":"1478.85"},{"@odata.etag":"","ItemInternalId":"c3cad321-9e65-464b-9aaa-5819e8366d15","날짜":"46013","잔액":"431549.69","평균단가":"1470.79","당일환율":"1478.35"},{"@odata.etag":"","ItemInternalId":"002071a7-255e-4131-bfd6-da4223a3e0fb","날짜":"46014","잔액":"466549.69","평균단가":"1471.37","당일환율":"1484.25"},{"@odata.etag":"","ItemInternalId":"4db2e188-f948-4120-93c3-235411224751","날짜":"46015","잔액":"501549.69","평균단가":"1471.3","당일환율":"1469.75"},{"@odata.etag":"","ItemInternalId":"9e736a9c-c777-440a-829a-2afa7d816782","날짜":"46015","잔액":"521549.69","평균단가":"1470.96","당일환율":"1456.45"},{"@odata.etag":"","ItemInternalId":"c173e047-a789-4ee8-8e1c-cdcb9f752e9d","날짜":"46017","잔액":"556549.69","평균단가":"1470.34","당일환율":"1455.05"},{"@odata.etag":"","ItemInternalId":"6ab556b0-cd3e-4489-88ae-dd254759c410","날짜":"46017","잔액":"566549.69","평균단가":"1470.04","당일환율":"1443.75"},{"@odata.etag":"","ItemInternalId":"863e1470-d1ae-41cd-b27e-5c367765762c","날짜":"46017","잔액":"571549.69","평균단가":"1469.89","당일환율":"1441.35"},{"@odata.etag":"","ItemInternalId":"9adfd734-6df0-4323-98c9-31273d626401","날짜":"46017","잔액":"576549.69","평균단가":"1469.72","당일환율":"1440.25"},{"@odata.etag":"","ItemInternalId":"a351996e-be98-41a8-87b4-124ed7fb8163","날짜":"46020","잔액":"611549.69","평균단가":"1468.47","당일환율":"1435.65"},{"@odata.etag":"","ItemInternalId":"16565847-d5bc-4712-992e-7d4bb09663ea","날짜":"46021","잔액":"646549.69","평균단가":"1467.23","당일환율":"1433.73"},{"@odata.etag":"","ItemInternalId":"51130bb5-245c-48ca-8377-03cff23b6f23","날짜":"46022","잔액":"182408.42","평균단가":"1458.44","당일환율":"1461.1"},{"@odata.etag":"","ItemInternalId":"6da10629-98f1-4bc8-af2c-dbbeb7135b0f","날짜":"46024","잔액":"217408.42","평균단가":"1455.81","당일환율":"1442.1"},{"@odata.etag":"","ItemInternalId":"6719d1d8-612c-4e3d-b10f-bf2a97fa42ad","날짜":"46027","잔액":"252408.42","평균단가":"1454.62","당일환율":"1447.2"},{"@odata.etag":"","ItemInternalId":"de76c509-760b-4d3a-bbeb-34c6d76ce82b","날짜":"46028","잔액":"287408.42","평균단가":"1453.79","당일환율":"1447.8"},{"@odata.etag":"","ItemInternalId":"269edff6-ec15-4a5d-90f9-0bd82518fa4a","날짜":"46029","잔액":"322408.42","평균단가":"1453.32","당일환율":"1449.5"},{"@odata.etag":"","ItemInternalId":"7f1d738a-1425-4710-bf44-620cab437fb5","날짜":"46030","잔액":"357408.42","평균단가":"1452.97","당일환율":"1449.7"},{"@odata.etag":"","ItemInternalId":"2f7c054c-a298-4b80-a2a8-c00b1d3ce314","날짜":"46031","잔액":"392408.42","평균단가":"1453.55","당일환율":"1459.5"},{"@odata.etag":"","ItemInternalId":"d3dc2925-d87f-4836-a4b0-b582b2f5a9f7","날짜":"46034","잔액":"427408.42","평균단가":"1454.15","당일환율":"1460.9"},{"@odata.etag":"","ItemInternalId":"b8bc2923-f7c9-49b1-b0a2-212b3d71b6d6","날짜":"46035","잔액":"462408.42","평균단가":"1455.53","당일환율":"1472.3"},{"@odata.etag":"","ItemInternalId":"0f6493f9-627e-44cf-9f8e-dfe309dceb4b","날짜":"46036","잔액":"497408.42","평균단가":"1457.13","당일환율":"1478.3"},{"@odata.etag":"","ItemInternalId":"dda6a405-a141-473a-b263-c751b7f8b10b","날짜":"2026-01-15","잔액":"6312.94","평균단가":"1468.1","당일환율":"1468.1"},{"@odata.etag":"","ItemInternalId":"0be9729d-1194-4ce0-b919-e603438e662f","날짜":"2026-01-16","잔액":"41312.94","평균단가":"1472","당일환율":"1472.7"},{"@odata.etag":"","ItemInternalId":"6642f834-609d-46fa-93c7-5f7029b9a9df","날짜":"2026-01-19","잔액":"76312.94","평균단가":"1472","당일환율":"1472"},{"@odata.etag":"","ItemInternalId":"029b74e1-a8fc-4611-b497-72c2636d8eaa","날짜":"2026-01-20","잔액":"111312.94","평균단가":"1473.19","당일환율":"1475.8"},{"@odata.etag":"","ItemInternalId":"8e28db6b-823c-40bc-9035-5e897aa86ace","날짜":"2026-01-21","잔액":"146312.94","평균단가":"1475.01","당일환율":"1480.8"},{"@odata.etag":"","ItemInternalId":"9a4dd36f-1d15-45ec-b910-1b694b715936","날짜":"2026-01-22","잔액":"181312.94","평균단가":"1473.33","당일환율":"1466.3"},{"@odata.etag":"","ItemInternalId":"6528c223-6d9b-4b86-96a8-d2d2e650eb60","날짜":"2026-01-23","잔액":"216312.94","평균단가":"1472.17","당일환율":"1466.15"},{"@odata.etag":"","ItemInternalId":"b625e64c-f84a-46f3-b1a1-6942ffd7f550","날짜":"2026-01-26","잔액":"251312.94","평균단가":"1468.94","당일환율":"1448.97"},{"@odata.etag":"","ItemInternalId":"00fc7d49-8da8-406a-b738-242875a403a4","날짜":"2026-01-27","잔액":"286312.94","평균단가":"1466.66","당일환율":"1450.32"},{"@odata.etag":"","ItemInternalId":"97993b65-b134-4ca9-bf67-5c8d2442f10b","날짜":"2026-01-28","잔액":"356312.94","평균단가":"1459.35","당일환율":"1425.07"}],"lastUpdated":"2026-01-29 09:49:11"}
+{
+  "lastUpdated": "2026-01-29 05:41:17",
+  "dailyBalance": [
+    {
+      "date": "2025-01-01",
+      "balance": 1921.0
+    },
+    {
+      "date": "2025-01-02",
+      "balance": 1510.0
+    },
+    {
+      "date": "2025-01-03",
+      "balance": 1188.0
+    },
+    {
+      "date": "2025-01-04",
+      "balance": 1188.0
+    },
+    {
+      "date": "2025-01-05",
+      "balance": 1204.0
+    },
+    {
+      "date": "2025-01-06",
+      "balance": 1355.0
+    },
+    {
+      "date": "2025-01-07",
+      "balance": 1131.0
+    },
+    {
+      "date": "2025-01-08",
+      "balance": 1202.0
+    },
+    {
+      "date": "2025-01-09",
+      "balance": 1242.0
+    },
+    {
+      "date": "2025-01-10",
+      "balance": 1222.0
+    },
+    {
+      "date": "2025-01-13",
+      "balance": 1286.0
+    },
+    {
+      "date": "2025-01-14",
+      "balance": 870.0
+    },
+    {
+      "date": "2025-01-15",
+      "balance": 159.0
+    },
+    {
+      "date": "2025-01-16",
+      "balance": 233.0
+    },
+    {
+      "date": "2025-01-17",
+      "balance": 280.0
+    },
+    {
+      "date": "2025-01-18",
+      "balance": 282.0
+    },
+    {
+      "date": "2025-01-19",
+      "balance": 281.0
+    },
+    {
+      "date": "2025-01-20",
+      "balance": 57.0
+    },
+    {
+      "date": "2025-01-21",
+      "balance": 115.0
+    },
+    {
+      "date": "2025-01-22",
+      "balance": 260.0
+    },
+    {
+      "date": "2025-01-23",
+      "balance": 224.0
+    },
+    {
+      "date": "2025-01-24",
+      "balance": 423.0
+    },
+    {
+      "date": "2025-01-25",
+      "balance": 427.0
+    },
+    {
+      "date": "2025-01-26",
+      "balance": 427.0
+    },
+    {
+      "date": "2025-01-27",
+      "balance": 440.0
+    },
+    {
+      "date": "2025-01-28",
+      "balance": 507.0
+    },
+    {
+      "date": "2025-01-30",
+      "balance": 509.0
+    },
+    {
+      "date": "2025-01-31",
+      "balance": 96.0
+    },
+    {
+      "date": "2025-02-01",
+      "balance": 99.0
+    },
+    {
+      "date": "2025-02-02",
+      "balance": 108.0
+    },
+    {
+      "date": "2025-02-03",
+      "balance": 249.0
+    },
+    {
+      "date": "2025-02-04",
+      "balance": 294.0
+    },
+    {
+      "date": "2025-02-05",
+      "balance": 348.0
+    },
+    {
+      "date": "2025-02-06",
+      "balance": 250.0
+    },
+    {
+      "date": "2025-02-07",
+      "balance": 363.0
+    },
+    {
+      "date": "2025-02-08",
+      "balance": 365.0
+    },
+    {
+      "date": "2025-02-09",
+      "balance": 367.0
+    },
+    {
+      "date": "2025-02-10",
+      "balance": 313.0
+    },
+    {
+      "date": "2025-02-11",
+      "balance": 420.0
+    },
+    {
+      "date": "2025-02-12",
+      "balance": 265.0
+    },
+    {
+      "date": "2025-02-13",
+      "balance": -11.0
+    },
+    {
+      "date": "2025-02-14",
+      "balance": -386.0
+    },
+    {
+      "date": "2025-02-15",
+      "balance": -386.0
+    },
+    {
+      "date": "2025-02-16",
+      "balance": -388.0
+    },
+    {
+      "date": "2025-02-17",
+      "balance": -304.0
+    },
+    {
+      "date": "2025-02-18",
+      "balance": -223.0
+    },
+    {
+      "date": "2025-02-19",
+      "balance": -177.0
+    },
+    {
+      "date": "2025-02-20",
+      "balance": -82.0
+    },
+    {
+      "date": "2025-02-21",
+      "balance": -304.0
+    },
+    {
+      "date": "2025-02-24",
+      "balance": -280.0
+    },
+    {
+      "date": "2025-02-25",
+      "balance": -201.0
+    },
+    {
+      "date": "2025-02-26",
+      "balance": -323.0
+    },
+    {
+      "date": "2025-02-27",
+      "balance": -359.0
+    },
+    {
+      "date": "2025-02-28",
+      "balance": 252.0
+    },
+    {
+      "date": "2025-03-01",
+      "balance": 253.0
+    },
+    {
+      "date": "2025-03-02",
+      "balance": 254.0
+    },
+    {
+      "date": "2025-03-03",
+      "balance": 282.0
+    },
+    {
+      "date": "2025-03-04",
+      "balance": 496.0
+    },
+    {
+      "date": "2025-03-05",
+      "balance": 603.0
+    },
+    {
+      "date": "2025-03-06",
+      "balance": 648.0
+    },
+    {
+      "date": "2025-03-07",
+      "balance": 586.0
+    },
+    {
+      "date": "2025-03-08",
+      "balance": 586.0
+    },
+    {
+      "date": "2025-03-09",
+      "balance": 588.0
+    },
+    {
+      "date": "2025-03-10",
+      "balance": 592.0
+    },
+    {
+      "date": "2025-03-11",
+      "balance": 660.0
+    },
+    {
+      "date": "2025-03-12",
+      "balance": 718.0
+    },
+    {
+      "date": "2025-03-13",
+      "balance": 754.0
+    },
+    {
+      "date": "2025-03-14",
+      "balance": 31.0
+    },
+    {
+      "date": "2025-03-15",
+      "balance": 31.0
+    },
+    {
+      "date": "2025-03-16",
+      "balance": 29.0
+    },
+    {
+      "date": "2025-03-17",
+      "balance": -28.0
+    },
+    {
+      "date": "2025-03-18",
+      "balance": 18.0
+    },
+    {
+      "date": "2025-03-19",
+      "balance": 74.0
+    },
+    {
+      "date": "2025-03-20",
+      "balance": 163.0
+    },
+    {
+      "date": "2025-03-21",
+      "balance": -8.0
+    },
+    {
+      "date": "2025-03-22",
+      "balance": -8.0
+    },
+    {
+      "date": "2025-03-23",
+      "balance": -8.0
+    },
+    {
+      "date": "2025-03-24",
+      "balance": -34.0
+    },
+    {
+      "date": "2025-03-25",
+      "balance": 124.0
+    },
+    {
+      "date": "2025-03-26",
+      "balance": 168.0
+    },
+    {
+      "date": "2025-03-27",
+      "balance": -16.0
+    },
+    {
+      "date": "2025-03-28",
+      "balance": -684.0
+    },
+    {
+      "date": "2025-03-29",
+      "balance": -675.0
+    },
+    {
+      "date": "2025-03-30",
+      "balance": -670.0
+    },
+    {
+      "date": "2025-03-31",
+      "balance": 659.0
+    },
+    {
+      "date": "2025-04-01",
+      "balance": 866.0
+    },
+    {
+      "date": "2025-04-02",
+      "balance": 945.0
+    },
+    {
+      "date": "2025-04-03",
+      "balance": 895.0
+    },
+    {
+      "date": "2025-04-04",
+      "balance": 752.0
+    },
+    {
+      "date": "2025-04-05",
+      "balance": 755.0
+    },
+    {
+      "date": "2025-04-06",
+      "balance": 756.0
+    },
+    {
+      "date": "2025-04-07",
+      "balance": 877.0
+    },
+    {
+      "date": "2025-04-08",
+      "balance": 939.0
+    },
+    {
+      "date": "2025-04-09",
+      "balance": 1015.0
+    },
+    {
+      "date": "2025-04-10",
+      "balance": 989.0
+    },
+    {
+      "date": "2025-04-11",
+      "balance": 875.0
+    },
+    {
+      "date": "2025-04-14",
+      "balance": 345.0
+    },
+    {
+      "date": "2025-04-15",
+      "balance": 289.0
+    },
+    {
+      "date": "2025-04-16",
+      "balance": 352.0
+    },
+    {
+      "date": "2025-04-17",
+      "balance": 452.0
+    },
+    {
+      "date": "2025-04-18",
+      "balance": 367.0
+    },
+    {
+      "date": "2025-04-20",
+      "balance": 364.0
+    },
+    {
+      "date": "2025-04-21",
+      "balance": 449.0
+    },
+    {
+      "date": "2025-04-22",
+      "balance": 508.0
+    },
+    {
+      "date": "2025-04-23",
+      "balance": 474.0
+    },
+    {
+      "date": "2025-04-24",
+      "balance": 550.0
+    },
+    {
+      "date": "2025-04-25",
+      "balance": -247.0
+    },
+    {
+      "date": "2025-04-27",
+      "balance": -247.0
+    },
+    {
+      "date": "2025-04-28",
+      "balance": -164.0
+    },
+    {
+      "date": "2025-04-29",
+      "balance": 137.0
+    },
+    {
+      "date": "2025-04-30",
+      "balance": 412.0
+    },
+    {
+      "date": "2025-05-01",
+      "balance": 418.0
+    },
+    {
+      "date": "2025-05-02",
+      "balance": 447.0
+    },
+    {
+      "date": "2025-05-03",
+      "balance": 455.0
+    },
+    {
+      "date": "2025-05-04",
+      "balance": 455.0
+    },
+    {
+      "date": "2025-05-05",
+      "balance": 461.0
+    },
+    {
+      "date": "2025-05-06",
+      "balance": 477.0
+    },
+    {
+      "date": "2025-05-07",
+      "balance": 525.0
+    },
+    {
+      "date": "2025-05-08",
+      "balance": 627.0
+    },
+    {
+      "date": "2025-05-09",
+      "balance": 420.0
+    },
+    {
+      "date": "2025-05-10",
+      "balance": 420.0
+    },
+    {
+      "date": "2025-05-11",
+      "balance": 421.0
+    },
+    {
+      "date": "2025-05-12",
+      "balance": 445.0
+    },
+    {
+      "date": "2025-05-13",
+      "balance": 554.0
+    },
+    {
+      "date": "2025-05-14",
+      "balance": 525.0
+    },
+    {
+      "date": "2025-05-15",
+      "balance": -423.0
+    },
+    {
+      "date": "2025-05-16",
+      "balance": -493.0
+    },
+    {
+      "date": "2025-05-17",
+      "balance": -493.0
+    },
+    {
+      "date": "2025-05-18",
+      "balance": -493.0
+    },
+    {
+      "date": "2025-05-19",
+      "balance": -476.0
+    },
+    {
+      "date": "2025-05-20",
+      "balance": -387.0
+    },
+    {
+      "date": "2025-05-21",
+      "balance": -339.0
+    },
+    {
+      "date": "2025-05-22",
+      "balance": -307.0
+    },
+    {
+      "date": "2025-05-23",
+      "balance": -246.0
+    },
+    {
+      "date": "2025-05-24",
+      "balance": -246.0
+    },
+    {
+      "date": "2025-05-26",
+      "balance": -171.0
+    },
+    {
+      "date": "2025-05-27",
+      "balance": -309.0
+    },
+    {
+      "date": "2025-05-28",
+      "balance": -366.0
+    },
+    {
+      "date": "2025-05-29",
+      "balance": -118.0
+    },
+    {
+      "date": "2025-05-30",
+      "balance": 100.0
+    },
+    {
+      "date": "2025-05-31",
+      "balance": 119.0
+    },
+    {
+      "date": "2025-06-01",
+      "balance": 124.0
+    },
+    {
+      "date": "2025-06-02",
+      "balance": 302.0
+    },
+    {
+      "date": "2025-06-03",
+      "balance": 308.0
+    },
+    {
+      "date": "2025-06-04",
+      "balance": 360.0
+    },
+    {
+      "date": "2025-06-05",
+      "balance": 89.0
+    },
+    {
+      "date": "2025-06-07",
+      "balance": 89.0
+    },
+    {
+      "date": "2025-06-08",
+      "balance": 91.0
+    },
+    {
+      "date": "2025-06-09",
+      "balance": 185.0
+    },
+    {
+      "date": "2025-06-10",
+      "balance": 187.0
+    },
+    {
+      "date": "2025-06-11",
+      "balance": 218.0
+    },
+    {
+      "date": "2025-06-12",
+      "balance": 46.0
+    },
+    {
+      "date": "2025-06-13",
+      "balance": 123.0
+    },
+    {
+      "date": "2025-06-14",
+      "balance": 123.0
+    },
+    {
+      "date": "2025-06-15",
+      "balance": 123.0
+    },
+    {
+      "date": "2025-06-16",
+      "balance": -382.0
+    },
+    {
+      "date": "2025-06-17",
+      "balance": -263.0
+    },
+    {
+      "date": "2025-06-18",
+      "balance": -214.0
+    },
+    {
+      "date": "2025-06-19",
+      "balance": -286.0
+    },
+    {
+      "date": "2025-06-20",
+      "balance": -193.0
+    },
+    {
+      "date": "2025-06-21",
+      "balance": -193.0
+    },
+    {
+      "date": "2025-06-22",
+      "balance": -193.0
+    },
+    {
+      "date": "2025-06-23",
+      "balance": -153.0
+    },
+    {
+      "date": "2025-06-24",
+      "balance": 25.0
+    },
+    {
+      "date": "2025-06-25",
+      "balance": 127.0
+    },
+    {
+      "date": "2025-06-26",
+      "balance": 8.0
+    },
+    {
+      "date": "2025-06-27",
+      "balance": -107.0
+    },
+    {
+      "date": "2025-06-28",
+      "balance": -106.0
+    },
+    {
+      "date": "2025-06-29",
+      "balance": -106.0
+    },
+    {
+      "date": "2025-06-30",
+      "balance": 62.0
+    },
+    {
+      "date": "2025-07-01",
+      "balance": 313.0
+    },
+    {
+      "date": "2025-07-02",
+      "balance": 406.0
+    },
+    {
+      "date": "2025-07-03",
+      "balance": 571.0
+    },
+    {
+      "date": "2025-07-04",
+      "balance": 478.0
+    },
+    {
+      "date": "2025-07-05",
+      "balance": 479.0
+    },
+    {
+      "date": "2025-07-07",
+      "balance": 519.0
+    },
+    {
+      "date": "2025-07-08",
+      "balance": 317.0
+    },
+    {
+      "date": "2025-07-09",
+      "balance": 405.0
+    },
+    {
+      "date": "2025-07-10",
+      "balance": 359.0
+    },
+    {
+      "date": "2025-07-11",
+      "balance": 436.0
+    },
+    {
+      "date": "2025-07-12",
+      "balance": 446.0
+    },
+    {
+      "date": "2025-07-13",
+      "balance": 447.0
+    },
+    {
+      "date": "2025-07-14",
+      "balance": 516.0
+    },
+    {
+      "date": "2025-07-15",
+      "balance": 141.0
+    },
+    {
+      "date": "2025-07-16",
+      "balance": 200.0
+    },
+    {
+      "date": "2025-07-17",
+      "balance": 291.0
+    },
+    {
+      "date": "2025-07-18",
+      "balance": 166.0
+    },
+    {
+      "date": "2025-07-19",
+      "balance": 166.0
+    },
+    {
+      "date": "2025-07-20",
+      "balance": 165.0
+    },
+    {
+      "date": "2025-07-21",
+      "balance": 277.0
+    },
+    {
+      "date": "2025-07-22",
+      "balance": 60.0
+    },
+    {
+      "date": "2025-07-23",
+      "balance": -94.0
+    },
+    {
+      "date": "2025-07-24",
+      "balance": -23.0
+    },
+    {
+      "date": "2025-07-25",
+      "balance": -443.0
+    },
+    {
+      "date": "2025-07-27",
+      "balance": -440.0
+    },
+    {
+      "date": "2025-07-28",
+      "balance": -355.0
+    },
+    {
+      "date": "2025-07-29",
+      "balance": -210.0
+    },
+    {
+      "date": "2025-07-30",
+      "balance": 62.0
+    },
+    {
+      "date": "2025-07-31",
+      "balance": 141.0
+    },
+    {
+      "date": "2025-08-01",
+      "balance": 224.0
+    },
+    {
+      "date": "2025-08-02",
+      "balance": 226.0
+    },
+    {
+      "date": "2025-08-03",
+      "balance": 227.0
+    },
+    {
+      "date": "2025-08-04",
+      "balance": 119.0
+    },
+    {
+      "date": "2025-08-05",
+      "balance": 198.0
+    },
+    {
+      "date": "2025-08-06",
+      "balance": 331.0
+    },
+    {
+      "date": "2025-08-07",
+      "balance": 461.0
+    },
+    {
+      "date": "2025-08-08",
+      "balance": 427.0
+    },
+    {
+      "date": "2025-08-10",
+      "balance": 427.0
+    },
+    {
+      "date": "2025-08-11",
+      "balance": 446.0
+    },
+    {
+      "date": "2025-08-12",
+      "balance": 529.0
+    },
+    {
+      "date": "2025-08-13",
+      "balance": -162.0
+    },
+    {
+      "date": "2025-08-14",
+      "balance": -133.0
+    },
+    {
+      "date": "2025-08-15",
+      "balance": -133.0
+    },
+    {
+      "date": "2025-08-16",
+      "balance": -132.0
+    },
+    {
+      "date": "2025-08-17",
+      "balance": -120.0
+    },
+    {
+      "date": "2025-08-18",
+      "balance": 29.0
+    },
+    {
+      "date": "2025-08-19",
+      "balance": -369.0
+    },
+    {
+      "date": "2025-08-20",
+      "balance": -458.0
+    },
+    {
+      "date": "2025-08-21",
+      "balance": -420.0
+    },
+    {
+      "date": "2025-08-22",
+      "balance": -299.0
+    },
+    {
+      "date": "2025-08-23",
+      "balance": -299.0
+    },
+    {
+      "date": "2025-08-25",
+      "balance": -298.0
+    },
+    {
+      "date": "2025-08-26",
+      "balance": -264.0
+    },
+    {
+      "date": "2025-08-27",
+      "balance": -425.0
+    },
+    {
+      "date": "2025-08-28",
+      "balance": -221.0
+    },
+    {
+      "date": "2025-08-29",
+      "balance": 155.0
+    },
+    {
+      "date": "2025-08-30",
+      "balance": 169.0
+    },
+    {
+      "date": "2025-08-31",
+      "balance": 182.0
+    },
+    {
+      "date": "2025-09-01",
+      "balance": 389.0
+    },
+    {
+      "date": "2025-09-02",
+      "balance": 433.0
+    },
+    {
+      "date": "2025-09-03",
+      "balance": 478.0
+    },
+    {
+      "date": "2025-09-04",
+      "balance": 446.0
+    },
+    {
+      "date": "2025-09-05",
+      "balance": 587.0
+    },
+    {
+      "date": "2025-09-06",
+      "balance": 588.0
+    },
+    {
+      "date": "2025-09-07",
+      "balance": 593.0
+    },
+    {
+      "date": "2025-09-08",
+      "balance": 667.0
+    },
+    {
+      "date": "2025-09-09",
+      "balance": 735.0
+    },
+    {
+      "date": "2025-09-10",
+      "balance": 420.0
+    },
+    {
+      "date": "2025-09-11",
+      "balance": 536.0
+    },
+    {
+      "date": "2025-09-12",
+      "balance": 589.0
+    },
+    {
+      "date": "2025-09-15",
+      "balance": 201.0
+    },
+    {
+      "date": "2025-09-16",
+      "balance": 283.0
+    },
+    {
+      "date": "2025-09-17",
+      "balance": 354.0
+    },
+    {
+      "date": "2025-09-18",
+      "balance": 174.0
+    },
+    {
+      "date": "2025-09-19",
+      "balance": 337.0
+    },
+    {
+      "date": "2025-09-20",
+      "balance": 339.0
+    },
+    {
+      "date": "2025-09-21",
+      "balance": 339.0
+    },
+    {
+      "date": "2025-09-22",
+      "balance": 393.0
+    },
+    {
+      "date": "2025-09-23",
+      "balance": 464.0
+    },
+    {
+      "date": "2025-09-24",
+      "balance": 513.0
+    },
+    {
+      "date": "2025-09-25",
+      "balance": 652.0
+    },
+    {
+      "date": "2025-09-26",
+      "balance": 521.0
+    },
+    {
+      "date": "2025-09-27",
+      "balance": 523.0
+    },
+    {
+      "date": "2025-09-28",
+      "balance": 523.0
+    },
+    {
+      "date": "2025-09-29",
+      "balance": 646.0
+    },
+    {
+      "date": "2025-09-30",
+      "balance": 920.0
+    },
+    {
+      "date": "2025-10-01",
+      "balance": 1051.0
+    },
+    {
+      "date": "2025-10-02",
+      "balance": 1117.0
+    },
+    {
+      "date": "2025-10-04",
+      "balance": 1118.0
+    },
+    {
+      "date": "2025-10-05",
+      "balance": 1118.0
+    },
+    {
+      "date": "2025-10-08",
+      "balance": 1119.0
+    },
+    {
+      "date": "2025-10-10",
+      "balance": 992.0
+    },
+    {
+      "date": "2025-10-13",
+      "balance": 1015.0
+    },
+    {
+      "date": "2025-10-14",
+      "balance": 793.0
+    },
+    {
+      "date": "2025-10-15",
+      "balance": 227.0
+    },
+    {
+      "date": "2025-10-16",
+      "balance": 316.0
+    },
+    {
+      "date": "2025-10-17",
+      "balance": 418.0
+    },
+    {
+      "date": "2025-10-18",
+      "balance": 419.0
+    },
+    {
+      "date": "2025-10-19",
+      "balance": 419.0
+    },
+    {
+      "date": "2025-10-20",
+      "balance": 557.0
+    },
+    {
+      "date": "2025-10-21",
+      "balance": 620.0
+    },
+    {
+      "date": "2025-10-22",
+      "balance": 565.0
+    },
+    {
+      "date": "2025-10-23",
+      "balance": 577.0
+    },
+    {
+      "date": "2025-10-24",
+      "balance": 696.0
+    },
+    {
+      "date": "2025-10-25",
+      "balance": 696.0
+    },
+    {
+      "date": "2025-10-26",
+      "balance": 697.0
+    },
+    {
+      "date": "2025-10-27",
+      "balance": 45.0
+    },
+    {
+      "date": "2025-10-28",
+      "balance": 308.0
+    },
+    {
+      "date": "2025-10-29",
+      "balance": 201.0
+    },
+    {
+      "date": "2025-10-30",
+      "balance": 227.0
+    },
+    {
+      "date": "2025-10-31",
+      "balance": 748.0
+    },
+    {
+      "date": "2025-11-01",
+      "balance": 752.0
+    },
+    {
+      "date": "2025-11-02",
+      "balance": 768.0
+    },
+    {
+      "date": "2025-11-04",
+      "balance": 881.0
+    },
+    {
+      "date": "2025-11-05",
+      "balance": 971.0
+    },
+    {
+      "date": "2025-11-08",
+      "balance": 1142.0
+    },
+    {
+      "date": "2025-11-09",
+      "balance": 1145.0
+    },
+    {
+      "date": "2025-11-10",
+      "balance": 1140.0
+    },
+    {
+      "date": "2025-11-11",
+      "balance": 1285.0
+    },
+    {
+      "date": "2025-11-12",
+      "balance": 1390.0
+    },
+    {
+      "date": "2025-11-13",
+      "balance": 1426.0
+    },
+    {
+      "date": "2025-11-14",
+      "balance": 573.0
+    },
+    {
+      "date": "2025-11-15",
+      "balance": 600.0
+    },
+    {
+      "date": "2025-11-16",
+      "balance": 602.0
+    },
+    {
+      "date": "2025-11-17",
+      "balance": 687.0
+    },
+    {
+      "date": "2025-11-18",
+      "balance": 758.0
+    },
+    {
+      "date": "2025-11-19",
+      "balance": 518.0
+    },
+    {
+      "date": "2025-11-20",
+      "balance": 603.0
+    },
+    {
+      "date": "2025-11-21",
+      "balance": 764.0
+    },
+    {
+      "date": "2025-11-22",
+      "balance": 764.0
+    },
+    {
+      "date": "2025-11-23",
+      "balance": 765.0
+    },
+    {
+      "date": "2025-11-24",
+      "balance": 866.0
+    },
+    {
+      "date": "2025-11-25",
+      "balance": 1111.0
+    },
+    {
+      "date": "2025-11-26",
+      "balance": 1227.0
+    },
+    {
+      "date": "2025-11-27",
+      "balance": 981.0
+    },
+    {
+      "date": "2025-11-28",
+      "balance": 1016.0
+    },
+    {
+      "date": "2025-11-29",
+      "balance": 1017.0
+    },
+    {
+      "date": "2025-11-30",
+      "balance": 1018.0
+    },
+    {
+      "date": "2025-12-01",
+      "balance": 1275.0
+    },
+    {
+      "date": "2025-12-02",
+      "balance": 1362.0
+    },
+    {
+      "date": "2025-12-03",
+      "balance": 1448.0
+    },
+    {
+      "date": "2025-12-04",
+      "balance": 1524.0
+    },
+    {
+      "date": "2025-12-05",
+      "balance": 1381.0
+    },
+    {
+      "date": "2025-12-06",
+      "balance": 1384.0
+    },
+    {
+      "date": "2025-12-07",
+      "balance": 1387.0
+    },
+    {
+      "date": "2025-12-08",
+      "balance": 1460.0
+    },
+    {
+      "date": "2025-12-09",
+      "balance": 1525.0
+    },
+    {
+      "date": "2025-12-10",
+      "balance": 1498.0
+    },
+    {
+      "date": "2025-12-11",
+      "balance": 1283.0
+    },
+    {
+      "date": "2025-12-12",
+      "balance": 1177.0
+    },
+    {
+      "date": "2025-12-13",
+      "balance": 1179.0
+    },
+    {
+      "date": "2025-12-14",
+      "balance": 1179.0
+    },
+    {
+      "date": "2025-12-15",
+      "balance": 711.0
+    },
+    {
+      "date": "2025-12-16",
+      "balance": 808.0
+    },
+    {
+      "date": "2025-12-17",
+      "balance": 870.0
+    },
+    {
+      "date": "2025-12-18",
+      "balance": 959.0
+    },
+    {
+      "date": "2025-12-19",
+      "balance": 987.0
+    },
+    {
+      "date": "2025-12-20",
+      "balance": 987.0
+    },
+    {
+      "date": "2025-12-21",
+      "balance": 987.0
+    },
+    {
+      "date": "2025-12-22",
+      "balance": 1190.0
+    },
+    {
+      "date": "2025-12-23",
+      "balance": 1210.0
+    },
+    {
+      "date": "2025-12-24",
+      "balance": 1266.0
+    },
+    {
+      "date": "2025-12-26",
+      "balance": 1058.0
+    },
+    {
+      "date": "2025-12-29",
+      "balance": 1026.0
+    },
+    {
+      "date": "2025-12-30",
+      "balance": 1496.0
+    },
+    {
+      "date": "2025-12-31",
+      "balance": 1270.0
+    },
+    {
+      "date": "2026-01-02",
+      "balance": 1042.0
+    },
+    {
+      "date": "2026-01-05",
+      "balance": 1160.0
+    },
+    {
+      "date": "2026-01-06",
+      "balance": 1198.0
+    },
+    {
+      "date": "2026-01-07",
+      "balance": 1327.0
+    },
+    {
+      "date": "2026-01-08",
+      "balance": 906.0
+    },
+    {
+      "date": "2026-01-09",
+      "balance": 972.0
+    },
+    {
+      "date": "2026-01-12",
+      "balance": 928.0
+    },
+    {
+      "date": "2026-01-13",
+      "balance": 1054.0
+    },
+    {
+      "date": "2026-01-14",
+      "balance": 987.0
+    },
+    {
+      "date": "2026-01-15",
+      "balance": 960.0
+    },
+    {
+      "date": "2026-01-16",
+      "balance": 432.0
+    },
+    {
+      "date": "2026-01-19",
+      "balance": 481.0
+    },
+    {
+      "date": "2026-01-20",
+      "balance": 553.0
+    },
+    {
+      "date": "2026-01-21",
+      "balance": 603.0
+    },
+    {
+      "date": "2026-01-22",
+      "balance": 655.0
+    },
+    {
+      "date": "2026-01-23",
+      "balance": 786.0
+    },
+    {
+      "date": "2026-01-26",
+      "balance": 747.0
+    },
+    {
+      "date": "2026-01-27",
+      "balance": 759.0
+    },
+    {
+      "date": "2026-01-28",
+      "balance": 527.0
+    },
+    {
+      "date": "2026-01-29",
+      "balance": 0
+    }
+  ],
+  "fxPosition": [
+    {
+      "date": "2025-11-11",
+      "balance": 20000.0,
+      "avgRate": 1464.72,
+      "marketRate": 1464.72
+    },
+    {
+      "date": "2025-11-14",
+      "balance": 40000.0,
+      "avgRate": 1462.59,
+      "marketRate": 1460.45
+    },
+    {
+      "date": "2025-11-14",
+      "balance": 60000.0,
+      "avgRate": 1460.03,
+      "marketRate": 1454.9
+    },
+    {
+      "date": "2025-11-24",
+      "balance": 70000.0,
+      "avgRate": 1462.09,
+      "marketRate": 1474.48
+    },
+    {
+      "date": "2025-11-25",
+      "balance": 105000.0,
+      "avgRate": 1466.78,
+      "marketRate": 1476.15
+    },
+    {
+      "date": "2025-11-26",
+      "balance": 140000.0,
+      "avgRate": 1464.77,
+      "marketRate": 1458.73
+    },
+    {
+      "date": "2025-11-27",
+      "balance": 175000.0,
+      "avgRate": 1465.39,
+      "marketRate": 1467.85
+    },
+    {
+      "date": "2025-11-28",
+      "balance": 210000.0,
+      "avgRate": 1465.6,
+      "marketRate": 1466.65
+    },
+    {
+      "date": "2025-12-01",
+      "balance": 245000.0,
+      "avgRate": 1465.89,
+      "marketRate": 1467.65
+    },
+    {
+      "date": "2025-12-02",
+      "balance": 280000.0,
+      "avgRate": 1466.14,
+      "marketRate": 1467.85
+    },
+    {
+      "date": "2025-12-03",
+      "balance": 315000.0,
+      "avgRate": 1466.43,
+      "marketRate": 1468.75
+    },
+    {
+      "date": "2025-12-04",
+      "balance": 350000.0,
+      "avgRate": 1466.66,
+      "marketRate": 1468.75
+    },
+    {
+      "date": "2025-12-05",
+      "balance": 385000.0,
+      "avgRate": 1467.31,
+      "marketRate": 1473.75
+    },
+    {
+      "date": "2025-12-08",
+      "balance": 420000.0,
+      "avgRate": 1467.52,
+      "marketRate": 1469.88
+    },
+    {
+      "date": "2025-12-09",
+      "balance": 455000.0,
+      "avgRate": 1467.85,
+      "marketRate": 1471.78
+    },
+    {
+      "date": "2025-12-10",
+      "balance": 490000.0,
+      "avgRate": 1468.02,
+      "marketRate": 1470.23
+    },
+    {
+      "date": "2025-12-11",
+      "balance": 525000.0,
+      "avgRate": 1467.94,
+      "marketRate": 1466.85
+    },
+    {
+      "date": "2025-12-12",
+      "balance": 560000.0,
+      "avgRate": 1468.3,
+      "marketRate": 1473.65
+    },
+    {
+      "date": "2025-12-15",
+      "balance": 256547.09999999995,
+      "avgRate": 1468.8,
+      "marketRate": 1476.83
+    },
+    {
+      "date": "2025-12-16",
+      "balance": 291547.1,
+      "avgRate": 1468.92,
+      "marketRate": 1470.98
+    },
+    {
+      "date": "2025-12-17",
+      "balance": 326547.1,
+      "avgRate": 1469.54,
+      "marketRate": 1480.63
+    },
+    {
+      "date": "2025-12-18",
+      "balance": 361547.1,
+      "avgRate": 1470.0,
+      "marketRate": 1478.85
+    },
+    {
+      "date": "2025-12-19",
+      "balance": 396547.1,
+      "avgRate": 1470.43,
+      "marketRate": 1478.85
+    },
+    {
+      "date": "2025-12-22",
+      "balance": 431549.69,
+      "avgRate": 1470.79,
+      "marketRate": 1478.35
+    },
+    {
+      "date": "2025-12-23",
+      "balance": 466549.69,
+      "avgRate": 1471.37,
+      "marketRate": 1484.25
+    },
+    {
+      "date": "2025-12-24",
+      "balance": 501549.69,
+      "avgRate": 1471.3,
+      "marketRate": 1469.75
+    },
+    {
+      "date": "2025-12-24",
+      "balance": 521549.69,
+      "avgRate": 1470.96,
+      "marketRate": 1456.45
+    },
+    {
+      "date": "2025-12-26",
+      "balance": 556549.69,
+      "avgRate": 1470.34,
+      "marketRate": 1455.05
+    },
+    {
+      "date": "2025-12-26",
+      "balance": 566549.69,
+      "avgRate": 1470.04,
+      "marketRate": 1443.75
+    },
+    {
+      "date": "2025-12-26",
+      "balance": 571549.69,
+      "avgRate": 1469.89,
+      "marketRate": 1441.35
+    },
+    {
+      "date": "2025-12-26",
+      "balance": 576549.69,
+      "avgRate": 1469.72,
+      "marketRate": 1440.25
+    },
+    {
+      "date": "2025-12-29",
+      "balance": 611549.69,
+      "avgRate": 1468.47,
+      "marketRate": 1435.65
+    },
+    {
+      "date": "2025-12-30",
+      "balance": 646549.69,
+      "avgRate": 1467.23,
+      "marketRate": 1433.73
+    },
+    {
+      "date": "2025-12-31",
+      "balance": 182408.41999999993,
+      "avgRate": 1458.44,
+      "marketRate": 1461.1
+    },
+    {
+      "date": "2026-01-02",
+      "balance": 217408.41999999993,
+      "avgRate": 1455.81,
+      "marketRate": 1442.1
+    },
+    {
+      "date": "2026-01-05",
+      "balance": 252408.41999999993,
+      "avgRate": 1454.62,
+      "marketRate": 1447.2
+    },
+    {
+      "date": "2026-01-06",
+      "balance": 287408.4199999999,
+      "avgRate": 1453.79,
+      "marketRate": 1447.8
+    },
+    {
+      "date": "2026-01-07",
+      "balance": 322408.4199999999,
+      "avgRate": 1453.32,
+      "marketRate": 1449.5
+    },
+    {
+      "date": "2026-01-08",
+      "balance": 357408.4199999999,
+      "avgRate": 1452.97,
+      "marketRate": 1449.7
+    },
+    {
+      "date": "2026-01-09",
+      "balance": 392408.4199999999,
+      "avgRate": 1453.55,
+      "marketRate": 1459.5
+    },
+    {
+      "date": "2026-01-12",
+      "balance": 427408.4199999999,
+      "avgRate": 1454.15,
+      "marketRate": 1460.9
+    },
+    {
+      "date": "2026-01-13",
+      "balance": 462408.4199999999,
+      "avgRate": 1455.53,
+      "marketRate": 1472.3
+    },
+    {
+      "date": "2026-01-14",
+      "balance": 497408.4199999999,
+      "avgRate": 1457.13,
+      "marketRate": 1478.3
+    },
+    {
+      "date": "2026-01-15",
+      "balance": 6312.94,
+      "avgRate": 1468.1,
+      "marketRate": 1468.1
+    },
+    {
+      "date": "2026-01-16",
+      "balance": 41312.94,
+      "avgRate": 1472.0,
+      "marketRate": 1472.7
+    },
+    {
+      "date": "2026-01-19",
+      "balance": 76312.94,
+      "avgRate": 1472.0,
+      "marketRate": 1472.0
+    },
+    {
+      "date": "2026-01-20",
+      "balance": 111312.94,
+      "avgRate": 1473.19,
+      "marketRate": 1475.8
+    },
+    {
+      "date": "2026-01-21",
+      "balance": 146312.94,
+      "avgRate": 1475.01,
+      "marketRate": 1480.8
+    },
+    {
+      "date": "2026-01-22",
+      "balance": 181312.94,
+      "avgRate": 1473.33,
+      "marketRate": 1466.3
+    },
+    {
+      "date": "2026-01-23",
+      "balance": 216312.94,
+      "avgRate": 1472.17,
+      "marketRate": 1466.15
+    },
+    {
+      "date": "2026-01-26",
+      "balance": 251312.94,
+      "avgRate": 1468.94,
+      "marketRate": 1448.97
+    },
+    {
+      "date": "2026-01-27",
+      "balance": 286312.94,
+      "avgRate": 1466.66,
+      "marketRate": 1450.32
+    },
+    {
+      "date": "2026-01-28",
+      "balance": 356312.94,
+      "avgRate": 1459.35,
+      "marketRate": 1425.07
+    },
+    {
+      "date": "2026-01-29",
+      "balance": 391312.94,
+      "avgRate": 1456.76,
+      "marketRate": 1430.04
+    }
+  ],
+  "payments": [
+    {
+      "date": "2025-12-15",
+      "totalUSD": 4487.14,
+      "ourAvgRate": 1468.8,
+      "vendorAvgRate": 1452.0,
+      "fxGainLoss": -75383.95,
+      "vendorCount": 1,
+      "vendors": [
+        {
+          "vendor": "CORE STAFF",
+          "amountUSD": 4487.14,
+          "vendorRate": 1452.0,
+          "fxGainLoss": -75383.95
+        }
+      ]
+    },
+    {
+      "date": "2025-12-31",
+      "totalUSD": 464141.27,
+      "ourAvgRate": 1458.44,
+      "vendorAvgRate": 1478.0,
+      "fxGainLoss": 9078603.24,
+      "vendorCount": 5,
+      "vendors": [
+        {
+          "vendor": "TME electronic",
+          "amountUSD": 1904.96,
+          "vendorRate": 1478.0,
+          "fxGainLoss": 37261.02
+        },
+        {
+          "vendor": "TTI",
+          "amountUSD": 3257.05,
+          "vendorRate": 1478.0,
+          "fxGainLoss": 63707.9
+        },
+        {
+          "vendor": "CHIP ONE",
+          "amountUSD": 15962.57,
+          "vendorRate": 1478.0,
+          "fxGainLoss": 312227.87
+        },
+        {
+          "vendor": "CHIP ONE(큐엠스)",
+          "amountUSD": 393016.68,
+          "vendorRate": 1478.0,
+          "fxGainLoss": 7687406.26
+        },
+        {
+          "vendor": "ELEMENT",
+          "amountUSD": 50000.01,
+          "vendorRate": 1478.0,
+          "fxGainLoss": 978000.2
+        }
+      ]
+    },
+    {
+      "date": "2026-01-15",
+      "totalUSD": 494606.43,
+      "ourAvgRate": 1468.1,
+      "vendorAvgRate": 1475.0,
+      "fxGainLoss": 3412784.37,
+      "vendorCount": 6,
+      "vendors": [
+        {
+          "vendor": "CORE STAFF",
+          "amountUSD": 2944.72,
+          "vendorRate": 1475.0,
+          "fxGainLoss": 20318.57
+        },
+        {
+          "vendor": "Mouser",
+          "amountUSD": 252079.76,
+          "vendorRate": 1475.0,
+          "fxGainLoss": 1739350.34
+        },
+        {
+          "vendor": "Digikey",
+          "amountUSD": 98178.19,
+          "vendorRate": 1475.0,
+          "fxGainLoss": 677429.51
+        },
+        {
+          "vendor": "RS component",
+          "amountUSD": 10935.3,
+          "vendorRate": 1475.0,
+          "fxGainLoss": 75453.57
+        },
+        {
+          "vendor": "QUANTUS",
+          "amountUSD": 110624.14,
+          "vendorRate": 1475.0,
+          "fxGainLoss": 763306.57
+        },
+        {
+          "vendor": "WALDOM",
+          "amountUSD": 19844.32,
+          "vendorRate": 1475.0,
+          "fxGainLoss": 136925.81
+        }
+      ]
+    },
+    {
+      "date": "2026-12-15",
+      "totalUSD": 333965.31,
+      "ourAvgRate": 1456.76,
+      "vendorAvgRate": 1452.0,
+      "fxGainLoss": -1589674.88,
+      "vendorCount": 5,
+      "vendors": [
+        {
+          "vendor": "Mouser",
+          "amountUSD": 152787.4,
+          "vendorRate": 1452.0,
+          "fxGainLoss": -727268.02
+        },
+        {
+          "vendor": "Digikey",
+          "amountUSD": 60555.2,
+          "vendorRate": 1452.0,
+          "fxGainLoss": -288242.75
+        },
+        {
+          "vendor": "Digikey (큐엠스)",
+          "amountUSD": 103410.2,
+          "vendorRate": 1452.0,
+          "fxGainLoss": -492232.55
+        },
+        {
+          "vendor": "RS component",
+          "amountUSD": 10418.75,
+          "vendorRate": 1452.0,
+          "fxGainLoss": -49593.25
+        },
+        {
+          "vendor": "WALDOM",
+          "amountUSD": 6793.76,
+          "vendorRate": 1452.0,
+          "fxGainLoss": -32338.3
+        }
+      ]
+    }
+  ]
+}
