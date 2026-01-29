@@ -992,13 +992,12 @@
                                         const payment = paymentDatesMap.get(dateStr);
                                         const lines = [
                                             `송금 총액: $${formatNumber(payment.totalUSD, 2)}`,
-                                            `환차손익: ${payment.fxGainLoss >= 0 ? '+' : ''}₩${formatNumber(Math.abs(payment.fxGainLoss), 0)}`,
                                             ``,
-                                            `[ 송금 업체 ]`
+                                            `[ 송금 내역 ]`
                                         ];
                                         
                                         payment.vendors.forEach((v, i) => {
-                                            lines.push(`${i + 1}. ${v.vendor}: $${formatNumber(v.amountUSD, 2)}`);
+                                            lines.push(`${v.vendor}: $${formatNumber(v.amountUSD, 2)}`);
                                         });
                                         
                                         return lines;
@@ -1032,14 +1031,11 @@
             const day = payment.date.getDate();
             
             const vendorList = payment.vendors.map((v, i) => 
-                `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
-                    <span style="color: #475569;">${i + 1}. ${v.vendor}</span>
-                    <span style="font-weight: 600; font-family: 'JetBrains Mono', monospace;">$${formatNumber(v.amountUSD, 2)}</span>
+                `<div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <span style="color: #475569; font-size: 14px;">${v.vendor}</span>
+                    <span style="font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 14px;">$${formatNumber(v.amountUSD, 2)}</span>
                 </div>`
             ).join('');
-            
-            const fxClass = payment.fxGainLoss >= 0 ? '#059669' : '#dc2626';
-            const fxSign = payment.fxGainLoss >= 0 ? '+' : '';
             
             const popup = document.createElement('div');
             popup.style.cssText = `
@@ -1067,24 +1063,18 @@
                     }
                 </style>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3 style="font-size: 18px; font-weight: 600; color: #1e293b;">${month}월 ${day}일 외상대금 송금 내역</h3>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #1e293b;">${month}월 ${day}일 외상대금 송금</h3>
                     <button onclick="this.closest('div').parentElement.remove(); document.getElementById('popupOverlay').remove();" 
                             style="background: none; border: none; font-size: 24px; color: #94a3b8; cursor: pointer; padding: 0; width: 32px; height: 32px; line-height: 1;">×</button>
                 </div>
                 
-                <div style="background: #f8fafc; padding: 16px; border-radius: 12px; margin-bottom: 20px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: #64748b; font-size: 13px;">송금 총액</span>
-                        <span style="font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #1e293b;">$${formatNumber(payment.totalUSD, 2)}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span style="color: #64748b; font-size: 13px;">환차손익</span>
-                        <span style="font-size: 16px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: ${fxClass};">${fxSign}₩${formatNumber(Math.abs(payment.fxGainLoss), 0)}</span>
-                    </div>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
+                    <div style="color: #64748b; font-size: 13px; margin-bottom: 8px;">총 송금액</div>
+                    <div style="font-size: 28px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #1e293b;">$${formatNumber(payment.totalUSD, 2)}</div>
                 </div>
                 
                 <div style="margin-bottom: 12px;">
-                    <div style="color: #64748b; font-size: 12px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">송금 업체 (${payment.vendors.length}개)</div>
+                    <div style="color: #64748b; font-size: 12px; font-weight: 600; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;">송금 내역 (${payment.vendors.length}개 업체)</div>
                     ${vendorList}
                 </div>
             `;
@@ -1358,17 +1348,58 @@
                             })).filter(row => row.date && !isNaN(row.date.getTime()) && row.balance > 0);
                         }
                         
-                        // payments
+                        // payments - 외상대금 상세를 날짜별로 집계
                         if (jsonData.payments && jsonData.payments.length > 0) {
-                            dashboardData.payments = jsonData.payments.map(row => ({
-                                date: parseExcelDate(row.날짜 || row.date),
-                                totalUSD: parseFloat(row.외상대 || row.totalUSD) || 0,
-                                ourAvgRate: parseFloat(row['외상대 매입 평균단가'] || row.ourAvgRate) || 0,
-                                vendorAvgRate: parseFloat(row['외상대 매입 평균단가'] || row.vendorAvgRate) || 0,
-                                fxGainLoss: parseFloat(row.외환차손익 || row.fxGainLoss) || 0,
-                                vendorCount: parseInt(row.vendorCount) || 0,
-                                vendors: row.vendors || (row.매입처 ? [{ vendor: row.매입처, amountUSD: parseFloat(row.외상대 || 0) }] : [])
-                            })).filter(p => p.date && !isNaN(p.date.getTime()) && p.totalUSD > 0);
+                            console.log('Processing payments data...');
+                            
+                            // 날짜별로 그룹화
+                            const paymentsByDate = new Map();
+                            
+                            jsonData.payments.forEach(row => {
+                                const dateValue = parseExcelDate(row.날짜 || row.date);
+                                if (!dateValue || isNaN(dateValue.getTime())) return;
+                                
+                                const dateKey = dateValue.toISOString().split('T')[0];
+                                const vendor = row.매입처 || row.vendor || '';
+                                const amountUSD = parseFloat(row.외상대 || row.totalUSD) || 0;
+                                const vendorRate = parseFloat(row['외상대 매입 평균단가'] || row.vendorAvgRate) || 0;
+                                
+                                if (amountUSD <= 0 || !vendor) return;
+                                
+                                if (!paymentsByDate.has(dateKey)) {
+                                    paymentsByDate.set(dateKey, {
+                                        date: dateValue,
+                                        vendors: [],
+                                        totalUSD: 0
+                                    });
+                                }
+                                
+                                const dayData = paymentsByDate.get(dateKey);
+                                dayData.vendors.push({
+                                    vendor: vendor,
+                                    amountUSD: amountUSD,
+                                    vendorRate: vendorRate
+                                });
+                                dayData.totalUSD += amountUSD;
+                            });
+                            
+                            // Map을 배열로 변환
+                            dashboardData.payments = Array.from(paymentsByDate.values())
+                                .map(p => ({
+                                    date: p.date,
+                                    totalUSD: p.totalUSD,
+                                    ourAvgRate: 0, // 나중에 fxPosition에서 찾기
+                                    vendorAvgRate: p.vendors.reduce((sum, v) => sum + v.vendorRate * v.amountUSD, 0) / p.totalUSD,
+                                    fxGainLoss: 0, // 나중에 계산
+                                    vendorCount: p.vendors.length,
+                                    vendors: p.vendors.sort((a, b) => b.amountUSD - a.amountUSD) // 금액 큰 순
+                                }))
+                                .sort((a, b) => a.date - b.date);
+                            
+                            console.log('Loaded payments:', dashboardData.payments.length, 'days');
+                            if (dashboardData.payments.length > 0) {
+                                console.log('Sample payment:', dashboardData.payments[0]);
+                            }
                         }
                         
                         if (dashboardData.dailyBalance.length > 0 || dashboardData.fxPosition.length > 0) {
