@@ -607,6 +607,32 @@
                 </div>
             </div>
 
+            <!-- 외환 차손익 실적 카드 -->
+            <div style="margin-bottom: 20px;">
+                <div class="kpi-card" style="background: linear-gradient(135deg, rgba(5, 150, 105, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%); border-left: 4px solid #059669;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div>
+                            <div style="font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">외환 차손익 실적</div>
+                            <div style="font-size: 11px; color: #64748b;">우리 매입단가 vs 외상대 매입단가 비교</div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                        <div>
+                            <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">당월 누적</div>
+                            <div id="fxMonthly" style="font-size: 22px; font-weight: 700; font-family: 'JetBrains Mono', monospace;">₩0</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">전체 누적</div>
+                            <div id="fxTotal" style="font-size: 22px; font-weight: 700; font-family: 'JetBrains Mono', monospace;">₩0</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 11px; color: #64748b; margin-bottom: 4px;">외상대금 건수</div>
+                            <div id="fxCount" style="font-size: 22px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #1e293b;">0건</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Charts Row 1 -->
             <div class="chart-grid">
                 <!-- KRW Cash Flow Chart -->
