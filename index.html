@@ -1321,7 +1321,9 @@
         async function autoLoadData() {
             showLoading(true);
             try {
-                const response = await fetch('./data.json');
+                // GitHub Pages용 절대 경로
+                const dataUrl = 'https://raw.githubusercontent.com/ksk19921106-byte/icbankq-dashboard/main/data.json';
+                const response = await fetch(dataUrl);
                 if (response.ok) {
                     const jsonData = await response.json();
                     console.log('Loaded data.json:', jsonData);
