@@ -1258,9 +1258,10 @@
                             color: '#64748b',
                             callback: function(v) {
                                 if (isUSD) {
-                                    return prefix + (v / 1000).toFixed(0) + 'K';
+                                    return (v / 1000).toFixed(0) + 'K';
                                 }
-                                return prefix + formatNumber(v, 0) + suffix;
+                                // Y축 레이블에서 통화 기호 제거
+                                return formatNumber(v, 0);
                             }
                         }
                     }
