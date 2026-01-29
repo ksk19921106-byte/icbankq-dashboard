@@ -211,7 +211,7 @@
         .kpi-card:hover {
             transform: translateY(-3px);
             border-color: rgba(59, 130, 246, 0.25);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         .kpi-card.blue { --card-accent: var(--gradient-blue); }
@@ -223,78 +223,61 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .kpi-label {
             font-size: 12px;
-            color: var(--text-secondary);
             font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: -0.2px;
         }
 
         .kpi-icon {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(59, 130, 246, 0.1);
+            font-size: 16px;
         }
 
-        .kpi-icon svg {
-            width: 18px;
-            height: 18px;
+        .kpi-card.blue .kpi-icon {
+            background: rgba(37, 99, 235, 0.1);
             color: var(--accent-blue);
+        }
+
+        .kpi-card.green .kpi-icon {
+            background: rgba(5, 150, 105, 0.1);
+            color: var(--accent-emerald);
+        }
+
+        .kpi-card.amber .kpi-icon {
+            background: rgba(217, 119, 6, 0.1);
+            color: var(--accent-amber);
+        }
+
+        .kpi-card.purple .kpi-icon {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent-purple);
         }
 
         .kpi-value {
             font-size: 26px;
             font-weight: 700;
+            color: var(--text-primary);
             font-family: 'JetBrains Mono', monospace;
-            margin-bottom: 6px;
-            letter-spacing: -0.5px;
+            margin-bottom: 4px;
         }
 
-        .kpi-sub {
+        .kpi-subtitle {
             font-size: 11px;
             color: var(--text-muted);
         }
 
-        .minus-banner {
-            margin-top: 10px;
-            padding: 6px 10px;
-            background: rgba(244, 63, 94, 0.15);
-            border: 1px solid rgba(244, 63, 94, 0.3);
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--accent-rose);
-            text-align: center;
-        }
-
-        .kpi-change {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            padding: 3px 7px;
-            border-radius: 5px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        .kpi-change.positive {
-            background: rgba(16, 185, 129, 0.12);
-            color: var(--accent-emerald);
-        }
-
-        .kpi-change.negative {
-            background: rgba(244, 63, 94, 0.12);
-            color: var(--accent-rose);
-        }
-
-        /* Chart Sections */
-        .chart-grid {
+        /* Charts Section */
+        .charts-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
@@ -386,6 +369,81 @@
             height: 260px;
         }
 
+        /* FX Summary Card - NEW */
+        .fx-summary-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 20px 24px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fx-summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #059669 0%, #dc2626 100%);
+        }
+
+        .fx-summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .fx-summary-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .fx-summary-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .fx-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .fx-summary-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .fx-summary-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .fx-summary-value {
+            font-size: 22px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .fx-summary-value.positive {
+            color: var(--accent-emerald);
+        }
+
+        .fx-summary-value.negative {
+            color: var(--accent-rose);
+        }
+
+        .fx-summary-value.neutral {
+            color: var(--text-primary);
+        }
+
         /* Empty State */
         .empty-state {
             display: flex;
@@ -399,18 +457,13 @@
         .empty-icon {
             width: 72px;
             height: 72px;
-            background: rgba(59, 130, 246, 0.1);
-            border-radius: 18px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
-        }
-
-        .empty-icon svg {
-            width: 36px;
-            height: 36px;
-            color: var(--accent-blue);
+            font-size: 32px;
         }
 
         .empty-title {
@@ -419,37 +472,31 @@
             margin-bottom: 8px;
         }
 
-        .empty-desc {
+        .empty-subtitle {
             font-size: 13px;
             color: var(--text-muted);
-            line-height: 1.6;
+            max-width: 360px;
         }
 
-        /* Loading State */
+        /* Loading */
         .loading-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
+            inset: 0;
+            background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(4px);
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease;
         }
 
         .loading-overlay.active {
-            opacity: 1;
-            visibility: visible;
+            display: flex;
         }
 
         .loading-spinner {
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border: 3px solid var(--border-color);
             border-top-color: var(--accent-blue);
             border-radius: 50%;
@@ -461,631 +508,538 @@
         }
 
         /* Responsive */
-        @media (max-width: 1200px) {
+        @media (max-width: 1024px) {
             .kpi-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .chart-grid {
+            .charts-grid {
                 grid-template-columns: 1fr;
+            }
+            .fx-summary-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
         }
 
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                gap: 14px;
-                padding: 16px;
-            }
+        @media (max-width: 640px) {
             .kpi-grid {
                 grid-template-columns: 1fr;
             }
+            .header {
+                padding: 16px 20px;
+            }
             .main-content {
-                padding: 16px;
+                padding: 20px 16px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Ambient Background -->
     <div class="ambient-bg">
         <div class="ambient-orb orb-1"></div>
         <div class="ambient-orb orb-2"></div>
     </div>
 
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-    </div>
-
-    <!-- Header -->
-    <header class="header">
+    <div class="header">
         <div class="logo-section">
             <div class="logo-icon">ICB</div>
             <div class="logo-text">
                 <h1>아이씨뱅큐 자금현황</h1>
-                <span>Daily Treasury Dashboard</span>
+                <span id="todayDate">2026년 1월 28일</span>
             </div>
         </div>
         <div class="header-actions">
-            <div class="update-time" id="updateTime">최종 업데이트: -</div>
-            <input type="file" id="fileInput" accept=".xlsx,.xls">
+            <span class="update-time" id="updateTime">최종 업데이트: -</span>
             <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="17 8 12 3 7 8"/>
-                    <line x1="12" y1="3" x2="12" y2="15"/>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
                 </svg>
                 엑셀 업로드
             </button>
+            <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFileUpload(event)">
         </div>
-    </header>
+    </div>
 
-    <!-- Main Content -->
-    <main class="main-content" id="mainContent">
-        <!-- Empty State -->
-        <div class="empty-state" id="emptyState">
-            <div class="empty-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                    <line x1="12" y1="18" x2="12" y2="12"/>
-                    <line x1="9" y1="15" x2="15" y2="15"/>
-                </svg>
-            </div>
-            <h2 class="empty-title">엑셀 파일을 업로드하세요</h2>
-            <p class="empty-desc">
-                일일 자금현황 엑셀 파일(.xlsx)을 업로드하면<br>
-                대시보드가 자동으로 생성됩니다.
-            </p>
+    <div class="main-content" id="content">
+        <div class="empty-state">
+            <div class="empty-icon">📊</div>
+            <div class="empty-title">데이터를 불러오는 중입니다...</div>
+            <div class="empty-subtitle">엑셀 파일을 업로드하거나 data.json을 자동으로 로드합니다.</div>
         </div>
+    </div>
 
-        <!-- Dashboard Content -->
-        <div id="dashboardContent" style="display: none;">
-            <!-- KPI Cards -->
-            <div class="kpi-grid">
-                <div class="kpi-card blue">
-                    <div class="kpi-header">
-                        <span class="kpi-label">USD 보유잔액</span>
-                        <div class="kpi-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M12 6v12M8 10h8M8 14h8"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="kpi-value" id="usdBalance">-</div>
-                    <div class="kpi-sub" id="usdKrwValue">원화환산액: -</div>
-                </div>
-
-                <div class="kpi-card green">
-                    <div class="kpi-header">
-                        <span class="kpi-label">평균 매입단가</span>
-                        <div class="kpi-icon" style="background: rgba(16, 185, 129, 0.1);">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-emerald);">
-                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="kpi-value" id="avgRate">-</div>
-                    <div class="kpi-sub" id="rateComparison">시장 환율 대비 -</div>
-                </div>
-
-                <div class="kpi-card amber">
-                    <div class="kpi-header">
-                        <span class="kpi-label">직전 매입환율</span>
-                        <div class="kpi-icon" style="background: rgba(245, 158, 11, 0.1);">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-amber);">
-                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-                                <polyline points="16 7 22 7 22 13"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="kpi-value" id="marketRate">-</div>
-                    <div class="kpi-sub" id="marketRateDate">(- 기준)</div>
-                </div>
-
-                <div class="kpi-card purple">
-                    <div class="kpi-header">
-                        <span class="kpi-label">총 보유잔액</span>
-                        <div class="kpi-icon" style="background: rgba(139, 92, 246, 0.1);">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-purple);">
-                                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                                <path d="M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                <path d="M2 10h2M20 10h2M2 14h2M20 14h2"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="kpi-value" id="krwBalance">-</div>
-                    <div class="kpi-sub" id="krwChange">전일 대비 -</div>
-                    <div class="minus-banner" id="minusBanner" style="display: none;">
-                        ⚠️ 원화 마이너스 통장으로 달러 CDA 매입 중
-                    </div>
-                </div>
-            </div>
-
-            <!-- Charts Row 1 -->
-            <div class="chart-grid">
-                <!-- KRW Cash Flow Chart -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">KRW 현금흐름 추세</h3>
-                        <div class="filter-buttons" data-chart="krw">
-                            <button class="filter-btn" data-days="30">30일</button>
-                            <button class="filter-btn" data-days="60">60일</button>
-                            <button class="filter-btn active" data-days="90">90일</button>
-                            <button class="filter-btn" data-days="120">120일</button>
-                            <button class="filter-btn" data-days="365">1년</button>
-                            <button class="filter-btn" data-days="all">전체</button>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="krwChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- USD Position Chart -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">USD 잔액 추이</h3>
-                        <div class="filter-buttons" data-chart="usd">
-                            <button class="filter-btn" data-days="30">30일</button>
-                            <button class="filter-btn" data-days="60">60일</button>
-                            <button class="filter-btn active" data-days="90">90일</button>
-                            <button class="filter-btn" data-days="120">120일</button>
-                            <button class="filter-btn" data-days="all">전체</button>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="usdChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Charts Row 2 -->
-            <div class="chart-grid">
-                <!-- Average Rate Trend -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">평균단가 매입 추이</h3>
-                        <div class="filter-buttons" data-chart="avgRate">
-                            <button class="filter-btn" data-days="30">30일</button>
-                            <button class="filter-btn" data-days="60">60일</button>
-                            <button class="filter-btn active" data-days="90">90일</button>
-                            <button class="filter-btn" data-days="120">120일</button>
-                            <button class="filter-btn" data-days="all">전체</button>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="avgRateChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Exchange Rate Comparison -->
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">환율 비교 분석</h3>
-                        <div class="filter-buttons" data-chart="rateCompare">
-                            <button class="filter-btn" data-days="30">30일</button>
-                            <button class="filter-btn" data-days="60">60일</button>
-                            <button class="filter-btn active" data-days="90">90일</button>
-                            <button class="filter-btn" data-days="120">120일</button>
-                            <button class="filter-btn" data-days="all">전체</button>
-                        </div>
-                        <div class="chart-legend">
-                            <div class="legend-item">
-                                <div class="legend-dot" style="background: var(--accent-cyan);"></div>
-                                시장환율
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-dot" style="background: var(--accent-amber);"></div>
-                                평균단가
-                            </div>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="rateCompareChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
 
     <script>
-        // Global data storage
         let dashboardData = {
             dailyBalance: [],
-            fxPosition: []
+            fxPosition: [],
+            payments: []  // NEW: 외상대금 + 환차손익
         };
 
-        // Chart instances
-        let krwChart, usdChart, avgRateChart, rateCompareChart;
-
-        // Filter state (days to show)
-        let filterState = {
-            krw: 90,
-            usd: 90,
-            avgRate: 90,
-            rateCompare: 90
+        let charts = {
+            dailyBalance: null,
+            usdBalance: null,
+            exchangeRate: null
         };
 
-        // File upload handler
-        document.getElementById('fileInput').addEventListener('change', handleFileUpload);
-
-        // Filter button event listeners
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('filter-btn')) {
-                const btn = e.target;
-                const chartType = btn.closest('.filter-buttons').dataset.chart;
-                const days = btn.dataset.days;
-                
-                // Update active state
-                btn.closest('.filter-buttons').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                // Update filter state
-                filterState[chartType] = days === 'all' ? 'all' : parseInt(days);
-                
-                // Re-render the specific chart
-                switch(chartType) {
-                    case 'krw': renderKRWChart(); break;
-                    case 'usd': renderUSDChart(); break;
-                    case 'avgRate': renderAvgRateChart(); break;
-                    case 'rateCompare': renderRateCompareChart(); break;
-                }
-            }
-        });
-
-        function handleFileUpload(e) {
-            const file = e.target.files[0];
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
             if (!file) return;
 
             showLoading(true);
-
             const reader = new FileReader();
+            
             reader.onload = function(e) {
                 try {
                     const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+                    const workbook = XLSX.read(data, { type: 'array' });
                     
-                    parseWorkbook(workbook);
+                    // 1. 일자별 잔액
+                    if (workbook.SheetNames.includes('일자별잔액')) {
+                        const sheet = workbook.Sheets['일자별잔액'];
+                        const jsonData = XLSX.utils.sheet_to_json(sheet);
+                        dashboardData.dailyBalance = jsonData.map(row => ({
+                            date: parseExcelDate(row['날짜']),
+                            balance: parseFloat(row['잔액']) || 0
+                        })).filter(row => row.date && !isNaN(row.date.getTime()));
+                    }
+                    
+                    // 2. 외화현황
+                    if (workbook.SheetNames.includes('외화현황')) {
+                        const sheet = workbook.Sheets['외화현황'];
+                        const jsonData = XLSX.utils.sheet_to_json(sheet);
+                        dashboardData.fxPosition = jsonData.map(row => ({
+                            date: parseExcelDate(row['날짜']),
+                            balance: parseFloat(row['잔액']) || 0,
+                            avgRate: parseFloat(row['평균단가']) || 0,
+                            marketRate: parseFloat(row['당일환율']) || parseFloat(row['당일 환율']) || 0
+                        })).filter(row => row.date && !isNaN(row.date.getTime()) && row.balance > 0);
+                    }
+                    
+                    // 3. 외상대금 상세 + 환차손익 계산 (날짜별 집계 + 업체별 상세)
+                    if (workbook.SheetNames.includes('외상대금 상세')) {
+                        const paymentSheet = workbook.Sheets['외상대금 상세'];
+                        const paymentData = XLSX.utils.sheet_to_json(paymentSheet);
+                        
+                        // 날짜별 우리 평균단가 맵 생성
+                        const fxRateMap = new Map();
+                        dashboardData.fxPosition.forEach(fx => {
+                            fxRateMap.set(fx.date.getTime(), fx.avgRate);
+                        });
+                        
+                        // 개별 계산
+                        const individualPayments = paymentData.map(row => {
+                            const paymentDate = parseExcelDate(row['날짜']);
+                            const amountUSD = parseFloat(row['외상대']) || 0;
+                            const vendorRate = parseFloat(row['외상대 매입 평균단가']) || 0;
+                            
+                            let ourRate = null;
+                            const sortedDates = Array.from(fxRateMap.keys()).sort((a, b) => b - a);
+                            for (const date of sortedDates) {
+                                if (date <= paymentDate.getTime()) {
+                                    ourRate = fxRateMap.get(date);
+                                    break;
+                                }
+                            }
+                            
+                            const fxGainLoss = ourRate ? amountUSD * (vendorRate - ourRate) : 0;
+                            
+                            return {
+                                date: paymentDate,
+                                vendor: row['매입처'] || '',
+                                amountUSD: amountUSD,
+                                ourAvgRate: ourRate || 0,
+                                vendorRate: vendorRate,
+                                fxGainLoss: fxGainLoss
+                            };
+                        }).filter(p => p.date && !isNaN(p.date.getTime()) && p.amountUSD > 0);
+                        
+                        // 날짜별로 집계
+                        const paymentsByDate = new Map();
+                        individualPayments.forEach(p => {
+                            const dateStr = p.date.toISOString().split('T')[0];
+                            if (!paymentsByDate.has(dateStr)) {
+                                paymentsByDate.set(dateStr, []);
+                            }
+                            paymentsByDate.get(dateStr).push(p);
+                        });
+                        
+                        dashboardData.payments = Array.from(paymentsByDate.entries()).map(([dateStr, payments]) => {
+                            const totalUSD = payments.reduce((sum, p) => sum + p.amountUSD, 0);
+                            const weightedOurRate = payments.reduce((sum, p) => sum + p.amountUSD * p.ourAvgRate, 0) / totalUSD;
+                            const weightedVendorRate = payments.reduce((sum, p) => sum + p.amountUSD * p.vendorRate, 0) / totalUSD;
+                            const totalFxGainLoss = payments.reduce((sum, p) => sum + p.fxGainLoss, 0);
+                            
+                            // 업체별 상세 리스트
+                            const vendors = payments.map(p => ({
+                                vendor: p.vendor,
+                                amountUSD: p.amountUSD,
+                                vendorRate: p.vendorRate,
+                                fxGainLoss: p.fxGainLoss
+                            }));
+                            
+                            return {
+                                date: new Date(dateStr),
+                                totalUSD: totalUSD,
+                                ourAvgRate: weightedOurRate,
+                                vendorAvgRate: weightedVendorRate,
+                                fxGainLoss: totalFxGainLoss,
+                                vendorCount: payments.length,
+                                vendors: vendors
+                            };
+                        });
+                    }
+                    
                     renderDashboard();
-                    
-                    document.getElementById('updateTime').textContent = 
-                        '최종 업데이트: ' + new Date().toLocaleString('ko-KR');
-                    
+                    document.getElementById('updateTime').textContent = '최종 업데이트: ' + new Date().toLocaleString('ko-KR');
                     showLoading(false);
-                } catch (error) {
-                    console.error('Error parsing file:', error);
-                    alert('파일 파싱 중 오류가 발생했습니다: ' + error.message);
+                } catch (err) {
+                    alert('파일 처리 중 오류가 발생했습니다: ' + err.message);
                     showLoading(false);
                 }
             };
+            
             reader.readAsArrayBuffer(file);
         }
 
-        function parseWorkbook(workbook) {
-            // Parse 일자별잔액
-            const balanceSheet = workbook.Sheets['일자별잔액'];
-            if (balanceSheet) {
-                const balanceData = XLSX.utils.sheet_to_json(balanceSheet);
-                dashboardData.dailyBalance = balanceData.map(row => ({
-                    date: parseDate(row['날짜']),
-                    balance: parseFloat(row['잔액']) || 0
-                })).filter(row => row.date);
-            }
-
-            // Parse 외화현황
-            const fxSheet = workbook.Sheets['외화현황'];
-            if (fxSheet) {
-                const fxData = XLSX.utils.sheet_to_json(fxSheet);
-                console.log('외화현황 raw:', fxData);
-                
-                if (fxData.length > 0) {
-                    // 컬럼명 찾기 (공백/유니코드 차이 대응)
-                    const keys = Object.keys(fxData[0]);
-                    console.log('외화현황 컬럼:', keys);
-                    
-                    const findKey = (searchTerms) => {
-                        return keys.find(k => searchTerms.some(term => k.includes(term))) || null;
-                    };
-                    
-                    const dateKey = findKey(['날짜', '일자', 'date']);
-                    const balanceKey = findKey(['잔액', 'balance']);
-                    const avgRateKey = findKey(['평균단가', '평균', 'avg']);
-                    const marketRateKey = findKey(['당일', '환율', '시장', 'market']);
-                    
-                    console.log('매핑된 키:', { dateKey, balanceKey, avgRateKey, marketRateKey });
-                    
-                    dashboardData.fxPosition = fxData.map(row => ({
-                        date: parseDate(dateKey ? row[dateKey] : null),
-                        balance: parseFloat(balanceKey ? row[balanceKey] : 0) || 0,
-                        avgRate: parseFloat(avgRateKey ? row[avgRateKey] : 0) || 0,
-                        marketRate: parseFloat(marketRateKey ? row[marketRateKey] : 0) || 0
-                    })).filter(row => row.date && row.balance > 0);
-                }
-            }
-
-            console.log('Parsed fxPosition:', dashboardData.fxPosition);
-        }
-
-        function parseDate(value) {
-            if (!value) return null;
-            if (value instanceof Date) return value;
-            if (typeof value === 'number') {
-                const date = new Date((value - 25569) * 86400 * 1000);
-                return date;
-            }
-            return new Date(value);
-        }
-
         function renderDashboard() {
-            document.getElementById('emptyState').style.display = 'none';
-            document.getElementById('dashboardContent').style.display = 'block';
-
-            updateKPIs();
-            renderKRWChart();
-            renderUSDChart();
-            renderAvgRateChart();
-            renderRateCompareChart();
-        }
-
-        function updateKPIs() {
-            const fx = dashboardData.fxPosition;
-            const balance = dashboardData.dailyBalance;
-
-            if (fx.length > 0) {
-                const latest = fx[fx.length - 1];
-                const prev = fx.length > 1 ? fx[fx.length - 2] : null;
-
-                // USD Balance
-                document.getElementById('usdBalance').textContent = 
-                    '$' + formatNumber(latest.balance, 2);
-
-                // USD 원화환산액 (USD 잔액 × 당일 시장환율)
-                const usdKrwValue = latest.balance * latest.marketRate;
-                const usdKrwValueEl = document.getElementById('usdKrwValue');
-                if (usdKrwValue >= 100000000) {
-                    // 1억 이상이면 억 단위로 표시
-                    usdKrwValueEl.textContent = '원화환산액: ' + formatNumber(usdKrwValue / 100000000, 2) + '억';
-                } else {
-                    // 백만 단위로 표시
-                    usdKrwValueEl.textContent = '원화환산액: ' + formatNumber(usdKrwValue / 1000000, 0) + '백만';
-                }
-
-                // Average Rate
-                document.getElementById('avgRate').textContent = 
-                    '₩' + formatNumber(latest.avgRate, 2);
-
-                // Rate Comparison (시장환율 - 평균단가)
-                const rateDiff = latest.marketRate - latest.avgRate;
-                const rateCompEl = document.getElementById('rateComparison');
-                if (rateDiff > 0) {
-                    // 시장환율이 더 높음 = 우리가 싸게 샀음 = 절감
-                    rateCompEl.innerHTML = `<span class="kpi-change positive">▼ ₩${formatNumber(Math.abs(rateDiff), 1)} 절감</span>`;
-                } else {
-                    rateCompEl.innerHTML = `<span class="kpi-change negative">▲ ₩${formatNumber(Math.abs(rateDiff), 1)}</span>`;
-                }
-
-                // Market Rate
-                document.getElementById('marketRate').textContent = 
-                    '₩' + formatNumber(latest.marketRate, 2);
-
-                // 직전 매입환율 날짜 표시
-                const marketRateDateEl = document.getElementById('marketRateDate');
-                if (latest.date) {
-                    const month = latest.date.getMonth() + 1;
-                    const day = latest.date.getDate();
-                    marketRateDateEl.textContent = `(${month}/${day} 기준)`;
-                }
+            const content = document.getElementById('content');
+            
+            if (dashboardData.dailyBalance.length === 0 && dashboardData.fxPosition.length === 0) {
+                return;
             }
-
-            if (balance.length > 0) {
-                const latestBal = balance[balance.length - 1];
-                const prevBal = balance.length > 1 ? balance[balance.length - 2] : null;
-
-                // KRW Balance (단위: 백만원)
-                const balanceInMillion = latestBal.balance;
-                if (Math.abs(balanceInMillion) >= 1000) {
-                    document.getElementById('krwBalance').textContent = 
-                        formatNumber(balanceInMillion / 100, 1) + '억';
-                } else {
-                    document.getElementById('krwBalance').textContent = 
-                        formatNumber(balanceInMillion, 0) + '백만';
-                }
-
-                // 마이너스 통장 배너 표시/숨김
-                const minusBanner = document.getElementById('minusBanner');
-                if (balanceInMillion < 0) {
-                    minusBanner.style.display = 'block';
-                } else {
-                    minusBanner.style.display = 'none';
-                }
-
-                // KRW Change
-                if (prevBal) {
-                    const krwChange = latestBal.balance - prevBal.balance;
-                    const krwChangeEl = document.getElementById('krwChange');
-                    const changeDisplay = Math.abs(krwChange) >= 100 
-                        ? formatNumber(Math.abs(krwChange) / 100, 1) + '억'
-                        : formatNumber(Math.abs(krwChange), 0) + '백만';
-                    if (krwChange >= 0) {
-                        krwChangeEl.innerHTML = `<span class="kpi-change positive">▲ ${changeDisplay}</span> 전일 대비`;
-                    } else {
-                        krwChangeEl.innerHTML = `<span class="kpi-change negative">▼ ${changeDisplay}</span> 전일 대비`;
-                    }
-                }
-            }
-        }
-
-        function renderKRWChart() {
-            const ctx = document.getElementById('krwChart').getContext('2d');
-            const days = filterState.krw;
-            const data = days === 'all' 
-                ? dashboardData.dailyBalance 
-                : dashboardData.dailyBalance.slice(-days);
-
-            if (krwChart) krwChart.destroy();
-
-            const gradient = ctx.createLinearGradient(0, 0, 0, 220);
-            gradient.addColorStop(0, 'rgba(139, 92, 246, 0.3)');
-            gradient.addColorStop(1, 'rgba(139, 92, 246, 0)');
-
-            krwChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(d => formatDateLabel(d.date)),
-                    datasets: [{
-                        data: data.map(d => d.balance),
-                        borderColor: '#8b5cf6',
-                        backgroundColor: gradient,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: data.length > 100 ? 0 : 2,
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: '#8b5cf6',
-                        borderWidth: 2
-                    }]
-                },
-                options: createChartOptions('', '백만')
+            
+            const latestKRW = dashboardData.dailyBalance.length > 0 
+                ? dashboardData.dailyBalance[dashboardData.dailyBalance.length - 1].balance 
+                : 0;
+            
+            const latestFX = dashboardData.fxPosition.length > 0 
+                ? dashboardData.fxPosition[dashboardData.fxPosition.length - 1] 
+                : { balance: 0, avgRate: 0, marketRate: 0 };
+            
+            // 환차손익 집계 (NEW)
+            const totalFXGainLoss = dashboardData.payments.reduce((sum, p) => sum + p.fxGainLoss, 0);
+            const currentMonthPayments = dashboardData.payments.filter(p => {
+                const now = new Date();
+                return p.date.getMonth() === now.getMonth() && p.date.getFullYear() === now.getFullYear();
             });
+            const monthlyFXGainLoss = currentMonthPayments.reduce((sum, p) => sum + p.fxGainLoss, 0);
+            
+            content.innerHTML = `
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card blue">
+                        <div class="kpi-header">
+                            <span class="kpi-label">KRW 잔액</span>
+                            <div class="kpi-icon">₩</div>
+                        </div>
+                        <div class="kpi-value">₩${formatNumber(latestKRW, 0)}</div>
+                        <div class="kpi-subtitle">원화 계좌 잔액</div>
+                    </div>
+                    
+                    <div class="kpi-card green">
+                        <div class="kpi-header">
+                            <span class="kpi-label">USD 잔액</span>
+                            <div class="kpi-icon">$</div>
+                        </div>
+                        <div class="kpi-value">$${formatNumber(latestFX.balance, 2)}</div>
+                        <div class="kpi-subtitle">외화 보유량</div>
+                    </div>
+                    
+                    <div class="kpi-card amber">
+                        <div class="kpi-header">
+                            <span class="kpi-label">평균 매입단가</span>
+                            <div class="kpi-icon">📊</div>
+                        </div>
+                        <div class="kpi-value">₩${formatNumber(latestFX.avgRate, 2)}</div>
+                        <div class="kpi-subtitle">현재 포지션 평균</div>
+                    </div>
+                    
+                    <div class="kpi-card purple">
+                        <div class="kpi-header">
+                            <span class="kpi-label">당일 환율</span>
+                            <div class="kpi-icon">💱</div>
+                        </div>
+                        <div class="kpi-value">₩${formatNumber(latestFX.marketRate, 2)}</div>
+                        <div class="kpi-subtitle">시장 환율</div>
+                    </div>
+                </div>
+
+                <!-- FX Summary Card (NEW) -->
+                <div class="fx-summary-card">
+                    <div class="fx-summary-header">
+                        <div>
+                            <div class="fx-summary-title">외환 차손익 실적</div>
+                            <div class="fx-summary-subtitle">우리 매입단가 vs 외상대 매입단가 비교</div>
+                        </div>
+                    </div>
+                    <div class="fx-summary-grid">
+                        <div class="fx-summary-item">
+                            <div class="fx-summary-label">당월 누적</div>
+                            <div class="fx-summary-value ${monthlyFXGainLoss >= 0 ? 'positive' : 'negative'}">
+                                ${monthlyFXGainLoss >= 0 ? '+' : ''}₩${formatNumber(Math.abs(monthlyFXGainLoss), 0)}
+                            </div>
+                        </div>
+                        <div class="fx-summary-item">
+                            <div class="fx-summary-label">전체 누적</div>
+                            <div class="fx-summary-value ${totalFXGainLoss >= 0 ? 'positive' : 'negative'}">
+                                ${totalFXGainLoss >= 0 ? '+' : ''}₩${formatNumber(Math.abs(totalFXGainLoss), 0)}
+                            </div>
+                        </div>
+                        <div class="fx-summary-item">
+                            <div class="fx-summary-label">외상대금 건수</div>
+                            <div class="fx-summary-value neutral">
+                                ${dashboardData.payments.length}건
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div class="chart-title">KRW 잔액 추이 <span>일별</span></div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="dailyBalanceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div class="chart-title">USD 평균 잔액 추이 <span>송금 내역 포함</span></div>
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background: #06b6d4;"></div>
+                                    <span>USD 잔액</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-dot" style="background: #dc2626;"></div>
+                                    <span>외상대금 송금</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="usdBalanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-card full-width">
+                    <div class="chart-header">
+                        <div class="chart-title">환율 비교 <span>매입단가 vs 시장환율</span></div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #06b6d4;"></div>
+                                <span>당일환율</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot" style="background: #f59e0b;"></div>
+                                <span>평균단가</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="exchangeRateChart"></canvas>
+                    </div>
+                </div>
+            `;
+            
+            createCharts();
         }
 
-        function renderUSDChart() {
-            const ctx = document.getElementById('usdChart').getContext('2d');
-            const days = filterState.usd;
-            const data = days === 'all' 
-                ? dashboardData.fxPosition 
-                : dashboardData.fxPosition.slice(-days);
-
-            if (usdChart) usdChart.destroy();
-
-            const gradient = ctx.createLinearGradient(0, 0, 0, 220);
-            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.3)');
-            gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
-
-            usdChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(d => formatDateLabel(d.date)),
-                    datasets: [{
-                        data: data.map(d => d.balance),
-                        borderColor: '#3b82f6',
-                        backgroundColor: gradient,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: data.length > 50 ? 2 : 3,
-                        pointBackgroundColor: '#3b82f6',
-                        borderWidth: 2
-                    }]
-                },
-                options: createChartOptions('$', '', true)
-            });
-        }
-
-        function renderAvgRateChart() {
-            const ctx = document.getElementById('avgRateChart').getContext('2d');
-            const days = filterState.avgRate;
-            const data = days === 'all' 
-                ? dashboardData.fxPosition 
-                : dashboardData.fxPosition.slice(-days);
-
-            if (avgRateChart) avgRateChart.destroy();
-
-            const gradient = ctx.createLinearGradient(0, 0, 0, 220);
-            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
-            gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
-
-            avgRateChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(d => formatDateLabel(d.date)),
-                    datasets: [{
-                        data: data.map(d => d.avgRate),
-                        borderColor: '#10b981',
-                        backgroundColor: gradient,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: data.length > 50 ? 2 : 3,
-                        pointBackgroundColor: '#10b981',
-                        borderWidth: 2
-                    }]
-                },
-                options: createChartOptions('₩', '')
-            });
-        }
-
-        function renderRateCompareChart() {
-            const ctx = document.getElementById('rateCompareChart').getContext('2d');
-            const days = filterState.rateCompare;
-            const data = days === 'all' 
-                ? dashboardData.fxPosition 
-                : dashboardData.fxPosition.slice(-days);
-
-            if (rateCompareChart) rateCompareChart.destroy();
-
-            rateCompareChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(d => formatDateLabel(d.date)),
-                    datasets: [{
-                        label: '시장환율',
-                        data: data.map(d => d.marketRate),
-                        borderColor: '#06b6d4',
-                        backgroundColor: 'transparent',
-                        tension: 0.4,
-                        pointRadius: data.length > 50 ? 2 : 3,
-                        pointBackgroundColor: '#06b6d4',
-                        borderWidth: 2
-                    }, {
-                        label: '평균단가',
-                        data: data.map(d => d.avgRate),
-                        borderColor: '#f59e0b',
-                        backgroundColor: 'transparent',
-                        tension: 0.4,
-                        pointRadius: data.length > 50 ? 2 : 3,
-                        pointBackgroundColor: '#f59e0b',
-                        borderWidth: 2,
-                        borderDash: [5, 5]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
+        function createCharts() {
+            // Destroy existing charts
+            Object.values(charts).forEach(chart => chart?.destroy());
+            
+            // 1. KRW 잔액 추이
+            if (dashboardData.dailyBalance.length > 0) {
+                const ctx = document.getElementById('dailyBalanceChart').getContext('2d');
+                const data = dashboardData.dailyBalance.slice(-60);
+                
+                charts.dailyBalance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.map(d => formatDateLabel(d.date)),
+                        datasets: [{
+                            label: 'KRW 잔액',
+                            data: data.map(d => d.balance),
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: data.length > 50 ? 0 : 3,
+                            pointBackgroundColor: '#2563eb',
+                            borderWidth: 2
+                        }]
                     },
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            backgroundColor: '#ffffff',
-                            borderColor: '#e2e8f0',
-                            borderWidth: 1,
-                            titleColor: '#1e293b',
-                            bodyColor: '#475569',
-                            padding: 10,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ₩' + formatNumber(context.raw, 2);
+                    options: createChartOptions('₩', '', false)
+                });
+            }
+            
+            // 2. USD 잔액 추이 + 송금 마커 (ENHANCED)
+            if (dashboardData.fxPosition.length > 0) {
+                const ctx = document.getElementById('usdBalanceChart').getContext('2d');
+                const data = dashboardData.fxPosition.slice(-60);
+                
+                // 송금일 데이터 준비
+                const paymentDates = new Set(dashboardData.payments.map(p => p.date.toISOString().split('T')[0]));
+                
+                charts.usdBalance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.map(d => formatDateLabel(d.date)),
+                        datasets: [{
+                            label: 'USD 잔액',
+                            data: data.map(d => d.balance),
+                            borderColor: '#06b6d4',
+                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: data.map(d => {
+                                const dateStr = d.date.toISOString().split('T')[0];
+                                return paymentDates.has(dateStr) ? 6 : (data.length > 50 ? 2 : 3);
+                            }),
+                            pointBackgroundColor: data.map(d => {
+                                const dateStr = d.date.toISOString().split('T')[0];
+                                return paymentDates.has(dateStr) ? '#dc2626' : '#06b6d4';
+                            }),
+                            pointBorderColor: data.map(d => {
+                                const dateStr = d.date.toISOString().split('T')[0];
+                                return paymentDates.has(dateStr) ? '#ffffff' : '#06b6d4';
+                            }),
+                            pointBorderWidth: data.map(d => {
+                                const dateStr = d.date.toISOString().split('T')[0];
+                                return paymentDates.has(dateStr) ? 2 : 0;
+                            }),
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        ...createChartOptions('$', '', true),
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#ffffff',
+                                borderColor: '#e2e8f0',
+                                borderWidth: 1,
+                                titleColor: '#1e293b',
+                                bodyColor: '#475569',
+                                padding: 12,
+                                callbacks: {
+                                    label: function(context) {
+                                        const dateStr = data[context.dataIndex].date.toISOString().split('T')[0];
+                                        const payment = dashboardData.payments.find(p => 
+                                            p.date.toISOString().split('T')[0] === dateStr
+                                        );
+                                        
+                                        let label = `USD 잔액: $${formatNumber(context.raw, 2)}`;
+                                        
+                                        if (payment) {
+                                            const fxText = payment.fxGainLoss >= 0 ? '환차익' : '환차손';
+                                            label += `\n━━━━━━━━━━━━━━━━━━━━━━`;
+                                            label += `\n🔴 외상대금 송금 (${payment.vendorCount}개 업체)`;
+                                            label += `\n총 외상대금: $${formatNumber(payment.totalUSD, 2)}`;
+                                            label += `\n━━━━━━━━━━━━━━━━━━━━━━`;
+                                            
+                                            // 업체별 상세 표시
+                                            if (payment.vendors && payment.vendors.length > 0) {
+                                                payment.vendors.forEach(v => {
+                                                    const vfxText = v.fxGainLoss >= 0 ? '✅' : '❌';
+                                                    label += `\n${vfxText} ${v.vendor}`;
+                                                    label += `\n   $${formatNumber(v.amountUSD, 2)}`;
+                                                    label += `\n   환차손익: ${v.fxGainLoss >= 0 ? '+' : ''}₩${formatNumber(Math.abs(v.fxGainLoss), 0)}`;
+                                                });
+                                            }
+                                            
+                                            label += `\n━━━━━━━━━━━━━━━━━━━━━━`;
+                                            label += `\n외상대 평균단가: ₩${formatNumber(payment.vendorAvgRate, 2)}`;
+                                            label += `\n우리 매입단가: ₩${formatNumber(payment.ourAvgRate, 2)}`;
+                                            label += `\n총 ${fxText}: ${payment.fxGainLoss >= 0 ? '+' : ''}₩${formatNumber(Math.abs(payment.fxGainLoss), 0)}`;
+                                        }
+                                        
+                                        return label;
+                                    }
                                 }
                             }
                         }
+                    }
+                });
+            }
+            
+            // 3. 환율 비교
+            if (dashboardData.fxPosition.length > 0) {
+                const ctx = document.getElementById('exchangeRateChart').getContext('2d');
+                const data = dashboardData.fxPosition.slice(-60);
+                
+                charts.exchangeRate = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.map(d => formatDateLabel(d.date)),
+                        datasets: [{
+                            label: '당일환율',
+                            data: data.map(d => d.marketRate),
+                            borderColor: '#06b6d4',
+                            backgroundColor: 'transparent',
+                            tension: 0.4,
+                            pointRadius: data.length > 50 ? 2 : 3,
+                            pointBackgroundColor: '#06b6d4',
+                            borderWidth: 2
+                        }, {
+                            label: '평균단가',
+                            data: data.map(d => d.avgRate),
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'transparent',
+                            tension: 0.4,
+                            pointRadius: data.length > 50 ? 2 : 3,
+                            pointBackgroundColor: '#f59e0b',
+                            borderWidth: 2,
+                            borderDash: [5, 5]
+                        }]
                     },
-                    scales: {
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#64748b', font: { size: 10 } }
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            mode: 'index',
+                            intersect: false
                         },
-                        y: {
-                            grid: { color: 'rgba(226, 232, 240, 0.8)' },
-                            ticks: {
-                                color: '#64748b',
-                                callback: v => '₩' + formatNumber(v, 0)
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#ffffff',
+                                borderColor: '#e2e8f0',
+                                borderWidth: 1,
+                                titleColor: '#1e293b',
+                                bodyColor: '#475569',
+                                padding: 10,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ₩' + formatNumber(context.raw, 2);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#64748b', font: { size: 10 } }
+                            },
+                            y: {
+                                grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                                ticks: {
+                                    color: '#64748b',
+                                    callback: v => '₩' + formatNumber(v, 0)
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
+            }
         }
 
         function createChartOptions(prefix = '', suffix = '', isUSD = false) {
@@ -1156,42 +1110,46 @@
         async function autoLoadData() {
             showLoading(true);
             try {
-                // 같은 폴더의 data.json 로드 시도
                 const response = await fetch('./data.json');
                 if (response.ok) {
                     const jsonData = await response.json();
                     console.log('Loaded data.json:', jsonData);
                     
-                    // JSON 데이터를 dashboardData로 변환
+                    // dailyBalance
                     if (jsonData.dailyBalance && jsonData.dailyBalance.length > 0) {
                         dashboardData.dailyBalance = jsonData.dailyBalance.map(row => ({
-                            date: parseExcelDate(row['날짜'] || row.date),
-                            balance: parseFloat(row['잔액'] || row.balance) || 0
+                            date: parseExcelDate(row.date),
+                            balance: parseFloat(row.balance) || 0
                         })).filter(row => row.date && !isNaN(row.date.getTime()));
-                        console.log('dailyBalance parsed:', dashboardData.dailyBalance.length, 'rows');
                     }
                     
+                    // fxPosition
                     if (jsonData.fxPosition && jsonData.fxPosition.length > 0) {
                         dashboardData.fxPosition = jsonData.fxPosition.map(row => ({
-                            date: parseExcelDate(row['날짜'] || row.date),
-                            balance: parseFloat(row['잔액'] || row.balance) || 0,
-                            avgRate: parseFloat(row['평균단가'] || row.avgRate) || 0,
-                            marketRate: parseFloat(row['당일환율'] || row['당일 환율'] || row.marketRate) || 0
+                            date: parseExcelDate(row.date),
+                            balance: parseFloat(row.balance) || 0,
+                            avgRate: parseFloat(row.avgRate) || 0,
+                            marketRate: parseFloat(row.marketRate) || 0
                         })).filter(row => row.date && !isNaN(row.date.getTime()) && row.balance > 0);
-                        console.log('fxPosition parsed:', dashboardData.fxPosition.length, 'rows');
                     }
                     
-                    console.log('Parsed dashboardData:', dashboardData);
+                    // payments (날짜별 집계 + 업체별 상세)
+                    if (jsonData.payments && jsonData.payments.length > 0) {
+                        dashboardData.payments = jsonData.payments.map(row => ({
+                            date: parseExcelDate(row.date),
+                            totalUSD: parseFloat(row.totalUSD) || 0,
+                            ourAvgRate: parseFloat(row.ourAvgRate) || 0,
+                            vendorAvgRate: parseFloat(row.vendorAvgRate) || 0,
+                            fxGainLoss: parseFloat(row.fxGainLoss) || 0,
+                            vendorCount: parseInt(row.vendorCount) || 0,
+                            vendors: row.vendors || []
+                        })).filter(p => p.date && !isNaN(p.date.getTime()) && p.totalUSD > 0);
+                    }
                     
-                    // 대시보드 렌더링
                     if (dashboardData.dailyBalance.length > 0 || dashboardData.fxPosition.length > 0) {
                         renderDashboard();
-                        
-                        // 업데이트 시간 표시
                         const updateTime = jsonData.lastUpdated || new Date().toLocaleString('ko-KR');
                         document.getElementById('updateTime').textContent = '최종 업데이트: ' + updateTime;
-                    } else {
-                        console.log('No valid data found');
                     }
                     
                     showLoading(false);
@@ -1204,34 +1162,25 @@
             return false;
         }
         
-        // Excel 시리얼 넘버 또는 날짜 문자열을 Date로 변환
         function parseExcelDate(value) {
             if (!value) return null;
             
-            // 이미 Date 객체인 경우
             if (value instanceof Date) return value;
             
-            // 숫자인 경우 (Excel 시리얼 넘버)
             if (typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)) {
                 const serial = parseFloat(value);
                 if (serial > 40000) {
-                    // Excel 시리얼 넘버를 Date로 변환
-                    // Excel: 1 = 1900-01-01, JavaScript epoch: 1970-01-01
-                    // 25569 = 1970-01-01의 Excel 시리얼 값
-                    const excelEpoch = new Date(1899, 11, 30); // 1899-12-30
+                    const excelEpoch = new Date(1899, 11, 30);
                     const date = new Date(excelEpoch.getTime() + serial * 86400000);
                     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
                 }
             }
             
-            // 문자열 날짜인 경우 (예: "2026-01-28")
             if (typeof value === 'string') {
-                // YYYY-MM-DD 형식
                 const match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
                 if (match) {
                     return new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]));
                 }
-                // 그 외 형식
                 const date = new Date(value);
                 if (!isNaN(date.getTime())) return date;
             }
@@ -1239,7 +1188,17 @@
             return null;
         }
         
-        // 페이지 로드 시 자동으로 data.json 로드 시도
+        function setYesterdayDate() {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+            const year = yesterday.getFullYear();
+            const month = yesterday.getMonth() + 1;
+            const day = yesterday.getDate();
+            document.getElementById('todayDate').textContent = `${year}년 ${month}월 ${day}일`;
+        }
+        
+        setYesterdayDate();
         autoLoadData();
     </script>
 </body>
