@@ -1385,15 +1385,32 @@
                             
                             // Map을 배열로 변환
                             dashboardData.payments = Array.from(paymentsByDate.values())
-                                .map(p => ({
-                                    date: p.date,
-                                    totalUSD: p.totalUSD,
-                                    ourAvgRate: 0, // 나중에 fxPosition에서 찾기
-                                    vendorAvgRate: p.vendors.reduce((sum, v) => sum + v.vendorRate * v.amountUSD, 0) / p.totalUSD,
-                                    fxGainLoss: 0, // 나중에 계산
-                                    vendorCount: p.vendors.length,
-                                    vendors: p.vendors.sort((a, b) => b.amountUSD - a.amountUSD) // 금액 큰 순
-                                }))
+                                .map(p => {
+                                    // 해당 날짜의 당사 평균단가 찾기 (외화현황 시트에서)
+                                    const dateStr = p.date.toISOString().split('T')[0];
+                                    const fxData = dashboardData.fxPosition.find(fx => 
+                                        fx.date.toISOString().split('T')[0] === dateStr
+                                    );
+                                    const ourAvgRate = fxData ? fxData.avgRate : 0;
+                                    
+                                    // 업체 청구 평균환율 (가중평균)
+                                    const vendorAvgRate = p.vendors.reduce((sum, v) => 
+                                        sum + v.vendorRate * v.amountUSD, 0
+                                    ) / p.totalUSD;
+                                    
+                                    // 외환차손익 = (총 지급액 × 당사평균단가) - (총 지급액 × 업체청구환율)
+                                    const fxGainLoss = (p.totalUSD * ourAvgRate) - (p.totalUSD * vendorAvgRate);
+                                    
+                                    return {
+                                        date: p.date,
+                                        totalUSD: p.totalUSD,
+                                        ourAvgRate: ourAvgRate,
+                                        vendorAvgRate: vendorAvgRate,
+                                        fxGainLoss: fxGainLoss,
+                                        vendorCount: p.vendors.length,
+                                        vendors: p.vendors.sort((a, b) => b.amountUSD - a.amountUSD)
+                                    };
+                                })
                                 .sort((a, b) => a.date - b.date);
                             
                             console.log('Loaded payments:', dashboardData.payments.length, 'days');
