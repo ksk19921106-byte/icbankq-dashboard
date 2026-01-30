@@ -461,7 +461,6 @@
             </div>
         </div>
         <div class="header-actions">
-            <div class="update-time" id="updateTime">최종 업데이트: -</div>
             <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
@@ -581,7 +580,7 @@
 
         <div class="fx-table-section">
             <div class="fx-table-header">
-                <div class="fx-table-title">외환 차손익 실적</div>
+                <div class="fx-table-title">외환차손익 내역</div>
             </div>
             <table class="fx-table">
                 <thead>
@@ -591,12 +590,11 @@
                         <th>당사 평균단가</th>
                         <th>업체 청구 환율</th>
                         <th>외환차손익</th>
-                        <th>거래처</th>
                     </tr>
                 </thead>
                 <tbody id="fxTableBody">
                     <tr>
-                        <td colspan="6" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td>
+                        <td colspan="5" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td>
                     </tr>
                 </tbody>
             </table>
@@ -1166,14 +1164,18 @@
             if (!tbody) return;
 
             if (!dashboardData.payments || dashboardData.payments.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td></tr>';
                 return;
             }
 
-            tbody.innerHTML = dashboardData.payments.map(p => {
+            // 외환차손익 총합 계산
+            const totalFxGainLoss = dashboardData.payments.reduce((sum, p) => sum + p.fxGainLoss, 0);
+            const totalFxClass = totalFxGainLoss >= 0 ? 'fx-positive' : 'fx-negative';
+            const totalFxSign = totalFxGainLoss >= 0 ? '+' : '';
+
+            const rows = dashboardData.payments.map(p => {
                 const fxClass = p.fxGainLoss >= 0 ? 'fx-positive' : 'fx-negative';
                 const fxSign = p.fxGainLoss >= 0 ? '+' : '';
-                const vendorNames = p.vendors.map(v => v.vendor).join(', ');
 
                 return `
                     <tr>
@@ -1181,11 +1183,21 @@
                         <td>$${formatNumber(p.totalUSD, 2)}</td>
                         <td>₩${formatNumber(p.ourAvgRate, 2)}</td>
                         <td>₩${formatNumber(p.vendorAvgRate, 2)}</td>
-                        <td class="${fxClass}">${fxSign}₩${formatNumber(Math.abs(p.fxGainLoss), 0)}</td>
-                        <td><div class="fx-vendors">${vendorNames}</div></td>
+                        <td class="${fxClass}">${fxSign}${formatNumber(Math.abs(p.fxGainLoss), 0)}</td>
                     </tr>
                 `;
             }).join('');
+
+            // TOTAL 행 추가
+            const totalRow = `
+                <tr style="border-top: 2px solid #e2e8f0; font-weight: 600; background: #f8fafc;">
+                    <td style="font-weight: 700;">TOTAL</td>
+                    <td colspan="3"></td>
+                    <td class="${totalFxClass}" style="font-weight: 700; font-size: 15px;">${totalFxSign}${formatNumber(Math.abs(totalFxGainLoss), 0)}</td>
+                </tr>
+            `;
+
+            tbody.innerHTML = rows + totalRow;
         }
 
         function createCharts() {
@@ -1398,8 +1410,10 @@
                                         sum + v.vendorRate * v.amountUSD, 0
                                     ) / p.totalUSD;
                                     
-                                    // 외환차손익 = (총 지급액 × 당사평균단가) - (총 지급액 × 업체청구환율)
-                                    const fxGainLoss = (p.totalUSD * ourAvgRate) - (p.totalUSD * vendorAvgRate);
+                                    // 외환차손익 = (총 지급액 × 업체청구환율) - (총 지급액 × 당사평균단가)
+                                    // 양수(+) = 외환차익 (업체청구 > 당사평균, 우리가 이득)
+                                    // 음수(-) = 외환차손 (업체청구 < 당사평균, 우리가 손해)
+                                    const fxGainLoss = (p.totalUSD * vendorAvgRate) - (p.totalUSD * ourAvgRate);
                                     
                                     return {
                                         date: p.date,
