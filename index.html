@@ -373,13 +373,13 @@
         }
 
         .fx-positive {
-            color: #0891b2;
-            font-weight: 700;
+            color: #0891b2 !important;
+            font-weight: 700 !important;
         }
 
         .fx-negative {
-            color: #dc2626;
-            font-weight: 700;
+            color: #dc2626 !important;
+            font-weight: 700 !important;
         }
 
         .fx-vendors {
@@ -1012,28 +1012,43 @@
                                 showPaymentDetailPopup(paymentDatesMap.get(dateStr));
                             }
                         }
-                    },
-                    onHover: (event, activeElements) => {
-                        // 기존 타이머 클리어
-                        if (window.hoverTimer) {
-                            clearTimeout(window.hoverTimer);
-                            window.hoverTimer = null;
-                        }
+                    }
+                },
+                plugins: [{
+                    id: 'hoverPopup',
+                    afterEvent: (chart, args) => {
+                        const event = args.event;
                         
-                        // 빨간 포인트에 마우스 올리면 5초 후 팝업
-                        if (activeElements.length > 0) {
-                            const index = activeElements[0].index;
-                            const d = data[index];
-                            const dateStr = d.date.toISOString().split('T')[0];
+                        if (event.type === 'mousemove') {
+                            const points = chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
                             
-                            if (paymentDatesMap.has(dateStr)) {
-                                window.hoverTimer = setTimeout(() => {
-                                    showPaymentDetailPopup(paymentDatesMap.get(dateStr));
-                                }, 5000);
+                            // 기존 타이머 클리어
+                            if (window.hoverTimer) {
+                                clearTimeout(window.hoverTimer);
+                                window.hoverTimer = null;
+                            }
+                            
+                            // 빨간 포인트에 마우스 올리면 5초 후 팝업
+                            if (points.length > 0) {
+                                const index = points[0].index;
+                                const d = data[index];
+                                const dateStr = d.date.toISOString().split('T')[0];
+                                
+                                if (paymentDatesMap.has(dateStr)) {
+                                    window.hoverTimer = setTimeout(() => {
+                                        showPaymentDetailPopup(paymentDatesMap.get(dateStr));
+                                    }, 5000);
+                                }
+                            }
+                        } else if (event.type === 'mouseout') {
+                            // 마우스가 차트 밖으로 나가면 타이머 취소
+                            if (window.hoverTimer) {
+                                clearTimeout(window.hoverTimer);
+                                window.hoverTimer = null;
                             }
                         }
                     }
-                }
+                }]
             });
         }
 
