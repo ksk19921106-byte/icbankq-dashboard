@@ -373,13 +373,13 @@
         }
 
         .fx-positive {
-            color: var(--accent-emerald);
-            font-weight: 600;
+            color: #0891b2;
+            font-weight: 700;
         }
 
         .fx-negative {
-            color: var(--accent-rose);
-            font-weight: 600;
+            color: #dc2626;
+            font-weight: 700;
         }
 
         .fx-vendors {
@@ -581,7 +581,7 @@
                         <th>지급일</th>
                         <th>지급액 (USD)</th>
                         <th>당사 평균단가</th>
-                        <th>업체 청구 환율</th>
+                        <th>매입처 청구 평균단가</th>
                         <th>외환차손익</th>
                     </tr>
                 </thead>
@@ -1010,6 +1010,26 @@
                             
                             if (paymentDatesMap.has(dateStr)) {
                                 showPaymentDetailPopup(paymentDatesMap.get(dateStr));
+                            }
+                        }
+                    },
+                    onHover: (event, activeElements) => {
+                        // 기존 타이머 클리어
+                        if (window.hoverTimer) {
+                            clearTimeout(window.hoverTimer);
+                            window.hoverTimer = null;
+                        }
+                        
+                        // 빨간 포인트에 마우스 올리면 5초 후 팝업
+                        if (activeElements.length > 0) {
+                            const index = activeElements[0].index;
+                            const d = data[index];
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            
+                            if (paymentDatesMap.has(dateStr)) {
+                                window.hoverTimer = setTimeout(() => {
+                                    showPaymentDetailPopup(paymentDatesMap.get(dateStr));
+                                }, 5000);
                             }
                         }
                     }
