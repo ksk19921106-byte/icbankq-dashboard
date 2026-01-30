@@ -1164,7 +1164,6 @@
             // 외환차손익 총합 계산
             const totalFxGainLoss = dashboardData.payments.reduce((sum, p) => sum + p.fxGainLoss, 0);
             const totalFxClass = totalFxGainLoss >= 0 ? 'fx-positive' : 'fx-negative';
-            const totalFxSign = totalFxGainLoss >= 0 ? '+' : '';
 
             const rows = dashboardData.payments.map(p => {
                 const fxClass = p.fxGainLoss >= 0 ? 'fx-positive' : 'fx-negative';
