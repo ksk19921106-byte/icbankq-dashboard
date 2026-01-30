@@ -1164,6 +1164,7 @@
             // 외환차손익 총합 계산
             const totalFxGainLoss = dashboardData.payments.reduce((sum, p) => sum + p.fxGainLoss, 0);
             const totalFxClass = totalFxGainLoss >= 0 ? 'fx-positive' : 'fx-negative';
+            const totalFxSign = totalFxGainLoss >= 0 ? '+' : '-';
 
             const rows = dashboardData.payments.map(p => {
                 const fxClass = p.fxGainLoss >= 0 ? 'fx-positive' : 'fx-negative';
@@ -1181,7 +1182,6 @@
             }).join('');
 
             // TOTAL 행 추가
-            const totalFxSign = totalFxGainLoss >= 0 ? '+' : '-';
             const totalRow = `
                 <tr style="border-top: 3px solid #cbd5e1; background: linear-gradient(to bottom, #f8fafc, #f1f5f9);">
                     <td style="text-align: center; font-weight: 700; font-size: 14px; color: #475569; letter-spacing: 0.5px;">TOTAL</td>
