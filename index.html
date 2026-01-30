@@ -1404,6 +1404,7 @@
                                 const vendor = row.매입처 || row.vendor || '';
                                 const amountUSD = parseFloat(row.외상대 || row.totalUSD) || 0;
                                 const vendorRate = parseFloat(row['외상대 매입 평균단가'] || row.vendorAvgRate) || 0;
+                                const ourRate = parseFloat(row['당사 평균단가'] || row.ourAvgRate) || 0;
                                 
                                 if (amountUSD <= 0 || !vendor) return;
                                 
@@ -1411,7 +1412,8 @@
                                     paymentsByDate.set(dateKey, {
                                         date: dateValue,
                                         vendors: [],
-                                        totalUSD: 0
+                                        totalUSD: 0,
+                                        ourRateSum: 0
                                     });
                                 }
                                 
@@ -1422,17 +1424,14 @@
                                     vendorRate: vendorRate
                                 });
                                 dayData.totalUSD += amountUSD;
+                                dayData.ourRateSum += ourRate * amountUSD;  // 가중평균 계산용
                             });
                             
                             // Map을 배열로 변환
                             dashboardData.payments = Array.from(paymentsByDate.values())
                                 .map(p => {
-                                    // 해당 날짜의 당사 평균단가 찾기 (외화현황 시트에서)
-                                    const dateStr = p.date.toISOString().split('T')[0];
-                                    const fxData = dashboardData.fxPosition.find(fx => 
-                                        fx.date.toISOString().split('T')[0] === dateStr
-                                    );
-                                    const ourAvgRate = fxData ? fxData.avgRate : 0;
+                                    // 당사 평균단가 (가중평균) - 외상대금 상세 시트에서 가져온 값
+                                    const ourAvgRate = p.ourRateSum / p.totalUSD;
                                     
                                     // 업체 청구 평균환율 (가중평균)
                                     const vendorAvgRate = p.vendors.reduce((sum, v) => 
