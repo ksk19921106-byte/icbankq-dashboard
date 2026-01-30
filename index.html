@@ -1413,7 +1413,7 @@
                                         date: dateValue,
                                         vendors: [],
                                         totalUSD: 0,
-                                        ourRateSum: 0
+                                        ourAvgRate: ourRate  // 첫 번째 행의 당사 평균단가 저장
                                     });
                                 }
                                 
@@ -1424,14 +1424,13 @@
                                     vendorRate: vendorRate
                                 });
                                 dayData.totalUSD += amountUSD;
-                                dayData.ourRateSum += ourRate * amountUSD;  // 가중평균 계산용
                             });
                             
                             // Map을 배열로 변환
                             dashboardData.payments = Array.from(paymentsByDate.values())
                                 .map(p => {
-                                    // 당사 평균단가 (가중평균) - 외상대금 상세 시트에서 가져온 값
-                                    const ourAvgRate = p.ourRateSum / p.totalUSD;
+                                    // 당사 평균단가 - 외상대금 상세 시트에서 가져온 값 (날짜별 첫 행)
+                                    const ourAvgRate = p.ourAvgRate;
                                     
                                     // 업체 청구 평균환율 (가중평균)
                                     const vendorAvgRate = p.vendors.reduce((sum, v) => 
