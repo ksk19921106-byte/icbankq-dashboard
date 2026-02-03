@@ -581,13 +581,14 @@
                         <th>지급일</th>
                         <th>지급액 (USD)</th>
                         <th>당사 평균단가</th>
+                        <th>당일 환율</th>
                         <th>매입처 청구 평균단가</th>
                         <th>외환차손익</th>
                     </tr>
                 </thead>
                 <tbody id="fxTableBody">
                     <tr>
-                        <td colspan="5" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td>
+                        <td colspan="6" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td>
                     </tr>
                 </tbody>
             </table>
@@ -1192,7 +1193,7 @@
             if (!tbody) return;
 
             if (!dashboardData.payments || dashboardData.payments.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td></tr>';
                 return;
             }
 
@@ -1210,6 +1211,7 @@
                         <td>${formatDateDisplay(p.date)}</td>
                         <td>$${formatNumber(p.totalUSD, 2)}</td>
                         <td>₩${formatNumber(p.ourAvgRate, 2)}</td>
+                        <td>₩${formatNumber(p.dailyRate, 2)}</td>
                         <td>₩${formatNumber(p.vendorAvgRate, 2)}</td>
                         <td class="${fxClass}">${fxSign}${formatNumber(Math.abs(p.fxGainLoss), 0)}</td>
                     </tr>
@@ -1220,7 +1222,7 @@
             const totalRow = `
                 <tr style="border-top: 3px solid #cbd5e1; background: linear-gradient(to bottom, #f8fafc, #f1f5f9);">
                     <td style="text-align: center; font-weight: 700; font-size: 14px; color: #475569; letter-spacing: 0.5px;">TOTAL</td>
-                    <td colspan="3" style="background: transparent;"></td>
+                    <td colspan="4" style="background: transparent;"></td>
                     <td class="${totalFxClass}" style="font-weight: 800; font-size: 16px; padding: 16px 12px;">${totalFxSign}${formatNumber(Math.abs(totalFxGainLoss), 0)}</td>
                 </tr>
             `;
@@ -1405,6 +1407,7 @@
                                 const amountUSD = parseFloat(row.외상대 || row.totalUSD) || 0;
                                 const vendorRate = parseFloat(row['외상대 매입 평균단가'] || row.vendorAvgRate) || 0;
                                 const ourRate = parseFloat(row['당사 평균단가'] || row.ourAvgRate) || 0;
+                                const dailyRate = parseFloat(row['당일환율'] || row.dailyRate) || 0;
                                 
                                 if (amountUSD <= 0 || !vendor) return;
                                 
@@ -1413,7 +1416,8 @@
                                         date: dateValue,
                                         vendors: [],
                                         totalUSD: 0,
-                                        ourAvgRate: ourRate  // 첫 번째 행의 당사 평균단가 저장
+                                        ourAvgRate: ourRate,  // 첫 번째 행의 당사 평균단가 저장
+                                        dailyRate: dailyRate  // 첫 번째 행의 당일환율 저장
                                     });
                                 }
                                 
@@ -1432,20 +1436,24 @@
                                     // 당사 평균단가 - 외상대금 상세 시트에서 가져온 값 (날짜별 첫 행)
                                     const ourAvgRate = p.ourAvgRate;
                                     
+                                    // 당일환율 - 외상대금 상세 시트에서 가져온 값 (날짜별 첫 행)
+                                    const dailyRate = p.dailyRate;
+                                    
                                     // 업체 청구 평균환율 (가중평균)
                                     const vendorAvgRate = p.vendors.reduce((sum, v) => 
                                         sum + v.vendorRate * v.amountUSD, 0
                                     ) / p.totalUSD;
                                     
-                                    // 외환차손익 = (총 지급액 × 업체청구환율) - (총 지급액 × 당사평균단가)
-                                    // 양수(+) = 외환차익 (업체청구 > 당사평균, 우리가 이득)
-                                    // 음수(-) = 외환차손 (업체청구 < 당사평균, 우리가 손해)
-                                    const fxGainLoss = (p.totalUSD * vendorAvgRate) - (p.totalUSD * ourAvgRate);
+                                    // 외환차손익 = [(외상대 × 외상대매입평균단가) - (외상대 × 당일환율)]
+                                    //            - [(외상대 × 외상대매입평균단가) - (외상대 × 당사평균단가)]
+                                    // 정리하면: (외상대 × 당사평균단가) - (외상대 × 당일환율)
+                                    const fxGainLoss = (p.totalUSD * ourAvgRate) - (p.totalUSD * dailyRate);
                                     
                                     return {
                                         date: p.date,
                                         totalUSD: p.totalUSD,
                                         ourAvgRate: ourAvgRate,
+                                        dailyRate: dailyRate,
                                         vendorAvgRate: vendorAvgRate,
                                         fxGainLoss: fxGainLoss,
                                         vendorCount: p.vendors.length,
