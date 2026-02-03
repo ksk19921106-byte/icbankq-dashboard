@@ -1444,10 +1444,10 @@
                                         sum + v.vendorRate * v.amountUSD, 0
                                     ) / p.totalUSD;
                                     
-                                    // 외환차손익 = [(외상대 × 외상대매입평균단가) - (외상대 × 당일환율)]
-                                    //            - [(외상대 × 외상대매입평균단가) - (외상대 × 당사평균단가)]
-                                    // 정리하면: (외상대 × 당사평균단가) - (외상대 × 당일환율)
-                                    const fxGainLoss = (p.totalUSD * ourAvgRate) - (p.totalUSD * dailyRate);
+                                    // 외환차손익 = (당일환율 × 외상대) - (당사평균단가 × 외상대)
+                                    // 양수(+) = 외환차익 (당일환율 > 당사평균, 우리가 싸게 샀음)
+                                    // 음수(-) = 외환차손 (당일환율 < 당사평균, 우리가 비싸게 샀음)
+                                    const fxGainLoss = (p.totalUSD * dailyRate) - (p.totalUSD * ourAvgRate);
                                     
                                     return {
                                         date: p.date,
