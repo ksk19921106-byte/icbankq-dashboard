@@ -165,6 +165,8 @@
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             margin-bottom: 24px;
+            max-height: 500px;
+            overflow: hidden;
         }
 
         .chart-header {
@@ -585,53 +587,20 @@
                 <p>데이터를 업로드하면 자금 흐름 분석 결과가 표시됩니다.</p>
             </div>
 
-            <!-- 현금흐름 예측 섹션 -->
-            <div class="chart-container" id="forecastSection" style="display: none;">
+            <!-- 수금현황 추이 섹션 -->
+            <div class="chart-container">
                 <div class="chart-header">
                     <div>
-                        <div class="chart-title">💰 향후 4주 현금흐름 예측</div>
-                        <div class="chart-subtitle">4-Week Cash Flow Forecast</div>
+                        <div class="chart-title">📊 월별 수금 회수율</div>
+                        <div class="chart-subtitle">Monthly Collection Rate Trend</div>
+                    </div>
+                    <div class="period-selector" id="collectionPeriodSelector">
+                        <button class="period-btn" data-period="12">1년</button>
+                        <button class="period-btn active" data-period="24">2년</button>
                     </div>
                 </div>
-                
-                <!-- 주차별 요약 테이블 -->
-                <div style="overflow-x: auto; margin-top: 20px;">
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background: #f8f9fa;">
-                                <th style="padding: 14px; text-align: center; border: 1px solid #e5e7eb; font-size: 14px; font-weight: 600; color: #6b7280;">구분</th>
-                                <th style="padding: 14px; text-align: center; border: 1px solid #e5e7eb; font-size: 15px; font-weight: 700; color: #111827;">
-                                    1주차<br>
-                                    <span style="font-size: 11px; color: #9ca3af; font-weight: 400;">Week 1</span>
-                                </th>
-                                <th style="padding: 14px; text-align: center; border: 1px solid #e5e7eb; font-size: 15px; font-weight: 700; color: #111827;">
-                                    2주차<br>
-                                    <span style="font-size: 11px; color: #9ca3af; font-weight: 400;">Week 2</span>
-                                </th>
-                                <th style="padding: 14px; text-align: center; border: 1px solid #e5e7eb; font-size: 15px; font-weight: 700; color: #111827;">
-                                    3주차<br>
-                                    <span style="font-size: 11px; color: #9ca3af; font-weight: 400;">Week 3</span>
-                                </th>
-                                <th style="padding: 14px; text-align: center; border: 1px solid #e5e7eb; font-size: 15px; font-weight: 700; color: #111827;">
-                                    4주차<br>
-                                    <span style="font-size: 11px; color: #9ca3af; font-weight: 400;">Week 4</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="forecastTableBody" style="background: white;">
-                            <!-- 동적으로 생성 -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- 잔액 추이 차트 -->
-                <div style="margin-top: 30px;">
-                    <canvas id="forecastBalanceChart" height="60"></canvas>
-                </div>
-
-                <!-- 상세 내역 -->
-                <div id="forecastDetails" style="margin-top: 20px;">
-                    <!-- 동적으로 생성 -->
+                <div style="position: relative; height: 400px;">
+                    <canvas id="collectionRateChart"></canvas>
                 </div>
             </div>
         </div>
@@ -1105,6 +1074,11 @@
                             globalData.forecastPayables = XLSX.utils.sheet_to_json(workbook.Sheets['월별 외상대금(예상)']);
                             console.log('월별 외상대금(예상) loaded:', globalData.forecastPayables.length, 'rows');
                         }
+                        
+                        if (sheets.includes('수금현황 추이')) {
+                            globalData.collectionRate = XLSX.utils.sheet_to_json(workbook.Sheets['수금현황 추이']);
+                            console.log('수금현황 추이 loaded:', globalData.collectionRate.length, 'rows');
+                        }
 
                         // 데이터 처리 및 차트 업데이트
                         processData();
@@ -1392,10 +1366,12 @@
             // 차트 생성
             createDailyBalanceChart(90);
             createMonthlyBalanceChart(90);
+            createCollectionRateChart(24);
 
             // 기간 선택 바인딩
             bindPeriodSelector('dailyPeriodSelector', createDailyBalanceChart);
             bindPeriodSelector('monthlyPeriodSelector', createMonthlyBalanceChart);
+            bindPeriodSelector('collectionPeriodSelector', createCollectionRateChart);
             
         }
 
@@ -1542,6 +1518,110 @@
                     }
                 }
             });
+        }
+
+        // 수금현황 추이 차트 (Google Sheets 방식)
+        function createCollectionRateChart(months) {
+            const data = globalData.collectionRate;
+            if (!data || data.length === 0) {
+                console.log('수금현황 추이 데이터 없음');
+                return;
+            }
+            
+            // 연구분 null 채우기
+            let currentYear = '';
+            const processed = data.map(item => {
+                if (item['연 구분']) currentYear = String(item['연 구분']).replace('년', '').trim();
+                const month = String(item['월 구분'] || '').trim().padStart(2, '0');
+                return {
+                    label: currentYear && month ? `${currentYear}-${month}` : '',
+                    월말당일: item['월말 당일'],
+                    w1: item['1W'],
+                    w2: item['2W'],
+                    w3: item['3W']
+                };
+            }).filter(item => item.label);
+            
+            // 최근 N개월
+            const recent = processed.slice(-months);
+            const labels = recent.map(item => item.label);
+            const monthEnd = recent.map(item => item.월말당일 ? item.월말당일 * 100 : null);
+            const week1 = recent.map(item => item.w1 ? item.w1 * 100 : null);
+            const week2 = recent.map(item => item.w2 ? item.w2 * 100 : null);
+            const week3 = recent.map(item => item.w3 ? item.w3 * 100 : null);
+            
+            const ctx = document.getElementById('collectionRateChart');
+            if (!ctx) return;
+            
+            if (window.collectionChart) {
+                window.collectionChart.destroy();
+            }
+            
+            window.collectionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: '월말 당일',
+                            data: monthEnd,
+                            borderColor: '#FFD700',
+                            tension: 0.3,
+                            pointRadius: 0,
+                            borderWidth: 2
+                        },
+                        {
+                            label: '1W',
+                            data: week1,
+                            borderColor: '#FFA500',
+                            tension: 0.3,
+                            pointRadius: 0,
+                            borderWidth: 2
+                        },
+                        {
+                            label: '2W',
+                            data: week2,
+                            borderColor: '#FF6B6B',
+                            tension: 0.3,
+                            pointRadius: 0,
+                            borderWidth: 2
+                        },
+                        {
+                            label: '3W',
+                            data: week3,
+                            borderColor: '#51CF66',
+                            tension: 0.3,
+                            pointRadius: 0,
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    },
+                    scales: {
+                        y: {
+                            min: 35,
+                            max: 105,
+                            ticks: {
+                                stepSize: 10,
+                                callback: v => v + '%'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+            
+            console.log('✅ 수금현황 추이 차트 생성 완료!');
         }
 
         // 외화 탭 업데이트
