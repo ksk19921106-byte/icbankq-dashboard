@@ -3,10 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>아이씨뱅큐 자금현황 Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <title>아이씨뱅큐 | 자금현황 Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8fafc;
+            --accent-blue: #2563eb;
+            --accent-cyan: #0891b2;
+            --accent-emerald: #059669;
+            --accent-amber: #d97706;
+            --accent-rose: #dc2626;
+            --accent-purple: #7c3aed;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --gradient-blue: linear-gradient(135deg, #2563eb 0%, #0891b2 100%);
+            --gradient-green: linear-gradient(135deg, #059669 0%, #0891b2 100%);
+            --gradient-amber: linear-gradient(135deg, #d97706 0%, #dc2626 100%);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,2481 +35,1470 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', sans-serif;
-            background: #f8f9fa;
-            color: #2c3e50;
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.12;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-blue);
+            top: -150px;
+            right: -50px;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--accent-emerald);
+            bottom: -80px;
+            left: -80px;
+            animation-delay: -7s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.03); }
         }
 
         .header {
-            background: white;
-            padding: 24px 40px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+            padding: 20px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
         }
 
-        .header-title {
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .header-title h1 {
-            font-size: 28px;
-            color: #2c3e50;
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-blue);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 700;
+            font-size: 16px;
+            color: white;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
         }
 
-        .header-subtitle {
-            font-size: 14px;
-            color: #7f8c8d;
-            margin-top: 4px;
+        .logo-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
         }
 
-        .upload-section {
+        .logo-text span {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .header-actions {
             display: flex;
             align-items: center;
             gap: 16px;
         }
 
+        .update-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
         .upload-btn {
-            background: #6366f1;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s;
+            padding: 10px 18px;
+            background: var(--gradient-blue);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
         .upload-btn:hover {
-            background: #4f46e5;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
         }
 
-        .last-update {
-            background: #f8f9fa;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            color: #64748b;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .upload-btn svg {
+            width: 16px;
+            height: 16px;
         }
 
-        .tabs {
-            background: white;
-            padding: 0 40px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            display: flex;
-            gap: 8px;
-        }
-
-        .tab {
-            padding: 16px 24px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            font-weight: 600;
-            font-size: 15px;
-            color: #64748b;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .tab:hover {
-            color: #6366f1;
-            background: #f8f9fa;
-        }
-
-        .tab.active {
-            color: #6366f1;
-            border-bottom-color: #6366f1;
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 32px 40px;
-        }
-
-        .tab-content {
+        #fileInput {
             display: none;
         }
 
-        .tab-content.active {
-            display: block;
+        .main-content {
+            position: relative;
+            z-index: 10;
+            padding: 28px 32px;
+            max-width: 1500px;
+            margin: 0 auto;
         }
 
-        .period-selector {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            justify-content: flex-end;
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
         }
 
-        .period-btn {
-            padding: 8px 16px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: #64748b;
-            transition: all 0.3s;
-        }
-
-        .period-btn:hover {
-            border-color: #6366f1;
-            color: #6366f1;
-        }
-
-        .period-btn.active {
-            background: #6366f1;
-            color: white;
-            border-color: #6366f1;
-        }
-
-        .chart-container {
-            background: white;
-            padding: 28px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 24px;
-            max-height: 500px;
+        .kpi-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 20px 22px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            position: relative;
             overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--card-accent, var(--gradient-blue));
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(59, 130, 246, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .kpi-card.blue { --card-accent: var(--gradient-blue); }
+        .kpi-card.green { --card-accent: var(--gradient-green); }
+        .kpi-card.amber { --card-accent: var(--gradient-amber); }
+        .kpi-card.purple { --card-accent: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: -0.2px;
+        }
+
+        .kpi-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -1px;
+            margin-bottom: 6px;
+        }
+
+        .kpi-subtext {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .chart-card:hover {
+            border-color: rgba(59, 130, 246, 0.25);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
         }
 
         .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .chart-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-
-        .chart-subtitle {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-top: 4px;
-        }
-
-        .insights-box {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid #7dd3fc;
-            margin-top: 24px;
-        }
-
-        .insights-box h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #0369a1;
-            font-weight: 700;
-        }
-
-        .insights-box p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #0c4a6e;
-        }
-        
-        .insights-box strong {
-            color: #075985;
-            font-weight: 700;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 32px;
-        }
-
-        /* 자금흐름분석 탭 전용 KPI 그리드 */
-        #cash-flow .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            margin-bottom: 32px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        #cash-flow .stat-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            padding: 36px 32px;
-            border-radius: 16px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            border-left: 6px solid;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        #cash-flow .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        }
-
-        #cash-flow .stat-label {
-            font-size: 15px;
-            color: #64748b;
-            margin-bottom: 12px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-        #cash-flow .stat-value {
-            font-size: 48px;
-            font-weight: 800;
-            color: #2c3e50;
-            margin-bottom: 8px;
-            line-height: 1.2;
-        }
-
-        #cash-flow .stat-detail {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-top: 8px;
-            font-weight: 500;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border-left: 4px solid;
-        }
-
-        .stat-card.blue { border-left-color: #6366f1; }
-        .stat-card.teal { border-left-color: #14b8a6; }
-        .stat-card.orange { border-left-color: #f59e0b; }
-        .stat-card.purple { border-left-color: #a855f7; }
-
-        .stat-label {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-
-        .stat-detail {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 6px;
-        }
-
-        .table-container {
-            background: white;
-            padding: 28px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 24px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            background: #f8f9fa;
-        }
-
-        th {
-            padding: 14px;
-            text-align: left;
-            font-size: 13px;
-            font-weight: 600;
-            color: #64748b;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        td {
-            padding: 14px;
-            font-size: 14px;
-            color: #2c3e50;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .simulator {
-            background: white;
-            padding: 32px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .simulator-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .simulator-inputs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #bae6fd;
-            transition: all 0.3s;
-        }
-        
-        .input-group:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-        }
-
-        .input-group label {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0369a1;
-        }
-
-        .input-group input {
-            padding: 14px 18px;
-            border: 2px solid #7dd3fc;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 700;
-            color: #0c4a6e;
-            background: white;
-            transition: all 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #0ea5e9;
-            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
-        }
-
-        .result-box {
-            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
-            border: 2px solid #fbbf24;
-            padding: 32px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .result-label {
-            font-size: 14px;
-            color: #78350f;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .result-value {
-            font-size: 48px;
-            font-weight: 700;
-            color: #92400e;
             margin-bottom: 20px;
         }
 
-        .result-breakdown {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid rgba(251, 191, 36, 0.3);
-        }
-
-        .breakdown-item {
-            text-align: center;
-        }
-
-        .breakdown-label {
-            font-size: 13px;
-            color: #92400e;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .breakdown-value {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .positive { color: #10b981; }
-        .negative { color: #ef4444; }
-
-        .loading {
-            text-align: center;
-            padding: 60px;
-            color: #94a3b8;
-        }
-
-        .highlight-point {
-            background: #fef3c7;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #f59e0b;
-            margin-bottom: 16px;
-        }
-
-        .highlight-point h4 {
+        .chart-title {
             font-size: 15px;
-            color: #92400e;
-            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
-        .highlight-point p {
+        .chart-filter {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-secondary);
+            padding: 3px;
+            border-radius: 8px;
+        }
+
+        .filter-btn {
+            padding: 5px 12px;
+            font-size: 11px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-weight: 500;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .filter-btn.active {
+            background: white;
+            color: var(--accent-blue);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-canvas {
+            height: 280px;
+            position: relative;
+        }
+
+        .fx-table-section {
+            background: var(--bg-card);
+            border-radius: 14px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 28px;
+        }
+
+        .fx-table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .fx-table-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .fx-table {
+            width: 100%;
+            border-collapse: collapse;
             font-size: 13px;
-            color: #78350f;
-            line-height: 1.6;
         }
 
-        input[type="file"] {
+        .fx-table thead th {
+            background: var(--bg-secondary);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .fx-table tbody td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .fx-table tbody tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .fx-positive {
+            color: #0891b2 !important;
+            font-weight: 700 !important;
+        }
+
+        .fx-negative {
+            color: #dc2626 !important;
+            font-weight: 700 !important;
+        }
+
+        .fx-vendors {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 1000;
             display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
         }
 
-        .icon {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 1200px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            .header {
+                flex-direction: column;
+                gap: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-title">
-            <h1>📊 아이씨뱅큐 자금현황</h1>
-            <div class="header-subtitle">Treasury Management Dashboard</div>
-        </div>
-        <div class="upload-section" style="display: flex !important; align-items: center !important; gap: 16px !important; visibility: visible !important;">
-            <div class="last-update" id="lastUpdate" style="display: flex !important;">
-                📅 마지막 업데이트: 데이터 없음
-            </div>
-            <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;">
-            <button class="upload-btn" onclick="document.getElementById('fileInput').click()" style="display: flex !important;">
-                📤 Excel 업로드
-            </button>
-        </div>
+    <div class="ambient-bg">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
     </div>
 
-    <div class="tabs">
-        <div class="tab active" data-tab="cash-flow">
-            📊 자금 흐름 분석
-        </div>
-        <div class="tab" data-tab="forex">
-            💵 외화 현황
-        </div>
-        <div class="tab" data-tab="loan">
-            💰 대출 현황
-        </div>
-        <div class="tab" data-tab="investment">
-            🎯 투자 운용
-        </div>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
     </div>
 
-    <div class="container">
-        <!-- 자금 흐름 분석 탭 -->
-        <div id="cash-flow" class="tab-content active">
-            <div class="stats-grid">
-                <div class="stat-card blue">
-                    <div class="stat-label">💼 순 현금 잔액</div>
-                    <div class="stat-value" id="currentBalance">-</div>
-                    <div class="stat-detail" id="balanceDate">데이터 로드 필요</div>
-                    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-size: 12px; color: #94a3b8;">당좌예금 + MMT</span>
-                            <span style="font-size: 13px; font-weight: 600; color: #6366f1;">현금성 자산</span>
-                        </div>
-                    </div>
+    <header class="header">
+        <div class="logo-section">
+            <div class="logo-icon">IC</div>
+            <div class="logo-text">
+                <h1>아이씨뱅큐</h1>
+                <span id="todayDate">기준일: 2024년 12월 1일</span>
+            </div>
+        </div>
+        <div class="header-actions">
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="kpi-grid">
+            <div class="kpi-card blue">
+                <div class="kpi-header">
+                    <div class="kpi-label">순 현금 잔액</div>
+                    <div class="kpi-icon">₩</div>
                 </div>
-                <div class="stat-card teal">
-                    <div class="stat-label">💰 총 가용자금</div>
-                    <div class="stat-value" id="totalAvailable">-</div>
-                    <div class="stat-detail">순 현금 잔액 + 마이너스통장 19.5억</div>
-                    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-size: 12px; color: #94a3b8;">즉시 사용 가능 금액</span>
-                            <span style="font-size: 13px; font-weight: 600; color: #14b8a6;">유동성 총액</span>
-                        </div>
-                    </div>
-                </div>
+                <div class="kpi-value" id="krwBalance">-</div>
+                <div class="kpi-subtext">순현금자산 + 외화예금 환산 잔액</div>
             </div>
 
-            <div class="chart-container">
+            <div class="kpi-card green">
+                <div class="kpi-header">
+                    <div class="kpi-label">USD 잔액</div>
+                    <div class="kpi-icon">$</div>
+                </div>
+                <div class="kpi-value" id="usdBalance">-</div>
+                <div class="kpi-subtext" id="usdKrwEquiv">원화 환산액: ₩-</div>
+            </div>
+
+            <div class="kpi-card amber">
+                <div class="kpi-header">
+                    <div class="kpi-label">USD 평균단가</div>
+                    <div class="kpi-icon">⚖</div>
+                </div>
+                <div class="kpi-value" id="avgRate">-</div>
+                <div class="kpi-subtext">평균 매입 환율</div>
+            </div>
+
+            <div class="kpi-card purple">
+                <div class="kpi-header">
+                    <div class="kpi-label">총 가용자금</div>
+                    <div class="kpi-icon">💰</div>
+                </div>
+                <div class="kpi-value" id="availableFunds">-</div>
+                <div class="kpi-subtext" id="availableFundsCalc">= 순현금잔액 + 마이너스통장 19.5억</div>
+            </div>
+        </div>
+
+        <div class="charts-row">
+            <div class="chart-card">
                 <div class="chart-header">
-                    <div>
-                        <div class="chart-title">일자별 잔액 추이</div>
-                        <div class="chart-subtitle">Daily Balance Trend</div>
-                    </div>
-                    <div class="period-selector" id="dailyPeriodSelector">
-                        <button class="period-btn" data-period="30">30일</button>
-                        <button class="period-btn active" data-period="90">90일</button>
-                        <button class="period-btn" data-period="120">120일</button>
-                        <button class="period-btn" data-period="365">1년</button>
-                        <button class="period-btn" data-period="730">2년</button>
+                    <div class="chart-title">순 현금 잔액 추이</div>
+                    <div class="chart-filter">
+                        <button class="filter-btn" onclick="filterKRWChart(30)">30일</button>
+                        <button class="filter-btn" onclick="filterKRWChart(60)">60일</button>
+                        <button class="filter-btn active" onclick="filterKRWChart(90)">90일</button>
+                        <button class="filter-btn" onclick="filterKRWChart(120)">120일</button>
+                        <button class="filter-btn" onclick="filterKRWChart(365)">1년</button>
                     </div>
                 </div>
-                <canvas id="dailyBalanceChart" height="80"></canvas>
+                <div class="chart-canvas">
+                    <canvas id="krwChart"></canvas>
+                </div>
             </div>
 
-            <div class="chart-container">
+            <div class="chart-card">
                 <div class="chart-header">
-                    <div>
-                        <div class="chart-title">월말 잔액 추이</div>
-                        <div class="chart-subtitle">Month-End Balance Trend</div>
-                    </div>
-                    <div class="period-selector" id="monthlyPeriodSelector">
-                        <button class="period-btn" data-period="30">30일</button>
-                        <button class="period-btn active" data-period="90">90일</button>
-                        <button class="period-btn" data-period="120">120일</button>
-                        <button class="period-btn" data-period="365">1년</button>
-                        <button class="period-btn" data-period="730">2년</button>
+                    <div class="chart-title">USD 평균 잔액 추이</div>
+                    <div class="chart-filter">
+                        <button class="filter-btn" onclick="filterUSDChart(30)">30일</button>
+                        <button class="filter-btn" onclick="filterUSDChart(60)">60일</button>
+                        <button class="filter-btn active" onclick="filterUSDChart(90)">90일</button>
+                        <button class="filter-btn" onclick="filterUSDChart(120)">120일</button>
+                        <button class="filter-btn" onclick="filterUSDChart(365)">1년</button>
                     </div>
                 </div>
-                <canvas id="monthlyBalanceChart" height="80"></canvas>
-            </div>
-
-            <div class="insights-box" id="cashFlowInsights">
-                <h3>💡 주요 인사이트</h3>
-                <p>데이터를 업로드하면 자금 흐름 분석 결과가 표시됩니다.</p>
-            </div>
-
-            <!-- 수금현황 추이 섹션 -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">📊 월별 수금 회수율</div>
-                        <div class="chart-subtitle">Monthly Collection Rate Trend</div>
-                    </div>
-                    <div class="period-selector" id="collectionPeriodSelector">
-                        <button class="period-btn" data-period="12">1년</button>
-                        <button class="period-btn active" data-period="24">2년</button>
-                    </div>
-                </div>
-                <div style="position: relative; height: 400px;">
-                    <canvas id="collectionRateChart"></canvas>
+                <div class="chart-canvas">
+                    <canvas id="usdChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- 외화 현황 탭 -->
-        <div id="forex" class="tab-content">
-            <div class="stats-grid">
-                <div class="stat-card blue">
-                    <div class="stat-label">💵 USD 보유</div>
-                    <div class="stat-value" id="usdBalance">-</div>
-                    <div class="stat-detail" id="usdBalanceDate">데이터 로드 필요</div>
-                </div>
-                <div class="stat-card teal">
-                    <div class="stat-label">📊 당사 평균단가</div>
-                    <div class="stat-value" id="avgUsdPrice">-</div>
-                    <div class="stat-detail" id="avgPriceDate">-</div>
-                </div>
-                <div class="stat-card orange">
-                    <div class="stat-label">💱 현재 환율</div>
-                    <div class="stat-value" id="currentExRate">-</div>
-                    <div class="stat-detail" id="exRateDate">-</div>
-                </div>
-                <div class="stat-card purple">
-                    <div class="stat-label">💰 MMDA 이자</div>
-                    <div class="stat-value" id="mmdaInterest">-</div>
-                    <div class="stat-detail">연 수익률</div>
-                </div>
-            </div>
-
-            <div class="chart-container">
+        <div class="charts-row">
+            <div class="chart-card">
                 <div class="chart-header">
-                    <div>
-                        <div class="chart-title">USD 잔액 추이</div>
-                        <div class="chart-subtitle">USD Balance Trend</div>
-                    </div>
-                    <div class="period-selector" id="usdBalancePeriodSelector">
-                        <button class="period-btn" data-period="30">30일</button>
-                        <button class="period-btn active" data-period="90">90일</button>
-                        <button class="period-btn" data-period="120">120일</button>
-                        <button class="period-btn" data-period="365">1년</button>
+                    <div class="chart-title">평균단가 매입 추이</div>
+                    <div class="chart-filter">
+                        <button class="filter-btn" onclick="filterAvgRateChart(30)">30일</button>
+                        <button class="filter-btn" onclick="filterAvgRateChart(60)">60일</button>
+                        <button class="filter-btn active" onclick="filterAvgRateChart(90)">90일</button>
+                        <button class="filter-btn" onclick="filterAvgRateChart(120)">120일</button>
+                        <button class="filter-btn" onclick="filterAvgRateChart(365)">1년</button>
                     </div>
                 </div>
-                <canvas id="usdBalanceChart" height="80"></canvas>
+                <div class="chart-canvas">
+                    <canvas id="avgRateChart"></canvas>
+                </div>
             </div>
 
-            <div class="chart-container">
+            <div class="chart-card">
                 <div class="chart-header">
-                    <div>
-                        <div class="chart-title">환율 비교 분석</div>
-                        <div class="chart-subtitle">Exchange Rate Comparison</div>
-                    </div>
-                    <div class="period-selector" id="exRateComparisonPeriodSelector">
-                        <button class="period-btn" data-period="30">30일</button>
-                        <button class="period-btn active" data-period="90">90일</button>
-                        <button class="period-btn" data-period="120">120일</button>
-                        <button class="period-btn" data-period="365">1년</button>
+                    <div class="chart-title">환율 비교 분석</div>
+                    <div class="chart-filter">
+                        <button class="filter-btn" onclick="filterRateCompareChart(30)">30일</button>
+                        <button class="filter-btn" onclick="filterRateCompareChart(60)">60일</button>
+                        <button class="filter-btn active" onclick="filterRateCompareChart(90)">90일</button>
+                        <button class="filter-btn" onclick="filterRateCompareChart(120)">120일</button>
+                        <button class="filter-btn" onclick="filterRateCompareChart(365)">1년</button>
                     </div>
                 </div>
-                <canvas id="exRateComparisonChart" height="80"></canvas>
-            </div>
-
-            <div class="table-container">
-                <h3 style="margin-bottom: 20px; font-size: 18px; font-weight: 700;">외상대금 현황</h3>
-                <div id="paymentSchedule">
-                    <p class="loading">데이터를 업로드하면 외상대금 정보가 표시됩니다.</p>
-                </div>
-            </div>
-
-            <div class="table-container">
-                <h3 style="margin-bottom: 20px; font-size: 18px; font-weight: 700;">기회수익 현황</h3>
-                <div id="forexProfitLoss">
-                    <p class="loading">데이터를 업로드하면 기회수익 분석이 표시됩니다.</p>
-                </div>
-            </div>
-
-            <div class="simulator">
-                <div class="simulator-title">🎯 외화 송금 시뮬레이터</div>
-                <div class="highlight-point">
-                    <h4>💡 시뮬레이터 사용 가이드</h4>
-                    <p>매월 15일/말일 송금 시, 보유 USD 사용 vs 당일 환전 중 어느 것이 유리한지 자동 계산합니다. 매입처 평균단가와 비교하여 최적의 송금 방법을 제시합니다.</p>
-                </div>
-                <div class="simulator-inputs">
-                    <div class="input-group">
-                        <label>💵 송금 필요 금액 (USD)</label>
-                        <input type="number" id="simRemittanceAmount" placeholder="예: 250000" value="250000">
-                    </div>
-                    <div class="input-group">
-                        <label>📊 보유 USD 평균단가 (₩)</label>
-                        <input type="number" id="simOurAvgPrice" placeholder="예: 1467" value="1467">
-                    </div>
-                    <div class="input-group">
-                        <label>💱 당일환율 (₩)</label>
-                        <input type="number" id="simTodayRate" placeholder="예: 1473" value="1473">
-                    </div>
-                    <div class="input-group">
-                        <label>🏢 매입처 평균단가 (₩)</label>
-                        <input type="number" id="simSupplierAvgPrice" placeholder="예: 1452" value="1452">
-                    </div>
-                </div>
-                <button class="upload-btn" style="width: 100%; justify-content: center; margin-bottom: 24px;" onclick="calculateRemittance()">
-                    계산하기
-                </button>
-                <div class="result-box" id="remittanceResult">
-                    <div class="result-label">권장 송금 방법</div>
-                    <div class="result-value" id="recommendedMethod">-</div>
-                    <div class="result-breakdown">
-                        <div class="breakdown-item">
-                            <div class="breakdown-label">보유 USD 사용 시</div>
-                            <div class="breakdown-value" id="ownUsdProfit">-</div>
-                        </div>
-                        <div class="breakdown-item">
-                            <div class="breakdown-label">당일 환전 시</div>
-                            <div class="breakdown-value" id="todayExchangeProfit">-</div>
-                        </div>
-                    </div>
+                <div class="chart-canvas">
+                    <canvas id="rateCompareChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <!-- 대출 현황 탭 -->
-        <div id="loan" class="tab-content">
-            <div class="stats-grid">
-                <div class="stat-card blue">
-                    <div class="stat-label">💳 총 대출한도</div>
-                    <div class="stat-value">23.5억</div>
-                    <div class="stat-detail">3개 통장 합계</div>
-                </div>
-                <div class="stat-card teal">
-                    <div class="stat-label">💰 현재 사용액</div>
-                    <div class="stat-value" id="totalLoanUsed">-</div>
-                    <div class="stat-detail" id="loanUsedDate">데이터 로드 필요</div>
-                </div>
-                <div class="stat-card orange">
-                    <div class="stat-label">📊 평균 금리</div>
-                    <div class="stat-value" id="avgLoanRate">-</div>
-                    <div class="stat-detail">가중평균 금리</div>
-                </div>
-                <div class="stat-card purple">
-                    <div class="stat-label">💸 월 이자비용</div>
-                    <div class="stat-value" id="monthlyInterest">-</div>
-                    <div class="stat-detail">최근 30일 평균</div>
-                </div>
+        <div class="fx-table-section">
+            <div class="fx-table-header">
+                <div class="fx-table-title">외환차손익 내역</div>
             </div>
-
-            <div class="table-container">
-                <h3 style="margin-bottom: 20px; font-size: 18px; font-weight: 700;">💼 보유 마이너스 통장 상세</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>은행</th>
-                            <th>대출명 및 대출번호</th>
-                            <th>금리</th>
-                            <th>대출가능액</th>
-                            <th>현재사용액</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>우리은행</td>
-                            <td>신용한도대출 보증서<br><small>1005-103-557898</small></td>
-                            <td><span style="color: #ef4444; font-weight: 600;">4.12%</span><br><small>CD연동금리 +1.29</small></td>
-                            <td style="font-weight: 600;">10억</td>
-                            <td><span style="color: #3b82f6; font-weight: 600;" id="loan1Used">0억</span></td>
-                        </tr>
-                        <tr>
-                            <td>우리은행</td>
-                            <td>신용보증기금 보증서<br><small>1005-401-165630</small></td>
-                            <td><span style="color: #ef4444; font-weight: 600;">4.07%</span><br><small>CD연동금리 +1.24</small></td>
-                            <td style="font-weight: 600;">9.5억</td>
-                            <td><span style="color: #3b82f6; font-weight: 600;" id="loan2Used">0억</span></td>
-                        </tr>
-                        <tr>
-                            <td>신한은행</td>
-                            <td>기업운영자금대출<br><small>351-004-461385</small></td>
-                            <td><span style="color: #ef4444; font-weight: 600;">3.40%</span><br><small>한국은행 중소기업 한도 특별지원</small></td>
-                            <td style="font-weight: 600;">4억</td>
-                            <td><span style="color: #3b82f6; font-weight: 600;" id="loan3Used">0억</span></td>
-                        </tr>
-                        <tr style="background: #f8f9fa; font-weight: 600;">
-                            <td colspan="3">합계 (평균 금리: 4.00%)</td>
-                            <td>23.5억</td>
-                            <td><span style="color: #3b82f6;" id="loanTotalUsed">0억</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="insights-box" style="margin-top: 20px;">
-                    <h3>💡 활용 전략</h3>
-                    <p><strong>최저 금리:</strong> 신한은행 3.40% (고정) | <strong>최고 금리:</strong> 우리은행 4.12% (변동)</p>
-                    <p><strong>권장:</strong> 투자 수익률이 금리보다 높을 때만 단기 마이너스 사용 (건전한 레버리지 활용)</p>
-                    <p><strong>현재:</strong> 전체 마이너스 통장 중 (건전한 제로 상태 유지)</p>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">기간별 이자비용 추이</div>
-                        <div class="chart-subtitle">Interest Expense Trend (2024-2025)</div>
-                    </div>
-                    <div class="period-selector" id="loanPeriodSelector">
-                        <button class="period-btn" data-period="30">최근 30일</button>
-                        <button class="period-btn" data-period="60">최근 60일</button>
-                        <button class="period-btn" data-period="90">최근 90일</button>
-                        <button class="period-btn" data-period="120">최근 120일</button>
-                        <button class="period-btn active" data-period="730">2년</button>
-                    </div>
-                </div>
-                <canvas id="loanInterestChart" height="80"></canvas>
-            </div>
-
-            <div class="chart-container">
-                <h3 style="margin-bottom: 20px; font-size: 18px; font-weight: 700;">📊 대출 이자비용 추이</h3>
-                <canvas id="loanMonthlyChart" height="80"></canvas>
-            </div>
-
-            <div class="insights-box" id="loanInsights">
-                <h3>💡 핵심 분석</h3>
-                <p>데이터를 업로드하면 대출 사용 현황과 이자비용 분석이 표시됩니다.</p>
-            </div>
+            <table class="fx-table">
+                <thead>
+                    <tr>
+                        <th>지급일</th>
+                        <th>지급액 (USD)</th>
+                        <th>당사 평균단가</th>
+                        <th>당일 환율</th>
+                        <th>매입처 청구 평균단가</th>
+                        <th>외환차손익</th>
+                    </tr>
+                </thead>
+                <tbody id="fxTableBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <!-- 투자 운용 탭 -->
-        <div id="investment" class="tab-content">
-            <div class="table-container">
-                <h3 style="margin-bottom: 20px; font-size: 18px; font-weight: 700;">💰 MMT 이자수익 내역</h3>
-                <div id="mmtTable">
-                    <p class="loading">데이터를 업로드하면 MMT 이자수익 정보가 표시됩니다.</p>
-                </div>
-                <div class="insights-box" style="margin-top: 20px;" id="mmtInsights">
-                    <h3>💡 MMT 수익 분석</h3>
-                    <p>데이터를 업로드하면 분기별 수익 분석이 표시됩니다.</p>
-                </div>
-            </div>
-
-            <div class="simulator">
-                <div class="simulator-title">🎯 마이너스 레버리지 시뮬레이터</div>
-                <div class="highlight-point">
-                    <h4>💡 레버리지 투자 전략</h4>
-                    <p>마이너스 통장을 활용한 투자 시, 실제 순수익을 계산합니다. 투자수익률이 마이너스 금리보다 높아야 수익이 발생합니다.</p>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
-                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center;">
-                        <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">💳 마이너스 평균 금리</div>
-                        <div style="font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 4px;">4.00%</div>
-                        <div style="font-size: 11px; color: #9ca3af;">3개 통장 가중평균</div>
-                    </div>
-                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center;">
-                        <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">📊 국채 금리</div>
-                        <div style="font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 4px;">3.8%</div>
-                        <div style="font-size: 11px; color: #9ca3af;">안전자산 벤치마크</div>
-                    </div>
-                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center;">
-                        <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">📈 단기채 금리</div>
-                        <div style="font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 4px;">4.2%</div>
-                        <div style="font-size: 11px; color: #9ca3af;">3개월 만기 기준</div>
-                    </div>
-                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; text-align: center;">
-                        <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">🎯 회사채 금리</div>
-                        <div style="font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 4px;">4.5%</div>
-                        <div style="font-size: 11px; color: #9ca3af;">우량기업 1년물</div>
-                    </div>
-                </div>
-
-                <div class="simulator-inputs">
-                    <div class="input-group">
-                        <label>💰 마이너스 사용액 (억원)</label>
-                        <input type="range" id="leverageAmount" min="0" max="19.5" step="0.1" value="0" 
-                               oninput="updateLeverageDisplay(); calculateLeverage();">
-                        <div style="text-align: center; font-size: 18px; font-weight: 600; color: #6366f1; margin-top: 8px;">
-                            <span id="leverageAmountDisplay">0</span>억원
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>📊 마이너스 금리 (%)</label>
-                        <input type="range" id="leverageRate" min="3.0" max="7.0" step="0.01" value="4.00" 
-                               oninput="updateRateDisplay(); calculateLeverage();">
-                        <div style="text-align: center; font-size: 18px; font-weight: 600; color: #ef4444; margin-top: 8px;">
-                            <span id="leverageRateDisplay">4.00</span>%
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>🎯 투자 수익률 (%)</label>
-                        <input type="range" id="investmentReturn" min="0" max="10" step="0.01" value="3.8" 
-                               oninput="updateReturnDisplay(); calculateLeverage();">
-                        <div style="text-align: center; font-size: 18px; font-weight: 600; color: #10b981; margin-top: 8px;">
-                            <span id="investmentReturnDisplay">3.8</span>%
-                        </div>
-                    </div>
-                </div>
-
-                <div style="background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px; margin-top: 24px;">
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">연간 순손익</div>
-                        <div style="font-size: 36px; font-weight: 700; color: #10b981;" id="netProfit">+0만원</div>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; background: #f9fafb; border-radius: 8px;">
-                        <div style="text-align: center;">
-                            <div style="font-size: 12px; color: #6b7280; margin-bottom: 6px;">투자 수익</div>
-                            <div style="font-size: 20px; font-weight: 600;" class="positive" id="investProfit">+0만원</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 12px; color: #6b7280; margin-bottom: 6px;">이자 비용</div>
-                            <div style="font-size: 20px; font-weight: 600;" class="negative" id="interestCost">-0만원</div>
-                        </div>
-                    </div>
-                    <div style="margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 8px; border-left: 3px solid #f59e0b; font-size: 13px; color: #78350f; line-height: 1.6;">
-                        <div id="leverageRecommendation">레버리지를 활용하여 투자수익률을 시뮬레이션해보세요.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <script>
-
-        // ===== 고정 데이터 (엑셀 업로드 불필요) =====
-        const EMBEDDED_DATA = {"일자별잔액": [{"날짜": "2025-01-01", "잔액": 1921}, {"날짜": "2025-01-02", "잔액": 1510}, {"날짜": "2025-01-03", "잔액": 1188}, {"날짜": "2025-01-04", "잔액": 1188}, {"날짜": "2025-01-05", "잔액": 1204}, {"날짜": "2025-01-06", "잔액": 1355}, {"날짜": "2025-01-07", "잔액": 1131}, {"날짜": "2025-01-08", "잔액": 1202}, {"날짜": "2025-01-09", "잔액": 1242}, {"날짜": "2025-01-10", "잔액": 1222}, {"날짜": "2025-01-13", "잔액": 1286}, {"날짜": "2025-01-14", "잔액": 870}, {"날짜": "2025-01-15", "잔액": 159}, {"날짜": "2025-01-16", "잔액": 233}, {"날짜": "2025-01-17", "잔액": 280}, {"날짜": "2025-01-18", "잔액": 282}, {"날짜": "2025-01-19", "잔액": 281}, {"날짜": "2025-01-20", "잔액": 57}, {"날짜": "2025-01-21", "잔액": 115}, {"날짜": "2025-01-22", "잔액": 260}, {"날짜": "2025-01-23", "잔액": 224}, {"날짜": "2025-01-24", "잔액": 423}, {"날짜": "2025-01-25", "잔액": 427}, {"날짜": "2025-01-26", "잔액": 427}, {"날짜": "2025-01-27", "잔액": 440}, {"날짜": "2025-01-28", "잔액": 507}, {"날짜": "2025-01-30", "잔액": 509}, {"날짜": "2025-01-31", "잔액": 96}, {"날짜": "2025-02-01", "잔액": 99}, {"날짜": "2025-02-02", "잔액": 108}, {"날짜": "2025-02-03", "잔액": 249}, {"날짜": "2025-02-04", "잔액": 294}, {"날짜": "2025-02-05", "잔액": 348}, {"날짜": "2025-02-06", "잔액": 250}, {"날짜": "2025-02-07", "잔액": 363}, {"날짜": "2025-02-08", "잔액": 365}, {"날짜": "2025-02-09", "잔액": 367}, {"날짜": "2025-02-10", "잔액": 313}, {"날짜": "2025-02-11", "잔액": 420}, {"날짜": "2025-02-12", "잔액": 265}, {"날짜": "2025-02-13", "잔액": -11}, {"날짜": "2025-02-14", "잔액": -386}, {"날짜": "2025-02-15", "잔액": -386}, {"날짜": "2025-02-16", "잔액": -388}, {"날짜": "2025-02-17", "잔액": -304}, {"날짜": "2025-02-18", "잔액": -223}, {"날짜": "2025-02-19", "잔액": -177}, {"날짜": "2025-02-20", "잔액": -82}, {"날짜": "2025-02-21", "잔액": -304}, {"날짜": "2025-02-24", "잔액": -280}, {"날짜": "2025-02-25", "잔액": -201}, {"날짜": "2025-02-26", "잔액": -323}, {"날짜": "2025-02-27", "잔액": -359}, {"날짜": "2025-02-28", "잔액": 252}, {"날짜": "2025-03-01", "잔액": 253}, {"날짜": "2025-03-02", "잔액": 254}, {"날짜": "2025-03-03", "잔액": 282}, {"날짜": "2025-03-04", "잔액": 496}, {"날짜": "2025-03-05", "잔액": 603}, {"날짜": "2025-03-06", "잔액": 648}, {"날짜": "2025-03-07", "잔액": 586}, {"날짜": "2025-03-08", "잔액": 586}, {"날짜": "2025-03-09", "잔액": 588}, {"날짜": "2025-03-10", "잔액": 592}, {"날짜": "2025-03-11", "잔액": 660}, {"날짜": "2025-03-12", "잔액": 718}, {"날짜": "2025-03-13", "잔액": 754}, {"날짜": "2025-03-14", "잔액": 31}, {"날짜": "2025-03-15", "잔액": 31}, {"날짜": "2025-03-16", "잔액": 29}, {"날짜": "2025-03-17", "잔액": -28}, {"날짜": "2025-03-18", "잔액": 18}, {"날짜": "2025-03-19", "잔액": 74}, {"날짜": "2025-03-20", "잔액": 163}, {"날짜": "2025-03-21", "잔액": -8}, {"날짜": "2025-03-22", "잔액": -8}, {"날짜": "2025-03-23", "잔액": -8}, {"날짜": "2025-03-24", "잔액": -34}, {"날짜": "2025-03-25", "잔액": 124}, {"날짜": "2025-03-26", "잔액": 168}, {"날짜": "2025-03-27", "잔액": -16}, {"날짜": "2025-03-28", "잔액": -684}, {"날짜": "2025-03-29", "잔액": -675}, {"날짜": "2025-03-30", "잔액": -670}, {"날짜": "2025-03-31", "잔액": 659}, {"날짜": "2025-04-01", "잔액": 866}, {"날짜": "2025-04-02", "잔액": 945}, {"날짜": "2025-04-03", "잔액": 895}, {"날짜": "2025-04-04", "잔액": 752}, {"날짜": "2025-04-05", "잔액": 755}, {"날짜": "2025-04-06", "잔액": 756}, {"날짜": "2025-04-07", "잔액": 877}, {"날짜": "2025-04-08", "잔액": 939}, {"날짜": "2025-04-09", "잔액": 1015}, {"날짜": "2025-04-10", "잔액": 989}, {"날짜": "2025-04-11", "잔액": 875}, {"날짜": "2025-04-14", "잔액": 345}, {"날짜": "2025-04-15", "잔액": 289}, {"날짜": "2025-04-16", "잔액": 352}, {"날짜": "2025-04-17", "잔액": 452}, {"날짜": "2025-04-18", "잔액": 367}, {"날짜": "2025-04-20", "잔액": 364}, {"날짜": "2025-04-21", "잔액": 449}, {"날짜": "2025-04-22", "잔액": 508}, {"날짜": "2025-04-23", "잔액": 474}, {"날짜": "2025-04-24", "잔액": 550}, {"날짜": "2025-04-25", "잔액": -247}, {"날짜": "2025-04-27", "잔액": -247}, {"날짜": "2025-04-28", "잔액": -164}, {"날짜": "2025-04-29", "잔액": 137}, {"날짜": "2025-04-30", "잔액": 412}, {"날짜": "2025-05-01", "잔액": 418}, {"날짜": "2025-05-02", "잔액": 447}, {"날짜": "2025-05-03", "잔액": 455}, {"날짜": "2025-05-04", "잔액": 455}, {"날짜": "2025-05-05", "잔액": 461}, {"날짜": "2025-05-06", "잔액": 477}, {"날짜": "2025-05-07", "잔액": 525}, {"날짜": "2025-05-08", "잔액": 627}, {"날짜": "2025-05-09", "잔액": 420}, {"날짜": "2025-05-10", "잔액": 420}, {"날짜": "2025-05-11", "잔액": 421}, {"날짜": "2025-05-12", "잔액": 445}, {"날짜": "2025-05-13", "잔액": 554}, {"날짜": "2025-05-14", "잔액": 525}, {"날짜": "2025-05-15", "잔액": -423}, {"날짜": "2025-05-16", "잔액": -493}, {"날짜": "2025-05-17", "잔액": -493}, {"날짜": "2025-05-18", "잔액": -493}, {"날짜": "2025-05-19", "잔액": -476}, {"날짜": "2025-05-20", "잔액": -387}, {"날짜": "2025-05-21", "잔액": -339}, {"날짜": "2025-05-22", "잔액": -307}, {"날짜": "2025-05-23", "잔액": -246}, {"날짜": "2025-05-24", "잔액": -246}, {"날짜": "2025-05-26", "잔액": -171}, {"날짜": "2025-05-27", "잔액": -309}, {"날짜": "2025-05-28", "잔액": -366}, {"날짜": "2025-05-29", "잔액": -118}, {"날짜": "2025-05-30", "잔액": 100}, {"날짜": "2025-05-31", "잔액": 119}, {"날짜": "2025-06-01", "잔액": 124}, {"날짜": "2025-06-02", "잔액": 302}, {"날짜": "2025-06-03", "잔액": 308}, {"날짜": "2025-06-04", "잔액": 360}, {"날짜": "2025-06-05", "잔액": 89}, {"날짜": "2025-06-07", "잔액": 89}, {"날짜": "2025-06-08", "잔액": 91}, {"날짜": "2025-06-09", "잔액": 185}, {"날짜": "2025-06-10", "잔액": 187}, {"날짜": "2025-06-11", "잔액": 218}, {"날짜": "2025-06-12", "잔액": 46}, {"날짜": "2025-06-13", "잔액": 123}, {"날짜": "2025-06-14", "잔액": 123}, {"날짜": "2025-06-15", "잔액": 123}, {"날짜": "2025-06-16", "잔액": -382}, {"날짜": "2025-06-17", "잔액": -263}, {"날짜": "2025-06-18", "잔액": -214}, {"날짜": "2025-06-19", "잔액": -286}, {"날짜": "2025-06-20", "잔액": -193}, {"날짜": "2025-06-21", "잔액": -193}, {"날짜": "2025-06-22", "잔액": -193}, {"날짜": "2025-06-23", "잔액": -153}, {"날짜": "2025-06-24", "잔액": 25}, {"날짜": "2025-06-25", "잔액": 127}, {"날짜": "2025-06-26", "잔액": 8}, {"날짜": "2025-06-27", "잔액": -107}, {"날짜": "2025-06-28", "잔액": -106}, {"날짜": "2025-06-29", "잔액": -106}, {"날짜": "2025-06-30", "잔액": 62}, {"날짜": "2025-07-01", "잔액": 313}, {"날짜": "2025-07-02", "잔액": 406}, {"날짜": "2025-07-03", "잔액": 571}, {"날짜": "2025-07-04", "잔액": 478}, {"날짜": "2025-07-05", "잔액": 479}, {"날짜": "2025-07-07", "잔액": 519}, {"날짜": "2025-07-08", "잔액": 317}, {"날짜": "2025-07-09", "잔액": 405}, {"날짜": "2025-07-10", "잔액": 359}, {"날짜": "2025-07-11", "잔액": 436}, {"날짜": "2025-07-12", "잔액": 446}, {"날짜": "2025-07-13", "잔액": 447}, {"날짜": "2025-07-14", "잔액": 516}, {"날짜": "2025-07-15", "잔액": 141}, {"날짜": "2025-07-16", "잔액": 200}, {"날짜": "2025-07-17", "잔액": 291}, {"날짜": "2025-07-18", "잔액": 166}, {"날짜": "2025-07-19", "잔액": 166}, {"날짜": "2025-07-20", "잔액": 165}, {"날짜": "2025-07-21", "잔액": 277}, {"날짜": "2025-07-22", "잔액": 60}, {"날짜": "2025-07-23", "잔액": -94}, {"날짜": "2025-07-24", "잔액": -23}, {"날짜": "2025-07-25", "잔액": -443}, {"날짜": "2025-07-27", "잔액": -440}, {"날짜": "2025-07-28", "잔액": -355}, {"날짜": "2025-07-29", "잔액": -210}, {"날짜": "2025-07-30", "잔액": 62}, {"날짜": "2025-07-31", "잔액": 141}, {"날짜": "2025-08-01", "잔액": 224}, {"날짜": "2025-08-02", "잔액": 226}, {"날짜": "2025-08-03", "잔액": 227}, {"날짜": "2025-08-04", "잔액": 119}, {"날짜": "2025-08-05", "잔액": 198}, {"날짜": "2025-08-06", "잔액": 331}, {"날짜": "2025-08-07", "잔액": 461}, {"날짜": "2025-08-08", "잔액": 427}, {"날짜": "2025-08-10", "잔액": 427}, {"날짜": "2025-08-11", "잔액": 446}, {"날짜": "2025-08-12", "잔액": 529}, {"날짜": "2025-08-13", "잔액": -162}, {"날짜": "2025-08-14", "잔액": -133}, {"날짜": "2025-08-15", "잔액": -133}, {"날짜": "2025-08-16", "잔액": -132}, {"날짜": "2025-08-17", "잔액": -120}, {"날짜": "2025-08-18", "잔액": 29}, {"날짜": "2025-08-19", "잔액": -369}, {"날짜": "2025-08-20", "잔액": -458}, {"날짜": "2025-08-21", "잔액": -420}, {"날짜": "2025-08-22", "잔액": -299}, {"날짜": "2025-08-23", "잔액": -299}, {"날짜": "2025-08-25", "잔액": -298}, {"날짜": "2025-08-26", "잔액": -264}, {"날짜": "2025-08-27", "잔액": -425}, {"날짜": "2025-08-28", "잔액": -221}, {"날짜": "2025-08-29", "잔액": 155}, {"날짜": "2025-08-30", "잔액": 169}, {"날짜": "2025-08-31", "잔액": 182}, {"날짜": "2025-09-01", "잔액": 389}, {"날짜": "2025-09-02", "잔액": 433}, {"날짜": "2025-09-03", "잔액": 478}, {"날짜": "2025-09-04", "잔액": 446}, {"날짜": "2025-09-05", "잔액": 587}, {"날짜": "2025-09-06", "잔액": 588}, {"날짜": "2025-09-07", "잔액": 593}, {"날짜": "2025-09-08", "잔액": 667}, {"날짜": "2025-09-09", "잔액": 735}, {"날짜": "2025-09-10", "잔액": 420}, {"날짜": "2025-09-11", "잔액": 536}, {"날짜": "2025-09-12", "잔액": 589}, {"날짜": "2025-09-15", "잔액": 201}, {"날짜": "2025-09-16", "잔액": 283}, {"날짜": "2025-09-17", "잔액": 354}, {"날짜": "2025-09-18", "잔액": 174}, {"날짜": "2025-09-19", "잔액": 337}, {"날짜": "2025-09-20", "잔액": 339}, {"날짜": "2025-09-21", "잔액": 339}, {"날짜": "2025-09-22", "잔액": 393}, {"날짜": "2025-09-23", "잔액": 464}, {"날짜": "2025-09-24", "잔액": 513}, {"날짜": "2025-09-25", "잔액": 652}, {"날짜": "2025-09-26", "잔액": 521}, {"날짜": "2025-09-27", "잔액": 523}, {"날짜": "2025-09-28", "잔액": 523}, {"날짜": "2025-09-29", "잔액": 646}, {"날짜": "2025-09-30", "잔액": 920}, {"날짜": "2025-10-01", "잔액": 1051}, {"날짜": "2025-10-02", "잔액": 1117}, {"날짜": "2025-10-04", "잔액": 1118}, {"날짜": "2025-10-05", "잔액": 1118}, {"날짜": "2025-10-08", "잔액": 1119}, {"날짜": "2025-10-10", "잔액": 992}, {"날짜": "2025-10-13", "잔액": 1015}, {"날짜": "2025-10-14", "잔액": 793}, {"날짜": "2025-10-15", "잔액": 227}, {"날짜": "2025-10-16", "잔액": 316}, {"날짜": "2025-10-17", "잔액": 418}, {"날짜": "2025-10-18", "잔액": 419}, {"날짜": "2025-10-19", "잔액": 419}, {"날짜": "2025-10-20", "잔액": 557}, {"날짜": "2025-10-21", "잔액": 620}, {"날짜": "2025-10-22", "잔액": 565}, {"날짜": "2025-10-23", "잔액": 577}, {"날짜": "2025-10-24", "잔액": 696}, {"날짜": "2025-10-25", "잔액": 696}, {"날짜": "2025-10-26", "잔액": 697}, {"날짜": "2025-10-27", "잔액": 45}, {"날짜": "2025-10-28", "잔액": 308}, {"날짜": "2025-10-29", "잔액": 201}, {"날짜": "2025-10-30", "잔액": 227}, {"날짜": "2025-10-31", "잔액": 748}, {"날짜": "2025-11-01", "잔액": 752}, {"날짜": "2025-11-02", "잔액": 768}, {"날짜": "2025-11-04", "잔액": 881}, {"날짜": "2025-11-05", "잔액": 971}, {"날짜": "2025-11-08", "잔액": 1142}, {"날짜": "2025-11-09", "잔액": 1145}, {"날짜": "2025-11-10", "잔액": 1140}, {"날짜": "2025-11-11", "잔액": 1285}, {"날짜": "2025-11-12", "잔액": 1390}, {"날짜": "2025-11-13", "잔액": 1426}, {"날짜": "2025-11-14", "잔액": 573}, {"날짜": "2025-11-15", "잔액": 600}, {"날짜": "2025-11-16", "잔액": 602}, {"날짜": "2025-11-17", "잔액": 687}, {"날짜": "2025-11-18", "잔액": 758}, {"날짜": "2025-11-19", "잔액": 518}, {"날짜": "2025-11-20", "잔액": 603}, {"날짜": "2025-11-21", "잔액": 764}, {"날짜": "2025-11-22", "잔액": 764}, {"날짜": "2025-11-23", "잔액": 765}, {"날짜": "2025-11-24", "잔액": 866}, {"날짜": "2025-11-25", "잔액": 1111}, {"날짜": "2025-11-26", "잔액": 1227}, {"날짜": "2025-11-27", "잔액": 981}, {"날짜": "2025-11-28", "잔액": 1016}, {"날짜": "2025-11-29", "잔액": 1017}, {"날짜": "2025-11-30", "잔액": 1018}, {"날짜": "2025-12-01", "잔액": 1275}, {"날짜": "2025-12-02", "잔액": 1362}, {"날짜": "2025-12-03", "잔액": 1448}, {"날짜": "2025-12-04", "잔액": 1524}, {"날짜": "2025-12-05", "잔액": 1381}, {"날짜": "2025-12-06", "잔액": 1384}, {"날짜": "2025-12-07", "잔액": 1387}, {"날짜": "2025-12-08", "잔액": 1460}, {"날짜": "2025-12-09", "잔액": 1525}, {"날짜": "2025-12-10", "잔액": 1498}, {"날짜": "2025-12-11", "잔액": 1283}, {"날짜": "2025-12-12", "잔액": 1177}, {"날짜": "2025-12-13", "잔액": 1179}, {"날짜": "2025-12-14", "잔액": 1179}, {"날짜": "2025-12-15", "잔액": 711}, {"날짜": "2025-12-16", "잔액": 808}, {"날짜": "2025-12-17", "잔액": 870}, {"날짜": "2025-12-18", "잔액": 959}, {"날짜": "2025-12-19", "잔액": 987}, {"날짜": "2025-12-20", "잔액": 987}, {"날짜": "2025-12-21", "잔액": 987}, {"날짜": "2025-12-22", "잔액": 1190}, {"날짜": "2025-12-23", "잔액": 1210}, {"날짜": "2025-12-24", "잔액": 1266}, {"날짜": "2025-12-26", "잔액": 1058}, {"날짜": "2025-12-29", "잔액": 1026}, {"날짜": "2025-12-30", "잔액": 1496}, {"날짜": "2025-12-31", "잔액": 1270}, {"날짜": "2026-01-02", "잔액": 1042}, {"날짜": "2026-01-05", "잔액": 1160}, {"날짜": "2026-01-06", "잔액": 1198}, {"날짜": "2026-01-07", "잔액": 1327}, {"날짜": "2026-01-08", "잔액": 906}, {"날짜": "2026-01-09", "잔액": 972}, {"날짜": "2026-01-12", "잔액": 928}, {"날짜": "2026-01-13", "잔액": 1054}, {"날짜": "2026-01-14", "잔액": 987}, {"날짜": "2026-01-15", "잔액": 960}, {"날짜": "2026-01-16", "잔액": 432}, {"날짜": "2026-01-19", "잔액": 481}, {"날짜": "2026-01-20", "잔액": 553}, {"날짜": "2026-01-21", "잔액": 603}, {"날짜": "2026-01-22", "잔액": 655}, {"날짜": "2026-01-23", "잔액": 786}, {"날짜": "2026-01-26", "잔액": 747}, {"날짜": "2026-01-27", "잔액": 759}, {"날짜": "2026-01-28", "잔액": 527}, {"날짜": "2026-01-29", "잔액": 150}, {"날짜": "2026-01-30", "잔액": 551}, {"날짜": "2026-02-02", "잔액": 705}, {"날짜": "2026-02-03", "잔액": 889}, {"날짜": "2026-02-04", "잔액": 637}, {"날짜": "2026-02-05", "잔액": 641}], "외화현황": [{"날짜": "2025-11-11", "잔액": 20000.0, "평균단가": 1464.72, "당일환율": 1464.72, "MMDA이자수익": null}, {"날짜": "2025-11-14", "잔액": 40000.0, "평균단가": 1462.59, "당일환율": 1460.45, "MMDA이자수익": null}, {"날짜": "2025-11-14", "잔액": 60000.0, "평균단가": 1460.03, "당일환율": 1454.9, "MMDA이자수익": null}, {"날짜": "2025-11-24", "잔액": 70000.0, "평균단가": 1462.09, "당일환율": 1474.48, "MMDA이자수익": null}, {"날짜": "2025-11-25", "잔액": 105000.0, "평균단가": 1466.78, "당일환율": 1476.15, "MMDA이자수익": null}, {"날짜": "2025-11-26", "잔액": 140000.0, "평균단가": 1464.77, "당일환율": 1458.73, "MMDA이자수익": null}, {"날짜": "2025-11-27", "잔액": 175000.0, "평균단가": 1465.39, "당일환율": 1467.85, "MMDA이자수익": null}, {"날짜": "2025-11-28", "잔액": 210000.0, "평균단가": 1465.6, "당일환율": 1466.65, "MMDA이자수익": null}, {"날짜": "2025-12-01", "잔액": 245000.0, "평균단가": 1465.89, "당일환율": 1467.65, "MMDA이자수익": null}, {"날짜": "2025-12-02", "잔액": 280000.0, "평균단가": 1466.14, "당일환율": 1467.85, "MMDA이자수익": null}, {"날짜": "2025-12-03", "잔액": 315000.0, "평균단가": 1466.43, "당일환율": 1468.75, "MMDA이자수익": null}, {"날짜": "2025-12-04", "잔액": 350000.0, "평균단가": 1466.66, "당일환율": 1468.75, "MMDA이자수익": null}, {"날짜": "2025-12-05", "잔액": 385000.0, "평균단가": 1467.31, "당일환율": 1473.75, "MMDA이자수익": null}, {"날짜": "2025-12-08", "잔액": 420000.0, "평균단가": 1467.52, "당일환율": 1469.88, "MMDA이자수익": null}, {"날짜": "2025-12-09", "잔액": 455000.0, "평균단가": 1467.85, "당일환율": 1471.78, "MMDA이자수익": null}, {"날짜": "2025-12-10", "잔액": 490000.0, "평균단가": 1468.02, "당일환율": 1470.23, "MMDA이자수익": null}, {"날짜": "2025-12-11", "잔액": 525000.0, "평균단가": 1467.94, "당일환율": 1466.85, "MMDA이자수익": null}, {"날짜": "2025-12-12", "잔액": 560000.0, "평균단가": 1468.3, "당일환율": 1473.65, "MMDA이자수익": null}, {"날짜": "2025-12-15", "잔액": 256547.09999999995, "평균단가": 1468.8, "당일환율": 1476.83, "MMDA이자수익": null}, {"날짜": "2025-12-16", "잔액": 291547.1, "평균단가": 1468.92, "당일환율": 1470.98, "MMDA이자수익": null}, {"날짜": "2025-12-17", "잔액": 326547.1, "평균단가": 1469.54, "당일환율": 1480.63, "MMDA이자수익": null}, {"날짜": "2025-12-18", "잔액": 361547.1, "평균단가": 1470.0, "당일환율": 1478.85, "MMDA이자수익": null}, {"날짜": "2025-12-19", "잔액": 396547.1, "평균단가": 1470.43, "당일환율": 1478.85, "MMDA이자수익": null}, {"날짜": "2025-12-22", "잔액": 431549.69, "평균단가": 1470.79, "당일환율": 1478.35, "MMDA이자수익": null}, {"날짜": "2025-12-23", "잔액": 466549.69, "평균단가": 1471.37, "당일환율": 1484.25, "MMDA이자수익": null}, {"날짜": "2025-12-24", "잔액": 501549.69, "평균단가": 1471.3, "당일환율": 1469.75, "MMDA이자수익": null}, {"날짜": "2025-12-24", "잔액": 521549.69, "평균단가": 1470.96, "당일환율": 1456.45, "MMDA이자수익": null}, {"날짜": "2025-12-26", "잔액": 556549.69, "평균단가": 1470.34, "당일환율": 1455.05, "MMDA이자수익": null}, {"날짜": "2025-12-26", "잔액": 566549.69, "평균단가": 1470.04, "당일환율": 1443.75, "MMDA이자수익": null}, {"날짜": "2025-12-26", "잔액": 571549.69, "평균단가": 1469.89, "당일환율": 1441.35, "MMDA이자수익": null}, {"날짜": "2025-12-26", "잔액": 576549.69, "평균단가": 1469.72, "당일환율": 1440.25, "MMDA이자수익": null}, {"날짜": "2025-12-29", "잔액": 611549.69, "평균단가": 1468.47, "당일환율": 1435.65, "MMDA이자수익": null}, {"날짜": "2025-12-30", "잔액": 646549.69, "평균단가": 1467.23, "당일환율": 1433.73, "MMDA이자수익": null}, {"날짜": "2025-12-31", "잔액": 182408.41999999993, "평균단가": 1458.44, "당일환율": 1461.1, "MMDA이자수익": null}, {"날짜": "2026-01-02", "잔액": 217408.41999999993, "평균단가": 1455.81, "당일환율": 1442.1, "MMDA이자수익": null}, {"날짜": "2026-01-05", "잔액": 252408.41999999993, "평균단가": 1454.62, "당일환율": 1447.2, "MMDA이자수익": null}, {"날짜": "2026-01-06", "잔액": 287408.4199999999, "평균단가": 1453.79, "당일환율": 1447.8, "MMDA이자수익": null}, {"날짜": "2026-01-07", "잔액": 322408.4199999999, "평균단가": 1453.32, "당일환율": 1449.5, "MMDA이자수익": null}, {"날짜": "2026-01-08", "잔액": 357408.4199999999, "평균단가": 1452.97, "당일환율": 1449.7, "MMDA이자수익": null}, {"날짜": "2026-01-09", "잔액": 392408.4199999999, "평균단가": 1453.55, "당일환율": 1459.5, "MMDA이자수익": null}, {"날짜": "2026-01-12", "잔액": 427408.4199999999, "평균단가": 1454.15, "당일환율": 1460.9, "MMDA이자수익": null}, {"날짜": "2026-01-13", "잔액": 462408.4199999999, "평균단가": 1455.53, "당일환율": 1472.3, "MMDA이자수익": null}, {"날짜": "2026-01-14", "잔액": 497408.4199999999, "평균단가": 1457.13, "당일환율": 1478.3, "MMDA이자수익": null}, {"날짜": "2026-01-15", "잔액": 6312.94, "평균단가": 1468.1, "당일환율": 1468.1, "MMDA이자수익": null}, {"날짜": "2026-01-16", "잔액": 41312.94, "평균단가": 1472.0, "당일환율": 1472.7, "MMDA이자수익": null}, {"날짜": "2026-01-19", "잔액": 76312.94, "평균단가": 1472.0, "당일환율": 1472.0, "MMDA이자수익": null}, {"날짜": "2026-01-20", "잔액": 111312.94, "평균단가": 1473.19, "당일환율": 1475.8, "MMDA이자수익": null}, {"날짜": "2026-01-21", "잔액": 146312.94, "평균단가": 1475.01, "당일환율": 1480.8, "MMDA이자수익": null}, {"날짜": "2026-01-22", "잔액": 181312.94, "평균단가": 1473.33, "당일환율": 1466.3, "MMDA이자수익": null}, {"날짜": "2026-01-23", "잔액": 216312.94, "평균단가": 1472.17, "당일환율": 1466.15, "MMDA이자수익": null}, {"날짜": "2026-01-26", "잔액": 251312.94, "평균단가": 1468.94, "당일환율": 1448.97, "MMDA이자수익": null}, {"날짜": "2026-01-27", "잔액": 286312.94, "평균단가": 1466.66, "당일환율": 1450.32, "MMDA이자수익": null}, {"날짜": "2026-01-28", "잔액": 356312.94, "평균단가": 1459.35, "당일환율": 1425.07, "MMDA이자수익": null}, {"날짜": "2026-01-29", "잔액": 391312.94, "평균단가": 1456.76, "당일환율": 1430.04, "MMDA이자수익": null}, {"날짜": "2026-01-30", "잔액": 20156.87, "평균단가": 1433.0, "당일환율": 1433.0, "MMDA이자수익": null}, {"날짜": "2026-02-02", "잔액": 55156.87, "평균단가": 1449.57, "당일환율": 1459.11, "MMDA이자수익": null}, {"날짜": "2026-02-03", "잔액": 90156.87, "평균단가": 1450.24, "당일환율": 1451.31, "MMDA이자수익": null}, {"날짜": "2026-02-04", "잔액": 125156.87, "평균단가": 1450.56, "당일환율": 1451.36, "MMDA이자수익": null}, {"날짜": "2026-02-05", "잔액": 160156.87, "평균단가": 1453.11, "당일환율": 1462.25, "MMDA이자수익": null}], "대출현황": [{"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-01-21", " 이자비용 ": 1.33}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-02-18", " 이자비용 ": 1.33}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-03-17", " 이자비용 ": 2.89}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-04-21", " 이자비용 ": 4.31}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-05-20", " 이자비용 ": 2.75}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-06-16", " 이자비용 ": 3.84}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-07-21", " 이자비용 ": 4.39}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-08-18", " 이자비용 ": 2.76}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-09-22", " 이자비용 ": 3.2}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-10-20", " 이자비용 ": 2.98}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-11-17", " 이자비용 ": 1.73}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2024-12-22", " 이자비용 ": 0.31}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-01-19", " 이자비용 ": 0.94}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-02-16", " 이자비용 ": 3.23}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-03-16", " 이자비용 ": 2.26}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-04-20", " 이자비용 ": 2.13}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-05-18", " 이자비용 ": 2.21}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-06-22", " 이자비용 ": 2.88}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-07-20", " 이자비용 ": 0.5}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-08-17", " 이자비용 ": 0.51}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-09-21", " 이자비용 ": 0.6}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-10-19", " 이자비용 ": 0.35}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-11-16", " 이자비용 ": 0.33}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2025-12-21", " 이자비용 ": 0.27}, {"대출통장": "우리 마이너스 통장(165630_9.5억)", "거래일": "2026-01-18", " 이자비용 ": 0.12}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-01-18", " 이자비용 ": "         -"}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-02-18", " 이자비용 ": "         -"}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-03-17", " 이자비용 ": "         -"}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-04-21", " 이자비용 ": 0.03}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-05-19", " 이자비용 ": 0.24}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-06-16", " 이자비용 ": 0.07}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-07-21", " 이자비용 ": 0.25}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-08-18", " 이자비용 ": 0}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-09-22", " 이자비용 ": 0.05}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-10-20", " 이자비용 ": 0}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-11-17", " 이자비용 ": 0.4}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2024-12-22", " 이자비용 ": 0.38}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-01-19", " 이자비용 ": 0.22}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-02-16", " 이자비용 ": 0.15}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-03-16", " 이자비용 ": 0.11}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-04-20", " 이자비용 ": 0.22}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-05-18", " 이자비용 ": 0.28}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-06-22", " 이자비용 ": 0.28}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-07-20", " 이자비용 ": 0}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-08-17", " 이자비용 ": "         -"}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-09-21", " 이자비용 ": 0.01}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-10-19", " 이자비용 ": 0}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-11-16", " 이자비용 ": "         -"}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2025-12-21", " 이자비용 ": "         -"}, {"대출통장": "우리 마이너스 통장(557898_10억)", "거래일": "2026-01-18", " 이자비용 ": "         -"}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-07-01", " 이자비용 ": 2}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-08-01", " 이자비용 ": 2}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-03-15", " 이자비용 ": 5.66}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-06-17", " 이자비용 ": 5.84}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-07-17", " 이자비용 ": 1.84}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-08-19", " 이자비용 ": 1.9}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-09-19", " 이자비용 ": 1.9}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-10-17", " 이자비용 ": 1.84}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-11-18", " 이자비용 ": 1.9}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2024-12-17", " 이자비용 ": 1.84}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2025-01-17", " 이자비용 ": 1.76}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2025-02-17", " 이자비용 ": 1.77}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2025-03-17", " 이자비용 ": 1.4}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2025-09-15", " 이자비용 ": 3.1}, {"대출통장": "신한 마이너스 통장(461385_4억)", "거래일": "2025-12-15", " 이자비용 ": 3.06}], "MMT이자": [{"입금일": "2025-09-30", "금액": 0.81}, {"입금일": "2025-12-31", "금액": 2.86}], "외상대금 상세": [{"날짜": "2025-12-15", "매입처": "CORE STAFF", "외상대": 4487.14, "외상대 매입 평균단가": 1452.0, "당사 평균단가": 1467.0, "당일환율": 1476.83}, {"날짜": "2025-12-15", "매입처": "Mouser", "외상대": 152787.4, "외상대 매입 평균단가": 1452.0, "당사 평균단가": 1467.0, "당일환율": 1476.83}, {"날짜": "2025-12-15", "매입처": "Digikey", "외상대": 60555.2, "외상대 매입 평균단가": 1452.0, "당사 평균단가": 1467.0, "당일환율": 1476.83}, {"날짜": "2025-12-15", "매입처": "Digikey (큐엠스)", "외상대": 103410.2, "외상대 매입 평균단가": 1452.0, "당사 평균단가": 1467.0, "당일환율": 1476.83}, {"날짜": "2025-12-15", "매입처": "RS component", "외상대": 10418.75, "외상대 매입 평균단가": 1452.0, "당사 평균단가": 1467.0, "당일환율": 1476.83}, {"날짜": "2025-12-15", "매입처": "WALDOM", "외상대": 6793.76, "외상대 매입 평균단가": 1452.0, "당사 평균단가": 1467.0, "당일환율": 1476.83}, {"날짜": "2025-12-31", "매입처": "TME electronic", "외상대": 1904.96, "외상대 매입 평균단가": 1478.0, "당사 평균단가": 1458.44, "당일환율": 1461.1}, {"날짜": "2025-12-31", "매입처": "TTI", "외상대": 3257.05, "외상대 매입 평균단가": 1478.0, "당사 평균단가": 1458.44, "당일환율": 1461.1}, {"날짜": "2025-12-31", "매입처": "CHIP ONE", "외상대": 15962.57, "외상대 매입 평균단가": 1478.0, "당사 평균단가": 1458.44, "당일환율": 1461.1}, {"날짜": "2025-12-31", "매입처": "CHIP ONE(큐엠스)", "외상대": 393016.68000000005, "외상대 매입 평균단가": 1478.0, "당사 평균단가": 1458.44, "당일환율": 1461.1}, {"날짜": "2025-12-31", "매입처": "ELEMENT", "외상대": 50000.01, "외상대 매입 평균단가": 1478.0, "당사 평균단가": 1458.44, "당일환율": 1461.1}, {"날짜": "2026-01-15", "매입처": "CORE STAFF", "외상대": 2944.72, "외상대 매입 평균단가": 1477.23, "당사 평균단가": 1457.85, "당일환율": 1468.1}, {"날짜": "2026-01-15", "매입처": "Mouser", "외상대": 252079.76, "외상대 매입 평균단가": 1477.23, "당사 평균단가": 1457.85, "당일환율": 1468.1}, {"날짜": "2026-01-15", "매입처": "Digikey", "외상대": 98178.19, "외상대 매입 평균단가": 1477.23, "당사 평균단가": 1457.85, "당일환율": 1468.1}, {"날짜": "2026-01-15", "매입처": "RS component", "외상대": 10935.3, "외상대 매입 평균단가": 1477.23, "당사 평균단가": 1457.85, "당일환율": 1468.1}, {"날짜": "2026-01-15", "매입처": "QUANTUS", "외상대": 110624.14, "외상대 매입 평균단가": 1477.23, "당사 평균단가": 1457.85, "당일환율": 1468.1}, {"날짜": "2026-01-15", "매입처": "WALDOM", "외상대": 19844.32, "외상대 매입 평균단가": 1477.23, "당사 평균단가": 1457.85, "당일환율": 1468.1}, {"날짜": "2026-01-30", "매입처": "ICBANK HK", "외상대": 150000.0, "외상대 매입 평균단가": 1480.91, "당사 평균단가": 1454.81, "당일환율": 1433.0}, {"날짜": "2026-01-30", "매입처": "RAYFAST", "외상대": 2750.0, "외상대 매입 평균단가": 1480.91, "당사 평균단가": 1454.81, "당일환율": 1433.0}, {"날짜": "2026-01-30", "매입처": "Chiponestop", "외상대": 20056.26, "외상대 매입 평균단가": 1480.91, "당사 평균단가": 1454.81, "당일환율": 1433.0}, {"날짜": "2026-01-30", "매입처": "TTI", "외상대": 4904.65, "외상대 매입 평균단가": 1480.91, "당사 평균단가": 1454.81, "당일환율": 1433.0}, {"날짜": "2026-01-30", "매입처": "Mouser", "외상대": 176942.68, "외상대 매입 평균단가": 1480.91, "당사 평균단가": 1454.81, "당일환율": 1433.0}, {"날짜": "2026-01-30", "매입처": "Future", "외상대": 1124.22, "외상대 매입 평균단가": 1480.91, "당사 평균단가": 1454.81, "당일환율": 1433.0}, {"날짜": "2026-01-30", "매입처": "Chiponestop", "외상대": 263.84, "외상대 매입 평균단가": 1480.91, "당사 평균단가": 1454.81, "당일환율": 1433.0}, {"날짜": "2026-01-30", "매입처": "QUANTUS", "외상대": 35139.42, "외상대 매입 평균단가": 1480.91, "당사 평균단가": 1454.81, "당일환율": 1433.0}], "수금현황(여신)": [{"연 구분": "2025년", "월 구분": "1월", "수금예정액": 2476.0, "월말 당일": 1412.0, "1W": 1843.0, "2W": 2202.0, "3W": 2273.0, "4W": 2321.0}, {"연 구분": null, "월 구분": "2월", "수금예정액": 2415.0, "월말 당일": 1696.0, "1W": 1935.0, "2W": 2198.0, "3W": 2317.0, "4W": 2365.0}, {"연 구분": null, "월 구분": "3월", "수금예정액": 2241.0, "월말 당일": 1758.0, "1W": 1958.0, "2W": 2181.0, "3W": 2203.0, "4W": 2203.0}, {"연 구분": null, "월 구분": "4월", "수금예정액": 2082.0, "월말 당일": 1397.0, "1W": 1633.0, "2W": 1791.0, "3W": 1870.0, "4W": 1870.0}, {"연 구분": null, "월 구분": "5월", "수금예정액": 2241.0, "월말 당일": 1447.0, "1W": 1641.0, "2W": 1900.0, "3W": 2029.0, "4W": 2094.0}, {"연 구분": null, "월 구분": "6월", "수금예정액": 2235.0, "월말 당일": 1536.0, "1W": 1803.0, "2W": 1937.0, "3W": 2226.0, "4W": 2226.0}, {"연 구분": null, "월 구분": "7월", "수금예정액": 2231.0, "월말 당일": 1558.0, "1W": 1975.0, "2W": 2106.0, "3W": 2150.0, "4W": 2172.0}, {"연 구분": null, "월 구분": "8월", "수금예정액": 2568.0, "월말 당일": 1773.0, "1W": 2272.0, "2W": 2347.0, "3W": 2422.0, "4W": 2422.0}, {"연 구분": null, "월 구분": "9월", "수금예정액": 2422.0, "월말 당일": 1484.0, "1W": 1634.0, "2W": 1828.0, "3W": 1914.0, "4W": 2021.0}, {"연 구분": null, "월 구분": "10월", "수금예정액": 2296.0, "월말 당일": 1557.0, "1W": 1873.0, "2W": 2009.0, "3W": 2167.0, "4W": 2212.0}, {"연 구분": null, "월 구분": "11월", "수금예정액": 1625.0, "월말 당일": 1073.0, "1W": 1341.0, "2W": 1404.0, "3W": 1468.0, "4W": 1531.0}, {"연 구분": null, "월 구분": "12월", "수금예정액": 1985.0, "월말 당일": 1225.0, "1W": 1537.0, "2W": 1712.0, "3W": 1867.0, "4W": 1906.0}, {"연 구분": " 2026년 ", "월 구분": " 1월 ", "수금예정액": 2027.0, "월말 당일": 1358.0, "1W": 1252.55, "2W": 1445.25, "3W": 1830.6499999999999, "4W": 1927.0}, {"연 구분": null, "월 구분": null, "수금예정액": null, "월말 당일": null, "1W": null, "2W": null, "3W": null, "4W": null}, {"연 구분": null, "월 구분": null, "수금예정액": null, "월말 당일": null, "1W": null, "2W": 192.70000000000005, "3W": 578.0999999999999, "4W": 674.45}], "수금현황(선입)": [{"일자": "2025-12-01", " 수금액 ": 75756149}, {"일자": "2025-12-02", " 수금액 ": 50451677}, {"일자": "2025-12-03", " 수금액 ": 34940343}, {"일자": "2025-12-04", " 수금액 ": 59068450}, {"일자": "2025-12-05", " 수금액 ": 40326608}, {"일자": "2025-12-06", " 수금액 ": 4542590}, {"일자": "2025-12-07", " 수금액 ": 1633450}, {"일자": "2025-12-08", " 수금액 ": 51201929}, {"일자": "2025-12-09", " 수금액 ": 25244482}, {"일자": "2025-12-10", " 수금액 ": 59900273}, {"일자": "2025-12-11", " 수금액 ": 66747635}, {"일자": "2025-12-12", " 수금액 ": 49267655}, {"일자": "2025-12-13", " 수금액 ": 2277000}, {"일자": "2025-12-14", " 수금액 ": 260370}, {"일자": "2025-12-15", " 수금액 ": 33963463}, {"일자": "2025-12-16", " 수금액 ": 44277387}, {"일자": "2025-12-17", " 수금액 ": 58854871}, {"일자": "2025-12-18", " 수금액 ": 37006260}, {"일자": "2025-12-19", " 수금액 ": 38557683}, {"일자": "2025-12-20", " 수금액 ": 52967}, {"일자": "2025-12-21", " 수금액 ": 89560}, {"일자": "2025-12-22", " 수금액 ": 63863474}, {"일자": "2025-12-23", " 수금액 ": 32907828}, {"일자": "2025-12-24", " 수금액 ": 38392733}, {"일자": "2025-12-25", " 수금액 ": 601700}, {"일자": "2025-12-26", " 수금액 ": 39416963}, {"일자": "2025-12-27", " 수금액 ": 2286270}, {"일자": "2025-12-29", " 수금액 ": 79109154}, {"일자": "2025-12-30", " 수금액 ": 79611757}, {"일자": "2025-12-31", " 수금액 ": 201422305}], "정기지출 관리대장": [{"일자": "1일", "지출방식": "계좌", "내역": "SIC 308호 월세", " 금액 ": 1210000, " 변동여부 ": " 고정 "}, {"일자": "1일", "지출방식": "계좌", "내역": "SIC 309호 월세", " 금액 ": 1375000, " 변동여부 ": " 고정 "}, {"일자": "1일", "지출방식": "계좌", "내역": "SIC 313호~316호 월세", " 금액 ": 7205000, " 변동여부 ": " 고정 "}, {"일자": "5일", "지출방식": "계좌", "내역": "사우회비(HR 작성)", " 금액 ": 4020000, " 변동여부 ": " 변동 "}, {"일자": "5일", "지출방식": "계좌", "내역": "직원 교육비(HR 작성)", " 금액 ": 600000, " 변동여부 ": " 변동 "}, {"일자": "5일", "지출방식": "계좌", "내역": "디자이너 유지보수료_김민지", " 금액 ": 2100000, " 변동여부 ": " 변동 "}, {"일자": "5일", "지출방식": "계좌", "내역": "노무법인동방(HR 작성)", " 금액 ": 220000, " 변동여부 ": " 고정 "}, {"일자": "5일", "지출방식": "계좌", "내역": "크레텍책임", " 금액 ": 110000, " 변동여부 ": "고정"}, {"일자": "9일", "지출방식": "카드", "내역": "LG U+ ( 몰 법인휴대폰 요금 )", " 금액 ": 20900, " 변동여부 ": " 고정 "}, {"일자": "10일", "지출방식": "자동", "내역": "4대보험(HR 작성)", " 금액 ": 52636530, " 변동여부 ": "변동"}, {"일자": "10일", "지출방식": "자동", "내역": "상해보험(HR 작성)", " 금액 ": 4034800, " 변동여부 ": "변동"}, {"일자": "10일", "지출방식": "계좌", "내역": "원천세(HR 작성)", " 금액 ": 563340, " 변동여부 ": "변동"}, {"일자": "10일", "지출방식": "계좌", "내역": "아이씨뱅큐몰(대구) 임대료 및 관리비", " 금액 ": 1531399, " 변동여부 ": "고정"}, {"일자": "10일", "지출방식": "계좌", "내역": "대전지사 관리비", " 금액 ": 315600, " 변동여부 ": "변동"}, {"일자": "10일", "지출방식": "계좌", "내역": "대전지사 임대료", " 금액 ": 749270, " 변동여부 ": "고정"}, {"일자": "10일", "지출방식": "계좌", "내역": "아르바이트 급여(HR 작성)", " 금액 ": 15157222, " 변동여부 ": "변동"}, {"일자": "10일", "지출방식": "계좌", "내역": "대한통운, 한진택배", " 금액 ": 11236090, " 변동여부 ": "변동"}, {"일자": "10일", "지출방식": "자동", "내역": "WINCMS  이용료 (집금 프로그램)", " 금액 ": 200900, " 변동여부 ": "고정"}, {"일자": "14일", "지출방식": " 계좌 ", "내역": "SIC 310호 월세", " 금액 ": 1430000, " 변동여부 ": "고정"}, {"일자": "14일", "지출방식": " 자동 ", "내역": "롯데카드", " 금액 ": 68499585, " 변동여부 ": "변동"}, {"일자": "15일", "지출방식": " 계좌 ", "내역": "카카오 T 비즈니스", " 금액 ": 11000, " 변동여부 ": " 고정 "}, {"일자": "15일", "지출방식": "카드", "내역": "청호나이스(본사)", " 금액 ": 50900, " 변동여부 ": " 고정 "}, {"일자": "15일", "지출방식": "카드", "내역": "청호나이스(본사_물류)", " 금액 ": 50900, " 변동여부 ": " 고정 "}, {"일자": "15일", "지출방식": "카드", "내역": "청호나이스(SIC)", " 금액 ": 46900, " 변동여부 ": " 고정 "}, {"일자": "15일", "지출방식": "카드", "내역": "청호나이스(대전)", " 금액 ": 46900, " 변동여부 ": " 고정 "}, {"일자": "15일", "지출방식": "카드", "내역": "동양앤커피(SIC)", " 금액 ": 46900, " 변동여부 ": " 고정 "}, {"일자": "15일", "지출방식": "카드", "내역": "동앙앤커피(대구)", " 금액 ": 46900, " 변동여부 ": " 고정 "}, {"일자": "15일", "지출방식": "자동", "내역": "삼성카드", " 금액 ": 25000000, " 변동여부 ": "변동"}, {"일자": "15일", "지출방식": "카드", "내역": "LG U+ ( 법인휴대폰 요금 )", " 금액 ": 1900, " 변동여부 ": " 고정 "}, {"일자": "15일", "지출방식": "자동", "내역": "신한은행 대출이자 / 우리은행 대출이자", " 금액 ": 3000000, " 변동여부 ": " 변동 "}, {"일자": "20일", "지출방식": "계좌", "내역": "명도종합물류", " 금액 ": 600000, " 변동여부 ": "변동"}, {"일자": "20일", "지출방식": "카드", "내역": "이카운트", " 금액 ": 44000, " 변동여부 ": " 고정 "}, {"일자": "21일", "지출방식": "카드", "내역": "에스원 구로", " 금액 ": 132000, " 변동여부 ": " 고정 "}, {"일자": "21일", "지출방식": "자동 ", "내역": "통신비(아이씨뱅큐몰 인터넷)", " 금액 ": 49500, " 변동여부 ": " 고정 "}, {"일자": "21일", "지출방식": "자동 ", "내역": "통신비(법인휴대폰 (JW)", " 금액 ": 60000, " 변동여부 ": " 변동 "}, {"일자": "23일", "지출방식": "자동", "내역": "하나카드", " 금액 ": 44000000, " 변동여부 ": "변동"}, {"일자": "23일", "지출방식": null, "내역": "우리카드", " 금액 ": 2000000, " 변동여부 ": "변동"}, {"일자": "23일", "지출방식": null, "내역": "기업카드", " 금액 ": 2000000, " 변동여부 ": "변동"}, {"일자": "25일", "지출방식": "계좌", "내역": "본사 건물관리비", " 금액 ": 3954671, " 변동여부 ": " 변동 "}, {"일자": "25일", "지출방식": "자동", "내역": "교보생명 2차", " 금액 ": 3412760, " 변동여부 ": " 고정 "}, {"일자": "25일", "지출방식": "카드", "내역": "kt 구내인터넷(서버실)", " 금액 ": 59400, " 변동여부 ": " 고정 "}, {"일자": "25일", "지출방식": "카드", "내역": "kt 구내인터넷", " 금액 ": 334950, " 변동여부 ": " 고정 "}, {"일자": "25일", "지출방식": "카드", "내역": "SK브로드밴드", " 금액 ": 331620, " 변동여부 ": " 고정 "}, {"일자": "25일", "지출방식": "카드", "내역": "동양정수커피렌탈(본사)", " 금액 ": 99000, " 변동여부 ": " 고정 "}, {"일자": "\n26일\n", "지출방식": "계좌", "내역": "본사 임차료(테크앤원)", " 금액 ": 6600000, " 변동여부 ": " 고정 "}, {"일자": "\n26일\n", "지출방식": "계좌", "내역": "본사 임차료(테크엔투)", " 금액 ": 13750000, " 변동여부 ": " 고정 "}, {"일자": "\n26일\n", "지출방식": "계좌", "내역": "한배통상_물류팀 에어완충필름", " 금액 ": 550000, " 변동여부 ": " 변동 "}, {"일자": "\n26일\n", "지출방식": "카드", "내역": "KT 인터넷(구로) 308호", " 금액 ": 46750, " 변동여부 ": " 고정 "}, {"일자": "\n26일\n", "지출방식": "카드", "내역": "KT 인터넷(구로) 313호", " 금액 ": 46750, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "카드", "내역": "피플링크", " 금액 ": 192000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "반도리 실장님급여", " 금액 ": 1000000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "반도리 개인경비", " 금액 ": 200000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "대구 임대료", " 금액 ": 550220, " 변동여부 ": "고정"}, {"일자": "말일", "지출방식": "계좌", "내역": "대구 관리비", " 금액 ": 821040, " 변동여부 ": null}, {"일자": "말일", "지출방식": "계좌", "내역": "SIC 관리비", " 금액 ": 2750360, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "자동", "내역": "반도리상하수도", " 금액 ": 178860, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "계좌", "내역": "슈어엠주식회사", " 금액 ": 1703890, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "계좌", "내역": "DHL", " 금액 ": 9017830, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "계좌", "내역": "DHL", " 금액 ": 20430, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "지로", "내역": "해외운반비", " 금액 ": 1400000, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "계좌", "내역": "짐케리인터내셔날(수입)(해외운반비)", " 금액 ": 8171836, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "계좌", "내역": "짐케리인터내셔날(수출)(해외운반비)", " 금액 ": 653500, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "계좌", "내역": "대영인터네셔널(포장비)", " 금액 ": 2854500, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "카드", "내역": "대원세무회계사무소", " 금액 ": 220000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "자동", "내역": "롯데캐피탈", " 금액 ": 395260, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "하이매트", " 금액 ": 33000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "주식회사 프린텍솔루션(물류)", " 금액 ": 66000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "주식회사 프린텍솔루션(본사)", " 금액 ": 75900, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "주식회사 프린텍솔루션(물류)-추가", " 금액 ": 55000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "카크린", " 금액 ": 110000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "지로", "내역": "전자신문_본사", " 금액 ": 20000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "지로", "내역": "전자신문_대구", " 금액 ": 20000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "지로", "내역": "전자신문_SIC", " 금액 ": 20000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "지로", "내역": "전자신문_대전", " 금액 ": 20000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "카드", "내역": "대구지사 주차비", " 금액 ": 22000, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "계좌", "내역": "세무대행료(6월부터 다시)(HR 작성)", " 금액 ": 773600, " 변동여부 ": " 변동 "}, {"일자": "말일", "지출방식": "카드", "내역": "㈜케이티_EDI", " 금액 ": 7560, " 변동여부 ": " 고정 "}, {"일자": "말일", "지출방식": "카드", "내역": "㈜케이티_대전", " 금액 ": "-", " 변동여부 ": " 변동 "}], "월별 외상대금(예상)": [{"1주차": 712, "2주차": 712, "3주차": 712, "4주차": 712, "total": 2851}]};
-        
-        // 페이지 로드 시 자동으로 데이터 로드
-        window.addEventListener('DOMContentLoaded', function() {
-            console.log('🎉 고정 데이터 로드 중...');
-            
-            // globalData에 데이터 할당
-            globalData.dailyBalance = EMBEDDED_DATA['일자별잔액'] || [];
-            globalData.forex = EMBEDDED_DATA['외화현황'] || [];
-            globalData.loans = EMBEDDED_DATA['대출현황'] || [];
-            globalData.mmt = EMBEDDED_DATA['MMT이자'] || [];
-            globalData.payments = EMBEDDED_DATA['외상대금 상세'] || [];
-            globalData.forecastYesin = EMBEDDED_DATA['수금현황(여신)'] || [];
-            globalData.forecastSunip = EMBEDDED_DATA['수금현황(선입)'] || [];
-            globalData.regularExpense = EMBEDDED_DATA['정기지출 관리대장'] || [];
-            globalData.forecastPayables = EMBEDDED_DATA['월별 외상대금(예상)'] || [];
-            
-            console.log('✅ 데이터 로드 완료!');
-            console.log('- 일자별잔액:', globalData.dailyBalance.length, '건');
-            console.log('- 외화현황:', globalData.forex.length, '건');
-            console.log('- 대출현황:', globalData.loans.length, '건');
-            
-            // 자동으로 데이터 처리 시작
-            processData();
-            
-            // 안내 메시지 표시
-            document.querySelector('.header-subtitle').textContent = '📊 2026년 2월 기준 데이터 (자동 로드 완료)';
-        });
-        // ===== 고정 데이터 끝 =====
-
-
-        // 전역 데이터 저장소
-        let globalData = {
+        const dashboardData = {
             dailyBalance: [],
-            forex: [],
-            loans: [],
-            mmt: [],
+            fxPosition: [],
             payments: []
         };
 
-        // Chart.js 인스턴스 저장소
         const charts = {
-            forecast: null,
-            exRateComparison: null
+            krw: null,
+            usd: null,
+            avgRate: null,
+            rateCompare: null
         };
 
-        // 차트 기본 설정
-        Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif';
-        Chart.defaults.color = '#64748b';
+        let currentFilters = {
+            krw: 90,
+            usd: 90,
+            avgRate: 90,
+            rateCompare: 90
+        };
 
-        // 탭 전환 이벤트
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabId = tab.dataset.tab;
-                
-                // 탭 활성화
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // 콘텐츠 표시
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-        // 기간 선택 이벤트 바인딩
-        function bindPeriodSelector(selectorId, updateFunction) {
-            document.getElementById(selectorId)?.addEventListener('click', (e) => {
-                if (e.target.classList.contains('period-btn')) {
-                    const buttons = e.target.parentElement.querySelectorAll('.period-btn');
-                    buttons.forEach(btn => btn.classList.remove('active'));
-                    e.target.classList.add('active');
+            showLoading(true);
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array', cellDates: true });
+
+                    console.log('Available sheets:', workbook.SheetNames);
+
+                    // 1. 일자별잔액 시트 (KRW)
+                    const krwSheetName = workbook.SheetNames.find(name => 
+                        name.includes('일자별') || name.includes('잔액') || name === 'Sheet1'
+                    );
                     
-                    const period = parseInt(e.target.dataset.period);
-                    updateFunction(period);
-                }
-            });
-        }
-
-        // 파일 업로드 처리
-        document.getElementById('fileInput').addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) {
-                alert('파일이 선택되지 않았습니다!');
-                return;
-            }
-
-            alert('파일 선택됨: ' + file.name);
-            console.log('File selected:', file.name);
-
-            // 로딩 표시
-            const uploadBtn = document.querySelector('.upload-btn');
-            const originalText = uploadBtn.innerHTML;
-            uploadBtn.innerHTML = '⏳ 처리 중...';
-            uploadBtn.disabled = true;
-
-            try {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    try {
-                        const data = new Uint8Array(e.target.result);
-                        const workbook = XLSX.read(data, { type: 'array' });
-
-                        console.log('Workbook sheets:', workbook.SheetNames);
-
-                        // 각 시트 데이터 읽기
-                        const sheets = workbook.SheetNames;
+                    if (krwSheetName) {
+                        console.log('Found KRW sheet:', krwSheetName);
+                        const sheet1 = workbook.Sheets[krwSheetName];
+                        const jsonData1 = XLSX.utils.sheet_to_json(sheet1, { header: 1, raw: false, dateNF: 'yyyy-mm-dd' });
                         
-                        if (sheets.includes('일자별잔액')) {
-                            globalData.dailyBalance = XLSX.utils.sheet_to_json(workbook.Sheets['일자별잔액']);
-                            console.log('일자별잔액 loaded:', globalData.dailyBalance.length, 'rows');
-                        }
+                        console.log('KRW Sheet Preview (first 5 rows):', jsonData1.slice(0, 5));
                         
-                        if (sheets.includes('외화현황')) {
-                            globalData.forex = XLSX.utils.sheet_to_json(workbook.Sheets['외화현황']);
-                            console.log('외화현황 loaded:', globalData.forex.length, 'rows');
-                        }
-                        
-                        if (sheets.includes('대출현황')) {
-                            globalData.loans = XLSX.utils.sheet_to_json(workbook.Sheets['대출현황']);
-                            console.log('대출현황 loaded:', globalData.loans.length, 'rows');
-                        }
-                        
-                        if (sheets.includes('MMT이자')) {
-                            globalData.mmt = XLSX.utils.sheet_to_json(workbook.Sheets['MMT이자']);
-                            console.log('MMT이자 loaded:', globalData.mmt.length, 'rows');
-                        }
-                        
-                        if (sheets.includes('외상대금 상세')) {
-                            globalData.payments = XLSX.utils.sheet_to_json(workbook.Sheets['외상대금 상세']);
-                            console.log('외상대금 상세 loaded:', globalData.payments.length, 'rows');
-                        }
-                        
-                        // 현금흐름 예측용 시트
-                        if (sheets.includes('수금현황(여신)')) {
-                            globalData.forecastYesin = XLSX.utils.sheet_to_json(workbook.Sheets['수금현황(여신)']);
-                            console.log('수금현황(여신) loaded:', globalData.forecastYesin.length, 'rows');
-                        }
-                        
-                        if (sheets.includes('수금현황(선입)')) {
-                            globalData.forecastSunip = XLSX.utils.sheet_to_json(workbook.Sheets['수금현황(선입)']);
-                            console.log('수금현황(선입) loaded:', globalData.forecastSunip.length, 'rows');
-                        }
-                        
-                        if (sheets.includes('정기지출 관리대장')) {
-                            globalData.regularExpense = XLSX.utils.sheet_to_json(workbook.Sheets['정기지출 관리대장']);
-                            console.log('정기지출 관리대장 loaded:', globalData.regularExpense.length, 'rows');
-                        }
-                        
-                        if (sheets.includes('월별 외상대금(예상)')) {
-                            globalData.forecastPayables = XLSX.utils.sheet_to_json(workbook.Sheets['월별 외상대금(예상)']);
-                            console.log('월별 외상대금(예상) loaded:', globalData.forecastPayables.length, 'rows');
-                        }
-                        
-                        if (sheets.includes('수금현황 추이')) {
-                            globalData.collectionRate = XLSX.utils.sheet_to_json(workbook.Sheets['수금현황 추이']);
-                            console.log('수금현황 추이 loaded:', globalData.collectionRate.length, 'rows');
-                        }
-
-                        // 데이터 처리 및 차트 업데이트
-                        processData();
-                        
-                        // 업데이트 날짜 표시
-                        const today = new Date();
-                        document.getElementById('lastUpdate').innerHTML = 
-                            `📅 마지막 업데이트: ${today.getFullYear()}년 ${today.getMonth()+1}월 ${today.getDate()}일`;
-
-                        // 버튼 복구
-                        uploadBtn.innerHTML = originalText;
-                        uploadBtn.disabled = false;
-
-                        alert('✅ 데이터가 성공적으로 업로드되었습니다!');
-                        
-                        // 파일 입력 초기화
-                        e.target.value = '';
-                    } catch (error) {
-                        console.error('Error processing workbook:', error);
-                        uploadBtn.innerHTML = originalText;
-                        uploadBtn.disabled = false;
-                        alert('❌ 파일 처리 중 오류가 발생했습니다: ' + error.message);
-                    }
-                };
-
-                reader.onerror = function(error) {
-                    console.error('Error reading file:', error);
-                    uploadBtn.innerHTML = originalText;
-                    uploadBtn.disabled = false;
-                    alert('❌ 파일 읽기 중 오류가 발생했습니다.');
-                };
-
-                reader.readAsArrayBuffer(file);
-            } catch (error) {
-                console.error('Error in file upload:', error);
-                uploadBtn.innerHTML = originalText;
-                uploadBtn.disabled = false;
-                alert('❌ 파일 업로드 중 오류가 발생했습니다: ' + error.message);
-            }
-        });
-
-        // 데이터 처리 및 차트 생성
-        function processData() {
-            console.log('Processing data...');
-            
-            // 날짜 형식 통합 변환 함수
-            function normalizeDate(dateValue) {
-                if (!dateValue) return '';
-                
-                // 이미 문자열이고 YYYY-MM-DD 형식이면 그대로 반환
-                if (typeof dateValue === 'string' && dateValue.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                    return dateValue;
-                }
-                
-                // 문자열이지만 다른 형식인 경우 (예: "2025-11-11 00:00:00")
-                if (typeof dateValue === 'string') {
-                    return dateValue.split(' ')[0];
-                }
-                
-                // Excel 날짜 시리얼 넘버인 경우
-                if (typeof dateValue === 'number') {
-                    const utc_days = Math.floor(dateValue - 25569);
-                    const utc_value = utc_days * 86400;
-                    const date_info = new Date(utc_value * 1000);
-                    return date_info.toISOString().split('T')[0];
-                }
-                
-                // Date 객체인 경우
-                if (dateValue instanceof Date) {
-                    return dateValue.toISOString().split('T')[0];
-                }
-                
-                return String(dateValue).split(' ')[0];
-            }
-
-            // 날짜 형식 정규화
-            if (globalData.dailyBalance && globalData.dailyBalance.length > 0) {
-                globalData.dailyBalance = globalData.dailyBalance
-                    .filter(item => item['잔액'] !== null && item['잔액'] !== undefined && item['잔액'] !== '')
-                    .map(item => ({
-                        ...item,
-                        '날짜': normalizeDate(item['날짜'])
-                    }));
-                console.log('일자별잔액 처리 완료:', globalData.dailyBalance.length, '건');
-                console.log('샘플:', globalData.dailyBalance[0]);
-            }
-
-            if (globalData.forex && globalData.forex.length > 0) {
-                // 안전한 숫자 변환 함수
-                const safeNumber = (value) => {
-                    if (value === null || value === undefined || value === '' || isNaN(value)) {
-                        return 0;
-                    }
-                    const num = parseFloat(value);
-                    return isNaN(num) ? 0 : num;
-                };
-                
-                // 첫 번째 항목에서 실제 컬럼명 찾기
-                if (globalData.forex.length > 0) {
-                    const keys = Object.keys(globalData.forex[0]);
-                    console.log('원본 컬럼 키들:', keys);
-                    console.log('각 키 상세:', keys.map(k => ({key: k, length: k.length, trimmed: k.trim()})));
-                }
-                
-                globalData.forex = globalData.forex
-                    .filter(item => {
-                        // 날짜가 있는 행만 유효 (잔액이 0이어도 OK)
-                        return item['날짜'] !== null && item['날짜'] !== undefined && item['날짜'] !== '';
-                    })
-                    .map(item => {
-                        // 컬럼명을 trim하여 접근
-                        const getValueByKey = (obj, targetKey) => {
-                            // 정확히 일치하는 키가 있으면 사용
-                            if (obj[targetKey] !== undefined) return obj[targetKey];
+                        dashboardData.dailyBalance = [];
+                        for (let i = 1; i < jsonData1.length; i++) {
+                            const row = jsonData1[i];
+                            if (!row[0]) continue;
                             
-                            // trim된 키로 찾기
-                            for (let key in obj) {
-                                if (key.trim() === targetKey.trim()) {
-                                    return obj[key];
-                                }
+                            const dateValue = parseExcelDate(row[0]);
+                            // 더 강력한 숫자 파싱
+                            let balance = 0;
+                            if (row[1] !== undefined && row[1] !== null && row[1] !== '') {
+                                const balanceStr = String(row[1]).replace(/[^0-9.-]/g, '');
+                                balance = parseFloat(balanceStr);
+                                console.log(`Row ${i}: 원본="${row[1]}", 파싱후="${balanceStr}", 숫자=${balance}`);
                             }
-                            return undefined;
-                        };
-                        
-                        const processed = {
-                            '날짜': normalizeDate(item['날짜']),
-                            '잔액': safeNumber(item['잔액']),
-                            '평균단가': safeNumber(getValueByKey(item, '평균단가')),
-                            '당일환율': safeNumber(getValueByKey(item, '당일환율')),  // 변경됨!
-                            'mmda이자수익': safeNumber(getValueByKey(item, 'mmda이자수익'))
-                        };
-                        
-                        return processed;
-                    });
-                
-                console.log('외화현황 처리 완료:', globalData.forex.length, '건 (빈 행 제거 후)');
-                console.log('샘플 첫번째:', globalData.forex[0]);
-                console.log('샘플 마지막:', globalData.forex[globalData.forex.length - 1]);
-            }
+                            
+                            // balance !== 0 조건 제거 - 0도 허용
+                            if (dateValue && !isNaN(dateValue.getTime()) && !isNaN(balance)) {
+                                dashboardData.dailyBalance.push({
+                                    date: dateValue,
+                                    balance: balance
+                                });
+                                console.log(`✓ Added: date=${dateValue.toISOString().split('T')[0]}, balance=${balance}`);
+                            } else {
+                                console.log(`✗ Skipped row ${i}: date valid=${!!dateValue}, balance=${balance}, isNaN=${isNaN(balance)}`);
+                            }
+                        }
+                        console.log('Loaded dailyBalance:', dashboardData.dailyBalance.length);
+                        if (dashboardData.dailyBalance.length > 0) {
+                            console.log('Sample KRW data:', dashboardData.dailyBalance[0]);
+                            console.log('Latest KRW data:', dashboardData.dailyBalance[dashboardData.dailyBalance.length - 1]);
+                        } else {
+                            console.error('❌ KRW dailyBalance is EMPTY! Check row data above.');
+                        }
+                    } else {
+                        console.warn('KRW sheet not found!');
+                    }
 
-            if (globalData.loans && globalData.loans.length > 0) {
-                console.log('======= 대출현황 디버깅 시작 =======');
-                console.log('대출현황 원본 데이터 수:', globalData.loans.length);
-                console.log('대출현황 첫 번째 원본 전체:', globalData.loans[0]);
-                console.log('대출현황 원본 키 목록:', Object.keys(globalData.loans[0]));
-                console.log('각 키 상세:');
-                Object.keys(globalData.loans[0]).forEach((key, idx) => {
-                    console.log(`  [${idx}] "${key}" (길이: ${key.length}, 값: ${globalData.loans[0][key]})`);
-                });
-                
-                // 안전한 숫자 변환 (-, 빈 문자열을 0으로 처리)
-                const safeNumber = (value) => {
-                    if (value === null || value === undefined || value === '' || value === '-') {
-                        return 0;
-                    }
-                    const num = parseFloat(value);
-                    return isNaN(num) ? 0 : num;
-                };
-                
-                // 키 찾기 헬퍼 (외화현황과 동일)
-                const getValueByKey = (obj, targetKey) => {
-                    if (obj[targetKey] !== undefined) return obj[targetKey];
-                    for (let key in obj) {
-                        if (key.trim() === targetKey.trim()) {
-                            return obj[key];
-                        }
-                    }
-                    return undefined;
-                };
-                
-                globalData.loans = globalData.loans
-                    .map((item, index) => {
-                        const account = getValueByKey(item, '대출통장');
-                        const date = getValueByKey(item, '거래일');
-                        const interest = getValueByKey(item, '이자비용');
-                        
-                        if (index < 3) {
-                            console.log(`행 ${index} 처리:`, {
-                                '대출통장': account,
-                                '거래일': date,
-                                '이자비용': interest,
-                                '변환후': safeNumber(interest)
-                            });
-                        }
-                        
-                        return {
-                            '대출통장': account || '',
-                            '거래일': normalizeDate(date),
-                            '이자비용': safeNumber(interest)
-                        };
-                    })
-                    .filter(item => {
-                        // 대출통장이 있는 행만
-                        return item['대출통장'] !== '';
-                    });
+                    // 2. 외화포지션/외화현황 시트 (USD)
+                    const usdSheetName = workbook.SheetNames.find(name => 
+                        name.includes('외화') || name.includes('포지션') || name.includes('USD') || name === 'Sheet2'
+                    );
                     
-                console.log('대출현황 처리 완료:', globalData.loans.length, '건');
-                if (globalData.loans.length > 0) {
-                    console.log('샘플 첫번째:', globalData.loans[0]);
-                    console.log('샘플 마지막:', globalData.loans[globalData.loans.length - 1]);
-                } else {
-                    console.error('⚠️ 모든 대출 데이터가 필터링되었습니다!');
-                }
-                console.log('======= 대출현황 디버깅 끝 =======');
-            }
-
-            if (globalData.mmt && globalData.mmt.length > 0) {
-                globalData.mmt = globalData.mmt
-                    .filter(item => item['금액'] !== null && item['금액'] !== undefined && item['금액'] !== '')
-                    .map(item => ({
-                        ...item,
-                        '입금일': normalizeDate(item['입금일']),
-                        '금액': parseFloat(item['금액']) || 0
-                    }));
-                console.log('MMT이자 처리 완료:', globalData.mmt.length, '건');
-                console.log('샘플:', globalData.mmt[0]);
-            }
-
-            if (globalData.payments && globalData.payments.length > 0) {
-                globalData.payments = globalData.payments
-                    .filter(item => item['외상대'] !== null && item['외상대'] !== undefined && item['외상대'] !== '')
-                    .map(item => ({
-                        ...item,
-                        '날짜': normalizeDate(item['날짜']),
-                        '외상대': parseFloat(item['외상대']) || 0,
-                        '외상대 매입 평균단가': parseFloat(item['외상대 매입 평균단가']) || 0,
-                        '당사 평균단가': parseFloat(item['당사 평균단가']) || 0,
-                        '당일환율': parseFloat(item['당일환율']) || 0
-                    }));
-                console.log('외상대금 상세 처리 완료:', globalData.payments.length, '건');
-                console.log('샘플:', globalData.payments[0]);
-            }
-
-            // 탭별 업데이트
-            if (globalData.dailyBalance.length > 0) {
-                console.log('자금흐름 탭 업데이트 시작...');
-                updateCashFlowTab();
-            }
-            if (globalData.forex.length > 0) {
-                console.log('외화현황 탭 업데이트 시작...');
-                updateForexTab();
-            }
-            if (globalData.loans.length > 0) {
-                console.log('대출현황 탭 업데이트 시작...');
-                updateLoanTab();
-            }
-            if (globalData.mmt.length > 0) {
-                console.log('투자운용 탭 업데이트 시작...');
-                updateInvestmentTab();
-            }
-            
-            console.log('=== Data processing complete! ===');
-        }
-
-        // 자금흐름 탭 업데이트
-        function updateCashFlowTab() {
-            const data = globalData.dailyBalance;
-            if (!data || data.length === 0) return;
-
-            // 통계 계산 (이미 백만원 단위)
-            const latest = data[data.length - 1];
-            const last30Days = data.slice(-30);
-            const avgBalance = last30Days.reduce((sum, item) => sum + item['잔액'], 0) / last30Days.length;
-            const maxItem = data.reduce((max, item) => item['잔액'] > max['잔액'] ? item : max);
-            const minItem = data.reduce((min, item) => item['잔액'] < min['잔액'] ? item : min);
-
-            // 통계 표시 (백만원 → 억원)
-            document.getElementById('currentBalance').textContent = `${(latest['잔액'] / 100).toFixed(1)}억`;
-            document.getElementById('balanceDate').textContent = `${latest['날짜']} 기준`;
-            
-            // 총 가용자금 = 순 현금잔액 + 마이너스통장 19.5억
-            const totalAvailable = (latest['잔액'] / 100) + 19.5;
-            document.getElementById('totalAvailable').textContent = `${totalAvailable.toFixed(1)}억`;
-
-            // 인사이트 생성
-            const growth = ((latest['잔액'] - last30Days[0]['잔액']) / last30Days[0]['잔액'] * 100).toFixed(1);
-            const trend = growth > 0 ? '증가' : '감소';
-            document.getElementById('cashFlowInsights').innerHTML = `
-                <h3>💡 주요 인사이트</h3>
-                <p>최근 90일간 평균 ${(avgBalance / 100).toFixed(2)}억 유지 중이며, 전월 동기 대비 <strong>${Math.abs(growth)}%</strong> ${trend}했습니다.</p>
-                <p>전월 대비 <strong>${trend === '증가' ? '안정적인' : '하락기에'}</strong> 흐름을 보이며, 하락기에는 경영진의 철저한 선별비용 집행이 필요합니다.</p>
-                <p>${latest['날짜']} 기준 <strong>${(latest['잔액'] / 100).toFixed(1)}억</strong>을 보유 중입니다.</p>
-            `;
-
-            // 차트 생성
-            createDailyBalanceChart(90);
-            createMonthlyBalanceChart(90);
-            createCollectionRateChart(24);
-
-            // 기간 선택 바인딩
-            bindPeriodSelector('dailyPeriodSelector', createDailyBalanceChart);
-            bindPeriodSelector('monthlyPeriodSelector', createMonthlyBalanceChart);
-            bindPeriodSelector('collectionPeriodSelector', createCollectionRateChart);
-            
-        }
-
-        // 일자별 잔액 차트
-        function createDailyBalanceChart(days) {
-            const data = globalData.dailyBalance.slice(-days);
-            const ctx = document.getElementById('dailyBalanceChart');
-            
-            if (charts.dailyBalance) {
-                charts.dailyBalance.destroy();
-            }
-
-            charts.dailyBalance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(item => item['날짜']),
-                    datasets: [{
-                        label: '일자별 잔액 (억원)',
-                        data: data.map(item => item['잔액']),
-                        borderColor: '#6366f1',
-                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true,
-                        pointRadius: 3,
-                        pointHoverRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12,
-                            titleFont: { size: 13 },
-                            bodyFont: { size: 14 },
-                            callbacks: {
-                                label: (context) => `${(context.parsed.y / 100).toFixed(1)}억원`
+                    if (usdSheetName) {
+                        console.log('Found USD sheet:', usdSheetName);
+                        const sheet2 = workbook.Sheets[usdSheetName];
+                        const jsonData2 = XLSX.utils.sheet_to_json(sheet2, { header: 1, raw: false, dateNF: 'yyyy-mm-dd' });
+                        
+                        console.log('USD Sheet Preview (first 3 rows):', jsonData2.slice(0, 3));
+                        
+                        dashboardData.fxPosition = [];
+                        for (let i = 1; i < jsonData2.length; i++) {
+                            const row = jsonData2[i];
+                            if (!row[0]) continue;
+                            
+                            const dateValue = parseExcelDate(row[0]);
+                            const balance = parseFloat(String(row[1]).replace(/[^0-9.-]/g, '')) || 0;
+                            const avgRate = parseFloat(String(row[2]).replace(/[^0-9.-]/g, '')) || 0;
+                            const marketRate = parseFloat(String(row[3]).replace(/[^0-9.-]/g, '')) || 0;
+                            
+                            console.log(`Row ${i}: date=${dateValue}, balance=${balance}, avgRate=${avgRate}, marketRate=${marketRate}`);
+                            
+                            if (dateValue && !isNaN(dateValue.getTime()) && balance > 0) {
+                                dashboardData.fxPosition.push({
+                                    date: dateValue,
+                                    balance: balance,
+                                    avgRate: avgRate,
+                                    marketRate: marketRate
+                                });
                             }
                         }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                maxRotation: 45,
-                                minRotation: 45,
-                                autoSkip: true,
-                                maxTicksLimit: 15
-                            },
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            beginAtZero: false,
-                            ticks: {
-                                callback: (value) => (value / 100).toFixed(1) + '억'
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
+                        console.log('Loaded fxPosition:', dashboardData.fxPosition.length);
+                        if (dashboardData.fxPosition.length > 0) {
+                            console.log('Sample USD data:', dashboardData.fxPosition[0]);
+                        } else {
+                            console.warn('USD data array is empty! Check if balance > 0 condition is met.');
                         }
+                    } else {
+                        console.warn('USD sheet not found!');
                     }
+
+                    // 3. 외환차손익 시트
+                    const fxSheetName = workbook.SheetNames.find(name => 
+                        name.includes('외환') || name.includes('차손익') || name === 'Sheet3'
+                    );
+                    
+                    if (fxSheetName) {
+                        console.log('Found FX sheet:', fxSheetName);
+                        const sheet3 = workbook.Sheets[fxSheetName];
+                        const jsonData3 = XLSX.utils.sheet_to_json(sheet3, { header: 1, raw: false, dateNF: 'yyyy-mm-dd' });
+                        
+                        console.log('FX Sheet Preview (first 3 rows):', jsonData3.slice(0, 3));
+                        
+                        dashboardData.payments = [];
+                        for (let i = 1; i < jsonData3.length; i++) {
+                            const row = jsonData3[i];
+                            if (!row[0]) continue;
+                            
+                            const dateValue = parseExcelDate(row[0]);
+                            const totalUSD = parseFloat(String(row[1]).replace(/[^0-9.-]/g, '')) || 0;
+                            const ourAvgRate = parseFloat(String(row[2]).replace(/[^0-9.-]/g, '')) || 0;
+                            const vendorAvgRate = parseFloat(String(row[3]).replace(/[^0-9.-]/g, '')) || 0;
+                            const fxGainLoss = parseFloat(String(row[4]).replace(/[^0-9.-]/g, '')) || 0;
+                            const vendors = row[5] ? String(row[5]).split(',').map(v => ({ vendor: v.trim() })) : [];
+                            
+                            if (dateValue && !isNaN(dateValue.getTime()) && totalUSD > 0) {
+                                dashboardData.payments.push({
+                                    date: dateValue,
+                                    totalUSD: totalUSD,
+                                    ourAvgRate: ourAvgRate,
+                                    vendorAvgRate: vendorAvgRate,
+                                    fxGainLoss: fxGainLoss,
+                                    vendorCount: vendors.length,
+                                    vendors: vendors
+                                });
+                            }
+                        }
+                        console.log('Loaded payments:', dashboardData.payments.length);
+                    } else {
+                        console.warn('FX sheet not found!');
+                    }
+
+                    if (dashboardData.dailyBalance.length > 0 || dashboardData.fxPosition.length > 0) {
+                        renderDashboard();
+                        document.getElementById('updateTime').textContent = '최종 업데이트: ' + new Date().toLocaleString('ko-KR');
+                    } else {
+                        alert('유효한 데이터가 없습니다. 엑셀 파일을 확인해주세요.');
+                    }
+
+                    showLoading(false);
+                    event.target.value = '';
+                } catch (error) {
+                    console.error('Excel parsing error:', error);
+                    alert('엑셀 파일을 읽는 중 오류가 발생했습니다.');
+                    showLoading(false);
                 }
-            });
+            };
+
+            reader.readAsArrayBuffer(file);
         }
 
-        // 월말 잔액 차트
-        function createMonthlyBalanceChart(days) {
-            const data = globalData.dailyBalance.slice(-days);
+        function renderDashboard() {
+            updateKPICards();
+            createCharts();
+            updateFXTable();
+        }
+
+        function updateKPICards() {
+            console.log('=== updateKPICards 호출 ===');
+            console.log('dailyBalance 개수:', dashboardData.dailyBalance.length);
+            console.log('fxPosition 개수:', dashboardData.fxPosition.length);
             
-            // 월말 데이터 필터링
-            const monthlyData = [];
-            let lastMonth = '';
-            
-            for (let i = data.length - 1; i >= 0; i--) {
-                const date = new Date(data[i]['날짜']);
-                const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+            if (dashboardData.dailyBalance.length > 0) {
+                const latest = dashboardData.dailyBalance[dashboardData.dailyBalance.length - 1];
+                console.log('Latest KRW 데이터:', latest);
+                console.log('Balance 값 (백만원 단위):', latest.balance);
                 
-                if (month !== lastMonth) {
-                    monthlyData.unshift(data[i]);
-                    lastMonth = month;
-                }
+                // 백만원 단위를 억 단위로 변환 (666백만원 → 6.66억)
+                const balanceInEok = latest.balance / 100;
+                console.log('억 단위 변환:', balanceInEok);
+                
+                const displayText = formatNumber(balanceInEok, 2) + '억';
+                console.log('표시할 텍스트:', displayText);
+                
+                document.getElementById('krwBalance').textContent = displayText;
+                
+                // 총 가용자금 = 순현금잔액 + 19.5억
+                const totalAvailable = balanceInEok + 19.5;
+                console.log('총 가용자금:', totalAvailable);
+                document.getElementById('availableFunds').textContent = formatNumber(totalAvailable, 2) + '억';
+            } else {
+                console.error('❌ dailyBalance 배열이 비어있습니다!');
             }
 
-            const ctx = document.getElementById('monthlyBalanceChart');
-            
-            if (charts.monthlyBalance) {
-                charts.monthlyBalance.destroy();
+            if (dashboardData.fxPosition.length > 0) {
+                const latest = dashboardData.fxPosition[dashboardData.fxPosition.length - 1];
+                document.getElementById('usdBalance').textContent = '$' + formatNumber(latest.balance, 2);
+                
+                const krwEquiv = latest.avgRate * latest.balance;
+                document.getElementById('usdKrwEquiv').textContent = '원화 환산액: ₩' + formatNumber(krwEquiv, 0);
             }
 
-            charts.monthlyBalance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: monthlyData.map(item => item['날짜']),
-                    datasets: [{
-                        label: '월말 잔액 (억원)',
-                        data: monthlyData.map(item => item['잔액']),
-                        borderColor: '#14b8a6',
-                        backgroundColor: 'rgba(20, 184, 166, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true,
-                        pointRadius: 4,
-                        pointHoverRadius: 7
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12,
-                            titleFont: { size: 13 },
-                            bodyFont: { size: 14 },
-                            callbacks: {
-                                label: (context) => `${(context.parsed.y / 100).toFixed(1)}억원`
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            beginAtZero: false,
-                            ticks: {
-                                callback: (value) => (value / 100).toFixed(1) + '억'
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        }
-                    }
-                }
-            });
+            if (dashboardData.fxPosition.length > 0) {
+                const latest = dashboardData.fxPosition[dashboardData.fxPosition.length - 1];
+                document.getElementById('avgRate').textContent = '₩' + formatNumber(latest.avgRate, 2);
+            }
         }
 
-        // 수금현황 추이 차트 (Google Sheets 방식)
-        function createCollectionRateChart(months) {
-            const data = globalData.collectionRate;
-            if (!data || data.length === 0) {
-                console.log('수금현황 추이 데이터 없음');
-                return;
-            }
-            
-            // 연구분 null 채우기
-            let currentYear = '';
-            const processed = data.map(item => {
-                if (item['연 구분']) currentYear = String(item['연 구분']).replace('년', '').trim();
-                const month = String(item['월 구분'] || '').trim().padStart(2, '0');
-                return {
-                    label: currentYear && month ? `${currentYear}-${month}` : '',
-                    월말당일: item['월말 당일'],
-                    w1: item['1W'],
-                    w2: item['2W'],
-                    w3: item['3W']
-                };
-            }).filter(item => item.label);
-            
-            // 최근 N개월
-            const recent = processed.slice(-months);
-            const labels = recent.map(item => item.label);
-            const monthEnd = recent.map(item => item.월말당일 ? item.월말당일 * 100 : null);
-            const week1 = recent.map(item => item.w1 ? item.w1 * 100 : null);
-            const week2 = recent.map(item => item.w2 ? item.w2 * 100 : null);
-            const week3 = recent.map(item => item.w3 ? item.w3 * 100 : null);
-            
-            const ctx = document.getElementById('collectionRateChart');
+        function filterKRWChart(days) {
+            currentFilters.krw = days;
+            setActiveFilter(event.target);
+            renderKRWChart();
+        }
+
+        function filterUSDChart(days) {
+            currentFilters.usd = days;
+            setActiveFilter(event.target);
+            renderUSDChart();
+        }
+
+        function filterAvgRateChart(days) {
+            currentFilters.avgRate = days;
+            setActiveFilter(event.target);
+            renderAvgRateChart();
+        }
+
+        function filterRateCompareChart(days) {
+            currentFilters.rateCompare = days;
+            setActiveFilter(event.target);
+            renderRateCompareChart();
+        }
+
+        function setActiveFilter(btn) {
+            const container = btn.parentElement;
+            container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function filterDataByDays(data, days) {
+            if (!data || data.length === 0) return [];
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - days);
+            return data.filter(item => item.date >= cutoffDate);
+        }
+
+        function renderKRWChart() {
+            const ctx = document.getElementById('krwChart');
             if (!ctx) return;
-            
-            if (window.collectionChart) {
-                window.collectionChart.destroy();
-            }
-            
-            window.collectionChart = new Chart(ctx, {
+
+            const data = filterDataByDays(dashboardData.dailyBalance, currentFilters.krw);
+            if (data.length === 0) return;
+
+            if (charts.krw) charts.krw.destroy();
+            charts.krw = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: '월말 당일',
-                            data: monthEnd,
-                            borderColor: '#FFD700',
-                            tension: 0.3,
-                            pointRadius: 0,
-                            borderWidth: 2
-                        },
-                        {
-                            label: '1W',
-                            data: week1,
-                            borderColor: '#FFA500',
-                            tension: 0.3,
-                            pointRadius: 0,
-                            borderWidth: 2
-                        },
-                        {
-                            label: '2W',
-                            data: week2,
-                            borderColor: '#FF6B6B',
-                            tension: 0.3,
-                            pointRadius: 0,
-                            borderWidth: 2
-                        },
-                        {
-                            label: '3W',
-                            data: week3,
-                            borderColor: '#51CF66',
-                            tension: 0.3,
-                            pointRadius: 0,
-                            borderWidth: 2
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom' }
-                    },
-                    scales: {
-                        y: {
-                            min: 35,
-                            max: 105,
-                            ticks: {
-                                stepSize: 10,
-                                callback: v => v + '%'
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                maxRotation: 45,
-                                minRotation: 45
-                            }
-                        }
-                    }
-                }
-            });
-            
-            console.log('✅ 수금현황 추이 차트 생성 완료!');
-        }
-
-        // 외화 탭 업데이트
-        function updateForexTab() {
-            const data = globalData.forex;
-            if (!data || data.length === 0) {
-                console.log('외화 데이터 없음');
-                return;
-            }
-
-            console.log('외화 탭 업데이트 중... 데이터 수:', data.length);
-            const latest = data[data.length - 1];
-            console.log('최신 외화 데이터:', latest);
-            console.log('최신 데이터 키들:', Object.keys(latest));
-            
-            // 안전한 숫자 변환
-            const safeNum = (val) => {
-                console.log(`safeNum 호출: ${val} (타입: ${typeof val})`);
-                const num = parseFloat(val);
-                const result = isNaN(num) ? 0 : num;
-                console.log(`safeNum 결과: ${result}`);
-                return result;
-            };
-            
-            // USD 통계
-            console.log('===== 값 추출 시작 =====');
-            console.log('latest["잔액"] =', latest['잔액']);
-            const usdBalance = safeNum(latest['잔액']);
-            
-            console.log('latest["평균단가"] =', latest['평균단가']);
-            const avgPrice = safeNum(latest['평균단가']);
-            
-            console.log('latest["당일환율"] =', latest['당일환율']);
-            const todayRate = safeNum(latest['당일환율']);
-            console.log('===== 값 추출 완료 =====');
-            
-            console.log('변환된 값 - USD 잔액:', usdBalance, '평균단가:', avgPrice, '당일환율:', todayRate);
-            
-            document.getElementById('usdBalance').textContent = `$${usdBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            document.getElementById('usdBalanceDate').textContent = `${latest['날짜']} 기준`;
-            document.getElementById('avgUsdPrice').textContent = `₩${avgPrice.toLocaleString('ko-KR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            document.getElementById('avgPriceDate').textContent = `2025년 11월 11일부터 USD 매입 시작`;
-            document.getElementById('currentExRate').textContent = `₩${todayRate.toLocaleString('ko-KR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-            document.getElementById('exRateDate').textContent = `${latest['날짜']} 환율`;
-            
-            // MMDA 이자 계산
-            const totalInterest = data.reduce((sum, item) => {
-                const interest = safeNum(item['mmda이자수익']);
-                return sum + interest;
-            }, 0);
-            
-            const avgUsdValue = usdBalance * avgPrice;
-            const annualRate = avgUsdValue > 0 && totalInterest > 0 ? ((totalInterest / avgUsdValue) * 100).toFixed(2) : '2.38';
-            document.getElementById('mmdaInterest').textContent = `${annualRate}%`;
-            
-            console.log('MMDA 총이자:', totalInterest, '연이율:', annualRate);
-
-            // 차트 생성
-            createUsdBalanceChart(90);
-            createExRateComparisonChart(90);
-
-            // 외상대금 테이블
-            createPaymentScheduleTable();
-            
-            // 기회수익 계산
-            calculateForexProfitLoss();
-
-            // 기간 선택 바인딩
-            bindPeriodSelector('usdBalancePeriodSelector', createUsdBalanceChart);
-            bindPeriodSelector('exRateComparisonPeriodSelector', createExRateComparisonChart);
-            
-            console.log('외화 탭 업데이트 완료');
-        }
-
-        // USD 잔액 차트
-        function createUsdBalanceChart(days) {
-            const data = globalData.forex.slice(-days);
-            if (!data || data.length === 0) {
-                console.log('USD 차트 데이터 없음');
-                return;
-            }
-            
-            console.log('USD 잔액 차트 생성 중... 데이터:', data.length, '건');
-            
-            const ctx = document.getElementById('usdBalanceChart');
-            
-            if (charts.usdBalance) {
-                charts.usdBalance.destroy();
-            }
-
-            // 안전한 숫자 변환
-            const safeNum = (val) => {
-                const num = parseFloat(val);
-                return isNaN(num) ? 0 : num;
-            };
-
-            // 15일, 말일 찾기
-            const paymentDates = data.map((item, idx) => {
-                const dateStr = item['날짜'];
-                if (!dateStr) return null;
-                const date = new Date(dateStr);
-                const day = date.getDate();
-                const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-                return (day === 15 || day === lastDay) ? idx : null;
-            }).filter(idx => idx !== null);
-            
-            console.log('송금일 인덱스:', paymentDates);
-
-            const chartData = data.map(item => safeNum(item['잔액']));
-            console.log('차트 데이터 샘플:', chartData.slice(0, 5));
-            console.log('차트 데이터 마지막:', chartData.slice(-3));
-
-            charts.usdBalance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(item => item['날짜']),
+                    labels: data.map(d => formatDateLabel(d.date)),
                     datasets: [{
-                        label: 'USD 잔액',
-                        data: chartData,
-                        borderColor: '#14b8a6',
-                        backgroundColor: 'rgba(20, 184, 166, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4,
+                        label: '순 현금 잔액',
+                        data: data.map(d => d.balance),
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
                         fill: true,
-                        pointRadius: data.map((_, idx) => paymentDates.includes(idx) ? 6 : 3),
-                        pointBackgroundColor: data.map((_, idx) => paymentDates.includes(idx) ? '#ef4444' : '#14b8a6'),
-                        pointHoverRadius: 8
+                        tension: 0.4,
+                        pointRadius: 2,
+                        borderWidth: 2
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12,
-                            callbacks: {
-                                label: (context) => {
-                                    const date = new Date(data[context.dataIndex]['날짜']);
-                                    const day = date.getDate();
-                                    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-                                    const isPaymentDay = day === 15 || day === lastDay;
-                                    return `$${context.parsed.y.toLocaleString('en-US', {minimumFractionDigits: 2})}${isPaymentDay ? ' (외상대금 지급일)' : ''}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                maxRotation: 45,
-                                minRotation: 45,
-                                autoSkip: true,
-                                maxTicksLimit: 15
-                            },
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: (value) => '$' + value.toLocaleString('en-US')
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        }
-                    }
-                }
+                options: createChartOptions('₩', '', false)
             });
-            
-            console.log('USD 잔액 차트 생성 완료');
         }
 
-        // 평균단가 차트
-        function createAvgPriceChart(days) {
-            // 이 함수는 더 이상 사용하지 않음 (통합 차트로 대체)
-        }
+        function renderUSDChart() {
+            const ctx = document.getElementById('usdChart');
+            if (!ctx) return;
 
-        // 환율 비교 차트 (평균단가 + 매입환율 통합)
-        function createExRateComparisonChart(days) {
-            const rawData = globalData.forex.slice(-days);
-            if (!rawData || rawData.length === 0) {
-                console.log('환율 비교 차트 데이터 없음');
-                return;
-            }
-            
-            console.log('환율 비교 차트 생성 중...');
-            
-            const ctx = document.getElementById('exRateComparisonChart');
-            
-            if (charts.exRateComparison) {
-                charts.exRateComparison.destroy();
-            }
+            const data = filterDataByDays(dashboardData.fxPosition, currentFilters.usd);
+            if (data.length === 0) return;
 
-            const safeNum = (val) => {
-                const num = parseFloat(val);
-                return isNaN(num) || num === 0 ? null : num;
-            };
-
-            // 유효한 데이터만 필터링
-            const data = rawData.filter(item => {
-                const avg = safeNum(item['평균단가']);
-                const rate = safeNum(item['당일환율']);
-                return avg !== null && rate !== null;
+            // 외상대금 송금일 찾기
+            const paymentDatesMap = new Map();
+            dashboardData.payments.forEach(p => {
+                const dateStr = p.date.toISOString().split('T')[0];
+                paymentDatesMap.set(dateStr, p);
             });
 
-            console.log('필터링 후 데이터 수:', data.length);
-
-            const avgPriceData = data.map(item => safeNum(item['평균단가']));
-            const exRateData = data.map(item => safeNum(item['당일환율']));
-
-            charts.exRateComparison = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(item => item['날짜']),
-                    datasets: [{
-                        label: '당사 평균단가',
-                        data: avgPriceData,
-                        borderColor: '#6366f1',
-                        backgroundColor: 'rgba(99, 102, 241, 0.05)',
-                        borderWidth: 2.5,
-                        tension: 0.4,
-                        fill: false,
-                        pointRadius: 2,
-                        pointHoverRadius: 8,
-                        pointBackgroundColor: '#6366f1',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        spanGaps: false
-                    }, {
-                        label: '시장 환율',
-                        data: exRateData,
-                        borderColor: '#f59e0b',
-                        backgroundColor: 'rgba(245, 158, 11, 0.05)',
-                        borderWidth: 2.5,
-                        tension: 0.4,
-                        fill: false,
-                        pointRadius: 2,
-                        pointHoverRadius: 8,
-                        pointBackgroundColor: '#f59e0b',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        spanGaps: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: {
-                                usePointStyle: true,
-                                padding: 15,
-                                font: {
-                                    size: 13,
-                                    weight: '600'
-                                }
-                            }
-                        },
-                        tooltip: {
-                            enabled: true,
-                            backgroundColor: 'rgba(0, 0, 0, 0.85)',
-                            padding: 14,
-                            titleFont: { size: 13, weight: '600' },
-                            bodyFont: { size: 14 },
-                            bodySpacing: 6,
-                            callbacks: {
-                                label: (context) => {
-                                    const value = context.parsed.y;
-                                    return `${context.dataset.label}: ₩${value.toLocaleString('ko-KR', {minimumFractionDigits: 2})}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                maxRotation: 45,
-                                minRotation: 45,
-                                autoSkip: true,
-                                maxTicksLimit: 12
-                            },
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            ticks: {
-                                callback: (value) => '₩' + value.toLocaleString('ko-KR', {minimumFractionDigits: 0})
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
-                        }
-                    }
-                }
-            });
-            
-            console.log('환율 비교 차트 생성 완료');
-        }
-
-        // 환율 차트
-        function createExRateChart(days) {
-            // 이 함수는 더 이상 사용하지 않음 (통합 차트로 대체)
-        }
-
-        // 외상대금 테이블 생성
-        function createPaymentScheduleTable() {
-            const payments = globalData.payments;
-            if (!payments || payments.length === 0) return;
-
-            // 날짜별로 그룹화
-            const grouped = {};
-            payments.forEach(item => {
-                const date = item['날짜'];
-                if (!grouped[date]) {
-                    grouped[date] = [];
-                }
-                grouped[date].push(item);
-            });
-
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>날짜</th>
-                            <th>매입처</th>
-                            <th>외상대금 (USD)</th>
-                            <th>매입처 평균단가</th>
-                            <th>당사 평균단가</th>
-                            <th>당일환율</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            Object.keys(grouped).sort().reverse().forEach(date => {
-                const items = grouped[date];
-                const totalAmount = items.reduce((sum, item) => sum + item['외상대'], 0);
-                const firstItem = items[0];
-                const vendorText = items.length === 1 ? items[0]['매입처'] : `${items[0]['매입처']} 외 ${items.length - 1}개`;
-                
-                html += `
-                    <tr>
-                        <td><strong>${date}</strong></td>
-                        <td>${vendorText}</td>
-                        <td style="color: #3b82f6; font-weight: 600;">$${totalAmount.toLocaleString()}</td>
-                        <td>₩${firstItem['외상대 매입 평균단가'].toLocaleString()}</td>
-                        <td>₩${firstItem['당사 평균단가'].toLocaleString()}</td>
-                        <td>₩${firstItem['당일환율'].toLocaleString()}</td>
-                    </tr>
-                `;
-            });
-            
-            html += `
-                    </tbody>
-                </table>
-            `;
-
-            document.getElementById('paymentSchedule').innerHTML = html;
-        }
-        
-        // 아코디언 토글 함수 (더 이상 사용하지 않음)
-        function toggleAccordion(id) {
-            // 제거됨
-        }
-
-        // 기회수익 계산
-        function calculateForexProfitLoss() {
-            const payments = globalData.payments;
-            if (!payments || payments.length === 0) return;
-
-            // 날짜별로 그룹화
-            const grouped = {};
-            payments.forEach(item => {
-                const date = item['날짜'];
-                if (!grouped[date]) {
-                    grouped[date] = {
-                        date: date,
-                        suppliers: [],
-                        totalAmount: 0,
-                        totalSupplierCost: 0,
-                        totalActualCost: 0,
-                        totalOurCost: 0
+            // 차트 데이터의 각 날짜와 매칭
+            const paymentMarkers = data.map((d, index) => {
+                const dateStr = d.date.toISOString().split('T')[0];
+                if (paymentDatesMap.has(dateStr)) {
+                    return {
+                        x: index,
+                        y: d.balance,
+                        payment: paymentDatesMap.get(dateStr)
                     };
                 }
-                
-                const amount = item['외상대'];
-                const supplierAvg = item['외상대 매입 평균단가'];
-                const ourAvg = item['당사 평균단가'];
-                const todayRate = item['당일환율'];
-                
-                grouped[date].suppliers.push(item['매입처']);
-                grouped[date].totalAmount += amount;
-                grouped[date].totalSupplierCost += amount * supplierAvg;
-                grouped[date].totalActualCost += amount * todayRate;
-                grouped[date].totalOurCost += amount * ourAvg;
-            });
+                return null;
+            }).filter(m => m !== null);
 
-            let html = '<table><thead><tr><th>송금일</th><th>매입처</th><th>외상대금 (USD)</th><th>기회수익</th><th>비고</th></tr></thead><tbody>';
+            if (charts.usd) charts.usd.destroy();
+            charts.usd = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => formatDateLabel(d.date)),
+                    datasets: [{
+                        label: 'USD 잔액',
+                        data: data.map(d => d.balance),
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: data.map((d, i) => {
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            return paymentDatesMap.has(dateStr) ? 8 : 2;
+                        }),
+                        pointBackgroundColor: data.map((d, i) => {
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            return paymentDatesMap.has(dateStr) ? '#dc2626' : '#059669';
+                        }),
+                        pointBorderColor: data.map((d, i) => {
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            return paymentDatesMap.has(dateStr) ? '#ffffff' : '#059669';
+                        }),
+                        pointBorderWidth: data.map((d, i) => {
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            return paymentDatesMap.has(dateStr) ? 2 : 0;
+                        }),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    ...createChartOptions('$', '', true),
+                    plugins: {
+                        ...createChartOptions('$', '', true).plugins,
+                        tooltip: {
+                            backgroundColor: '#ffffff',
+                            borderColor: '#e2e8f0',
+                            borderWidth: 1,
+                            titleColor: '#1e293b',
+                            bodyColor: '#475569',
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                title: function(context) {
+                                    const index = context[0].dataIndex;
+                                    const d = data[index];
+                                    const dateStr = d.date.toISOString().split('T')[0];
+                                    
+                                    if (paymentDatesMap.has(dateStr)) {
+                                        const month = d.date.getMonth() + 1;
+                                        const day = d.date.getDate();
+                                        return `${month}월 ${day}일 외상대금 송금`;
+                                    }
+                                    return context[0].label;
+                                },
+                                label: function(context) {
+                                    const index = context.dataIndex;
+                                    const d = data[index];
+                                    const dateStr = d.date.toISOString().split('T')[0];
+                                    
+                                    if (paymentDatesMap.has(dateStr)) {
+                                        const payment = paymentDatesMap.get(dateStr);
+                                        const lines = [
+                                            `송금 총액: $${formatNumber(payment.totalUSD, 2)}`,
+                                            ``,
+                                            `[ 송금 내역 ]`
+                                        ];
+                                        
+                                        payment.vendors.forEach((v, i) => {
+                                            lines.push(`${v.vendor}: $${formatNumber(v.amountUSD, 2)}`);
+                                        });
+                                        
+                                        return lines;
+                                    }
+                                    
+                                    return `USD 잔액: $${formatNumber(context.raw, 2)}`;
+                                },
+                                labelTextColor: function(context) {
+                                    return '#475569';
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, activeElements) => {
+                        if (activeElements.length > 0) {
+                            const index = activeElements[0].index;
+                            const d = data[index];
+                            const dateStr = d.date.toISOString().split('T')[0];
+                            
+                            if (paymentDatesMap.has(dateStr)) {
+                                showPaymentDetailPopup(paymentDatesMap.get(dateStr));
+                            }
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'hoverPopup',
+                    afterEvent: (chart, args) => {
+                        const event = args.event;
+                        
+                        if (event.type === 'mousemove') {
+                            const points = chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
+                            
+                            // 기존 타이머 클리어
+                            if (window.hoverTimer) {
+                                clearTimeout(window.hoverTimer);
+                                window.hoverTimer = null;
+                            }
+                            
+                            // 빨간 포인트에 마우스 올리면 5초 후 팝업
+                            if (points.length > 0) {
+                                const index = points[0].index;
+                                const d = data[index];
+                                const dateStr = d.date.toISOString().split('T')[0];
+                                
+                                if (paymentDatesMap.has(dateStr)) {
+                                    window.hoverTimer = setTimeout(() => {
+                                        showPaymentDetailPopup(paymentDatesMap.get(dateStr));
+                                    }, 5000);
+                                }
+                            }
+                        } else if (event.type === 'mouseout') {
+                            // 마우스가 차트 밖으로 나가면 타이머 취소
+                            if (window.hoverTimer) {
+                                clearTimeout(window.hoverTimer);
+                                window.hoverTimer = null;
+                            }
+                        }
+                    }
+                }]
+            });
+        }
+
+        function showPaymentDetailPopup(payment) {
+            const month = payment.date.getMonth() + 1;
+            const day = payment.date.getDate();
             
-            // 전체 합계 변수
-            let grandTotalAmount = 0;
-            let grandTotalProfitLoss = 0;
+            const vendorList = payment.vendors.map((v, i) => 
+                `<div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <span style="color: #475569; font-size: 14px;">${v.vendor}</span>
+                    <span style="font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 14px;">$${formatNumber(v.amountUSD, 2)}</span>
+                </div>`
+            ).join('');
             
-            Object.values(grouped).sort((a, b) => b.date.localeCompare(a.date)).forEach(group => {
-                // (외상대*외상대매입평균단가)-(외상대*당일환율) - ((외상대*외상대매입평균단가)-(외상대*당사평균단가))
-                const profitLoss1 = group.totalSupplierCost - group.totalActualCost;
-                const profitLoss2 = group.totalSupplierCost - group.totalOurCost;
-                const finalProfitLoss = profitLoss1 - profitLoss2;
+            const popup = document.createElement('div');
+            popup.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: white;
+                border-radius: 16px;
+                padding: 28px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                z-index: 10000;
+                max-width: 500px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                animation: popupFadeIn 0.2s ease;
+            `;
+            
+            popup.innerHTML = `
+                <style>
+                    @keyframes popupFadeIn {
+                        from { opacity: 0; transform: translate(-50%, -48%); }
+                        to { opacity: 1; transform: translate(-50%, -50%); }
+                    }
+                </style>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #1e293b;">${month}월 ${day}일 외상대금 송금</h3>
+                    <button onclick="this.closest('div').parentElement.remove(); document.getElementById('popupOverlay').remove();" 
+                            style="background: none; border: none; font-size: 24px; color: #94a3b8; cursor: pointer; padding: 0; width: 32px; height: 32px; line-height: 1;">×</button>
+                </div>
                 
-                // 합계 누적
-                grandTotalAmount += group.totalAmount;
-                grandTotalProfitLoss += finalProfitLoss;
+                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
+                    <div style="color: #64748b; font-size: 13px; margin-bottom: 8px;">총 송금액</div>
+                    <div style="font-size: 28px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #1e293b;">$${formatNumber(payment.totalUSD, 2)}</div>
+                </div>
                 
-                // 로직 반대로: 양수면 차손, 음수면 차익 (하지만 (차손)/(차익) 텍스트는 제거)
-                const profitLossClass = finalProfitLoss < 0 ? 'positive' : 'negative';
-                const profitLossText = finalProfitLoss < 0 ? `+₩${Math.abs(finalProfitLoss/10000).toFixed(1)}만원` : `-₩${Math.abs(finalProfitLoss/10000).toFixed(1)}만원`;
-                
-                html += `
+                <div style="margin-bottom: 12px;">
+                    <div style="color: #64748b; font-size: 12px; font-weight: 600; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;">송금 내역 (${payment.vendors.length}개 업체)</div>
+                    ${vendorList}
+                </div>
+            `;
+            
+            const overlay = document.createElement('div');
+            overlay.id = 'popupOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 9999;
+                backdrop-filter: blur(4px);
+            `;
+            overlay.onclick = () => {
+                popup.remove();
+                overlay.remove();
+            };
+            
+            document.body.appendChild(overlay);
+            document.body.appendChild(popup);
+        }
+
+        function renderAvgRateChart() {
+            const ctx = document.getElementById('avgRateChart');
+            if (!ctx) return;
+
+            const data = filterDataByDays(dashboardData.fxPosition, currentFilters.avgRate);
+            if (data.length === 0) return;
+
+            if (charts.avgRate) charts.avgRate.destroy();
+            charts.avgRate = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => formatDateLabel(d.date)),
+                    datasets: [{
+                        label: '평균단가',
+                        data: data.map(d => d.avgRate),
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 2,
+                        borderWidth: 2
+                    }]
+                },
+                options: createChartOptions('₩', '', false)
+            });
+        }
+
+        function renderRateCompareChart() {
+            const ctx = document.getElementById('rateCompareChart');
+            if (!ctx) return;
+
+            const data = filterDataByDays(dashboardData.fxPosition, currentFilters.rateCompare);
+            if (data.length === 0) return;
+
+            if (charts.rateCompare) charts.rateCompare.destroy();
+            charts.rateCompare = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(d => formatDateLabel(d.date)),
+                    datasets: [{
+                        label: '시장환율',
+                        data: data.map(d => d.marketRate),
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'transparent',
+                        tension: 0.4,
+                        pointRadius: 2,
+                        borderWidth: 2
+                    }, {
+                        label: '평균단가',
+                        data: data.map(d => d.avgRate),
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'transparent',
+                        tension: 0.4,
+                        pointRadius: 2,
+                        borderWidth: 2
+                    }]
+                },
+                options: createChartOptions('₩', '', false)
+            });
+        }
+
+        function updateFXTable() {
+            const tbody = document.getElementById('fxTableBody');
+            if (!tbody) return;
+
+            if (!dashboardData.payments || dashboardData.payments.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 40px;">데이터 없음</td></tr>';
+                return;
+            }
+
+            // 외환차손익 총합 계산
+            const totalFxGainLoss = dashboardData.payments.reduce((sum, p) => sum + p.fxGainLoss, 0);
+            const totalFxClass = totalFxGainLoss >= 0 ? 'fx-positive' : 'fx-negative';
+            const totalFxSign = totalFxGainLoss >= 0 ? '+' : '-';
+
+            const rows = dashboardData.payments.map(p => {
+                const fxClass = p.fxGainLoss >= 0 ? 'fx-positive' : 'fx-negative';
+                const fxSign = p.fxGainLoss >= 0 ? '+' : '-';
+
+                return `
                     <tr>
-                        <td><strong>${group.date}</strong></td>
-                        <td>${group.suppliers.join(', ')}</td>
-                        <td style="color: #3b82f6; font-weight: 600;">$${group.totalAmount.toLocaleString()}</td>
-                        <td class="${profitLossClass}" style="font-weight: 700;">${profitLossText}</td>
-                        <td style="font-size: 12px; color: #64748b;">당일환전/보유달러 기준</td>
+                        <td>${formatDateDisplay(p.date)}</td>
+                        <td>$${formatNumber(p.totalUSD, 2)}</td>
+                        <td>₩${formatNumber(p.ourAvgRate, 2)}</td>
+                        <td>₩${formatNumber(p.dailyRate, 2)}</td>
+                        <td>₩${formatNumber(p.vendorAvgRate, 2)}</td>
+                        <td class="${fxClass}">${fxSign}${formatNumber(Math.abs(p.fxGainLoss), 0)}</td>
                     </tr>
                 `;
-            });
-            
-            // TOTAL 합계 행 추가
-            const totalProfitLossClass = grandTotalProfitLoss < 0 ? 'positive' : 'negative';
-            const totalProfitLossText = grandTotalProfitLoss < 0 ? `+₩${Math.abs(grandTotalProfitLoss/10000).toFixed(1)}만원` : `-₩${Math.abs(grandTotalProfitLoss/10000).toFixed(1)}만원`;
-            
-            html += `
-                <tr style="background: #f8f9fa; font-weight: 700; border-top: 2px solid #dee2e6;">
-                    <td colspan="2"><strong>TOTAL</strong></td>
-                    <td style="color: #3b82f6; font-weight: 700;">$${grandTotalAmount.toLocaleString()}</td>
-                    <td class="${totalProfitLossClass}" style="font-weight: 800; font-size: 15px;">${totalProfitLossText}</td>
-                    <td></td>
+            }).join('');
+
+            // TOTAL 행 추가
+            const totalRow = `
+                <tr style="border-top: 3px solid #cbd5e1; background: linear-gradient(to bottom, #f8fafc, #f1f5f9);">
+                    <td style="text-align: center; font-weight: 700; font-size: 14px; color: #475569; letter-spacing: 0.5px;">TOTAL</td>
+                    <td colspan="4" style="background: transparent;"></td>
+                    <td class="${totalFxClass}" style="font-weight: 800; font-size: 16px; padding: 16px 12px;">${totalFxSign}${formatNumber(Math.abs(totalFxGainLoss), 0)}</td>
                 </tr>
             `;
-            
-            html += '</tbody></table>';
-            document.getElementById('forexProfitLoss').innerHTML = html;
+
+            tbody.innerHTML = rows + totalRow;
         }
 
-        // 외화 송금 시뮬레이터
-        function calculateRemittance() {
-            const amount = parseFloat(document.getElementById('simRemittanceAmount').value);
-            const ourAvg = parseFloat(document.getElementById('simOurAvgPrice').value);
-            const todayRate = parseFloat(document.getElementById('simTodayRate').value);
-            const supplierAvg = parseFloat(document.getElementById('simSupplierAvgPrice').value);
-
-            // 보유 USD 사용 시: (외상대*외상대평균단가) - (외상대*당사평균단가)
-            const ownUsdProfit = (amount * supplierAvg) - (amount * ourAvg);
-            
-            // 당일 환전 시: (외상대*외상대평균단가) - (외상대*당일환율)
-            const todayExchangeProfit = (amount * supplierAvg) - (amount * todayRate);
-
-            // 결과 표시
-            const recommendedMethod = ownUsdProfit > todayExchangeProfit ? '보유 USD 사용' : '당일 환전';
-            const betterProfit = Math.max(ownUsdProfit, todayExchangeProfit);
-            
-            document.getElementById('recommendedMethod').textContent = recommendedMethod;
-            document.getElementById('ownUsdProfit').textContent = ownUsdProfit > 0 ? `+₩${(ownUsdProfit/10000).toFixed(1)}만원` : `-₩${Math.abs(ownUsdProfit/10000).toFixed(1)}만원`;
-            document.getElementById('ownUsdProfit').className = ownUsdProfit > 0 ? 'breakdown-value positive' : 'breakdown-value negative';
-            
-            document.getElementById('todayExchangeProfit').textContent = todayExchangeProfit > 0 ? `+₩${(todayExchangeProfit/10000).toFixed(1)}만원` : `-₩${Math.abs(todayExchangeProfit/10000).toFixed(1)}만원`;
-            document.getElementById('todayExchangeProfit').className = todayExchangeProfit > 0 ? 'breakdown-value positive' : 'breakdown-value negative';
+        function createCharts() {
+            renderKRWChart();
+            renderUSDChart();
+            renderAvgRateChart();
+            renderRateCompareChart();
         }
 
-        // 대출 탭 업데이트
-        function updateLoanTab() {
-            const data = globalData.loans;
-            if (!data || data.length === 0) {
-                console.log('대출 데이터 없음');
-                return;
-            }
-
-            console.log('대출 탭 업데이트 중... 데이터 수:', data.length);
-            console.log('대출 데이터 샘플:', data.slice(0, 3));
-
-            // 최근 데이터로 사용액 계산은 생략 (실제 데이터에 없음)
-            document.getElementById('totalLoanUsed').textContent = '0억';
-            document.getElementById('loanUsedDate').textContent = '실제 사용액 데이터 필요';
-            document.getElementById('avgLoanRate').textContent = '3.56%';
-            
-            // 월 평균 이자 계산 (이미 백만원 단위)
-            const recentInterest = data.slice(-3);
-            const avgInterest = recentInterest.reduce((sum, item) => sum + item['이자비용'], 0) / Math.max(recentInterest.length, 1);
-            document.getElementById('monthlyInterest').textContent = `${avgInterest.toFixed(1)}백만원`;
-
-            console.log('최근 3개월 이자:', recentInterest.map(i => i['이자비용']));
-            console.log('월평균 이자:', avgInterest);
-
-            // 개별 대출 사용액 (실제 데이터 없으므로 0으로 표시)
-            document.getElementById('loan1Used').textContent = '0억';
-            document.getElementById('loan2Used').textContent = '0억';
-            document.getElementById('loan3Used').textContent = '0억';
-            document.getElementById('loanTotalUsed').textContent = '0억';
-
-            // 차트 생성
-            createLoanInterestChart(730);
-            createLoanMonthlyChart();
-
-            // 인사이트
-            const data2024 = data.filter(item => item['거래일'] && item['거래일'].startsWith('2024'));
-            const data2025 = data.filter(item => item['거래일'] && item['거래일'].startsWith('2025'));
-            
-            const totalInterest2024 = data2024.reduce((sum, item) => sum + item['이자비용'], 0);
-            const totalInterest2025 = data2025.reduce((sum, item) => sum + item['이자비용'], 0);
-            
-            console.log('2024년 이자:', totalInterest2024, '2025년 이자:', totalInterest2025);
-            
-            const changePercent = totalInterest2024 > 0 ? ((1 - totalInterest2025/totalInterest2024) * 100).toFixed(1) : '0';
-            
-            document.getElementById('loanInsights').innerHTML = `
-                <h3>💡 핵심 분석</h3>
-                <p><strong>2024년 이자비용:</strong> ${totalInterest2024.toFixed(0)}백만원</p>
-                <p><strong>2025년 이자비용:</strong> ${totalInterest2025.toFixed(0)}백만원 ${totalInterest2025 < totalInterest2024 ? `(▼${changePercent}%)` : `(▲${Math.abs(parseFloat(changePercent))}%)`}</p>
-                <p>마이너스 사용 ${totalInterest2025 < totalInterest2024 ? '감소' : '증가'} 중. 투자시 ${totalInterest2025 < totalInterest2024 ? '감소' : '증가'} 점검 필수</p>
-            `;
-
-            // 기간 선택 바인딩
-            bindPeriodSelector('loanPeriodSelector', createLoanInterestChart);
-            
-            console.log('대출 탭 업데이트 완료');
-        }
-
-        // 대출 이자비용 추이 차트
-        function createLoanInterestChart(days) {
-            const data = globalData.loans;
-            if (!data || data.length === 0) {
-                console.log('대출 차트 데이터 없음');
-                return;
-            }
-
-            console.log('대출 이자비용 차트 생성 중... 전체 데이터:', data.length, '건');
-
-            // 대출 통장별로 분류
-            const loan1 = data.filter(item => item['대출통장'] && item['대출통장'].includes('165630'));
-            const loan2 = data.filter(item => item['대출통장'] && item['대출통장'].includes('557898'));
-            const loan3 = data.filter(item => item['대출통장'] && item['대출통장'].includes('461385'));
-
-            console.log('통장별 데이터:', {
-                loan1: loan1.length,
-                loan2: loan2.length,
-                loan3: loan3.length
-            });
-
-            // 모든 날짜 수집 및 정렬
-            const allDates = [...new Set(data.map(item => item['거래일']))].sort();
-            console.log('전체 날짜 수:', allDates.length);
-            console.log('날짜 범위:', allDates[0], '~', allDates[allDates.length - 1]);
-
-            // 날짜 범위 설정
-            const recentDates = allDates.slice(-Math.min(days / 30, allDates.length)); // 대략 개월수로 제한
-
-            console.log('차트에 표시할 날짜 수:', recentDates.length);
-
-            const ctx = document.getElementById('loanInterestChart');
-            
-            if (charts.loanInterest) {
-                charts.loanInterest.destroy();
-            }
-
-            const dataset1 = recentDates.map(date => {
-                const item = loan1.find(l => l['거래일'] === date);
-                return item ? item['이자비용'] : null;  // 이미 백만원 단위
-            });
-
-            const dataset2 = recentDates.map(date => {
-                const item = loan2.find(l => l['거래일'] === date);
-                return item ? item['이자비용'] : null;  // 이미 백만원 단위
-            });
-
-            const dataset3 = recentDates.map(date => {
-                const item = loan3.find(l => l['거래일'] === date);
-                return item ? item['이자비용'] : null;  // 이미 백만원 단위
-            });
-
-            console.log('Dataset1 샘플:', dataset1.slice(0, 5));
-            console.log('Dataset2 샘플:', dataset2.slice(0, 5));
-            console.log('Dataset3 샘플:', dataset3.slice(0, 5));
-
-            charts.loanInterest = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: recentDates,
-                    datasets: [
-                        {
-                            label: '우리 165630 (9.5억)',
-                            data: dataset1,
-                            borderColor: '#6366f1',
-                            backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            fill: false,
-                            spanGaps: true
-                        },
-                        {
-                            label: '우리 557898 (10억)',
-                            data: dataset2,
-                            borderColor: '#14b8a6',
-                            backgroundColor: 'rgba(20, 184, 166, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            fill: false,
-                            spanGaps: true
-                        },
-                        {
-                            label: '신한 461385 (4억)',
-                            data: dataset3,
-                            borderColor: '#f59e0b',
-                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            fill: false,
-                            spanGaps: true
-                        }
-                    ]
+        function createChartOptions(prefix = '', suffix = '', isUSD = false) {
+            return {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12,
-                            callbacks: {
-                                label: (context) => `${context.dataset.label}: ${context.parsed.y ? context.parsed.y.toFixed(1) : '0'}백만원`
+                plugins: {
+                    legend: { 
+                        display: true,
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            boxWidth: 8,
+                            boxHeight: 8,
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            padding: 15,
+                            font: {
+                                size: 11,
+                                family: "'Noto Sans KR', sans-serif"
                             }
                         }
                     },
-                    scales: {
-                        x: {
-                            ticks: {
-                                maxRotation: 45,
-                                minRotation: 45,
-                                autoSkip: true,
-                                maxTicksLimit: 15
-                            },
-                            grid: {
-                                display: false
+                    tooltip: {
+                        backgroundColor: '#ffffff',
+                        borderColor: '#e2e8f0',
+                        borderWidth: 1,
+                        titleColor: '#1e293b',
+                        bodyColor: '#475569',
+                        padding: 10,
+                        callbacks: {
+                            label: function(context) {
+                                if (isUSD) {
+                                    return context.dataset.label + ': ' + prefix + formatNumber(context.raw, 2);
+                                }
+                                return context.dataset.label + ': ' + prefix + formatNumber(context.raw, 0) + suffix;
                             }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: (value) => value.toFixed(1) + '백만원'
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#64748b', font: { size: 10 }, maxTicksLimit: 10 }
+                    },
+                    y: {
+                        grid: { color: 'rgba(226, 232, 240, 0.8)' },
+                        ticks: {
+                            color: '#64748b',
+                            callback: function(v) {
+                                if (isUSD) {
+                                    return (v / 1000).toFixed(0) + 'K';
+                                }
+                                // Y축 레이블에서 통화 기호 제거
+                                return formatNumber(v, 0);
                             }
                         }
                     }
                 }
-            });
-            
-            console.log('대출 이자비용 차트 생성 완료');
+            };
         }
 
-        // 월별 이자비용 차트
-        function createLoanMonthlyChart() {
-            const data = globalData.loans;
-            if (!data || data.length === 0) {
-                console.log('월별 대출 차트 데이터 없음');
-                return;
-            }
-
-            console.log('월별 대출 차트 생성 중...');
-
-            // 월별 집계
-            const monthly = {};
-            data.forEach(item => {
-                const dateStr = item['거래일'];
-                if (!dateStr) return;
-                
-                const date = new Date(dateStr);
-                const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-                const year = date.getFullYear().toString();
-                
-                if (!monthly[month]) {
-                    monthly[month] = { '2024': 0, '2025': 0 };
-                }
-                
-                monthly[month][year] = (monthly[month][year] || 0) + item['이자비용'];  // 이미 백만원 단위
+        function formatNumber(num, decimals = 0) {
+            return num.toLocaleString('ko-KR', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
             });
+        }
 
-            console.log('월별 집계:', monthly);
+        function formatDateLabel(date) {
+            if (!date) return '';
+            return (date.getMonth() + 1) + '/' + date.getDate();
+        }
 
-            const months = Object.keys(monthly).sort();
-            console.log('집계된 월:', months);
+        function formatDateDisplay(date) {
+            if (!date) return '';
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
 
-            const ctx = document.getElementById('loanMonthlyChart');
-            
-            if (charts.loanMonthly) {
-                charts.loanMonthly.destroy();
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').classList.toggle('active', show);
+        }
+
+        function parseExcelDate(value) {
+            if (!value) return null;
+
+            if (value instanceof Date) return value;
+
+            if (typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)) {
+                const serial = parseFloat(value);
+                if (serial > 40000) {
+                    const excelEpoch = new Date(1899, 11, 30);
+                    const date = new Date(excelEpoch.getTime() + serial * 86400000);
+                    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                }
             }
 
-            const months2024 = [];
-            const months2025 = [];
-            
-            for (let m = 1; m <= 12; m++) {
-                const key2024 = `2024-${String(m).padStart(2, '0')}`;
-                const key2025 = `2025-${String(m).padStart(2, '0')}`;
-                
-                months2024.push(monthly[key2024] ? monthly[key2024]['2024'] : 0);
-                months2025.push(monthly[key2025] ? monthly[key2025]['2025'] : 0);
+            if (typeof value === 'string') {
+                const match = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
+                if (match) {
+                    return new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]));
+                }
+                const date = new Date(value);
+                if (!isNaN(date.getTime())) return date;
             }
 
-            console.log('2024 데이터:', months2024);
-            console.log('2025 데이터:', months2025);
+            return null;
+        }
 
-            charts.loanMonthly = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-                    datasets: [
-                        {
-                            label: '2024년',
-                            data: months2024,
-                            borderColor: '#ef4444',
-                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            spanGaps: true
-                        },
-                        {
-                            label: '2025년',
-                            data: months2025,
-                            borderColor: '#f59e0b',
-                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4,
-                            spanGaps: true
+        // Auto-load data.json from same folder (for SharePoint/Power Automate hosting)
+        async function autoLoadData() {
+            showLoading(true);
+            
+            // 여러 경로를 순차적으로 시도
+            const possibleUrls = [
+                './data.json',  // 상대 경로 (같은 폴더)
+                'data.json',    // 현재 위치
+                'https://raw.githubusercontent.com/ksk19921106-byte/icbankq-dashboard/refs/heads/main/data.json',  // GitHub raw
+                'https://ksk19921106-byte.github.io/icbankq-dashboard/data.json'  // GitHub Pages
+            ];
+            
+            for (const dataUrl of possibleUrls) {
+                try {
+                    console.log('Trying to load:', dataUrl);
+                    const response = await fetch(dataUrl);
+                    if (response.ok) {
+                        console.log('✅ Successfully loaded from:', dataUrl);
+                        console.log('✅ Successfully loaded from:', dataUrl);
+                        const jsonData = await response.json();
+                        console.log('Loaded data.json:', jsonData);
+                        
+                        // dailyBalance
+                        if (jsonData.dailyBalance && jsonData.dailyBalance.length > 0) {
+                            dashboardData.dailyBalance = jsonData.dailyBalance.map(row => ({
+                                date: parseExcelDate(row.날짜 || row.date),
+                                balance: parseFloat(row.잔액 || row.balance) || 0
+                            })).filter(row => row.date && !isNaN(row.date.getTime()));
                         }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12,
-                            callbacks: {
-                                label: (context) => `${context.dataset.label}: ${context.parsed.y ? context.parsed.y.toFixed(0) : '0'}백만원`
+                        
+                        // fxPosition
+                        if (jsonData.fxPosition && jsonData.fxPosition.length > 0) {
+                            dashboardData.fxPosition = jsonData.fxPosition.map(row => ({
+                                date: parseExcelDate(row.날짜 || row.date),
+                                balance: parseFloat(row.잔액 || row.balance) || 0,
+                                avgRate: parseFloat(row.평균단가 || row.avgRate) || 0,
+                                marketRate: parseFloat(row.당일환율 || row['당일 환율'] || row.marketRate) || 0
+                            })).filter(row => row.date && !isNaN(row.date.getTime()) && row.balance > 0);
+                        }
+                        
+                        // payments - 외상대금 상세를 날짜별로 집계
+                        if (jsonData.payments && jsonData.payments.length > 0) {
+                            console.log('Processing payments data...');
+                            
+                            // 날짜별로 그룹화
+                            const paymentsByDate = new Map();
+                            
+                            jsonData.payments.forEach(row => {
+                                const dateValue = parseExcelDate(row.날짜 || row.date);
+                                if (!dateValue || isNaN(dateValue.getTime())) return;
+                                
+                                const dateKey = dateValue.toISOString().split('T')[0];
+                                const vendor = row.매입처 || row.vendor || '';
+                                const amountUSD = parseFloat(row.외상대 || row.totalUSD) || 0;
+                                const vendorRate = parseFloat(row['외상대 매입 평균단가'] || row.vendorAvgRate) || 0;
+                                const ourRate = parseFloat(row['당사 평균단가'] || row.ourAvgRate) || 0;
+                                const dailyRate = parseFloat(row['당일환율'] || row.dailyRate) || 0;
+                                
+                                if (amountUSD <= 0 || !vendor) return;
+                                
+                                if (!paymentsByDate.has(dateKey)) {
+                                    paymentsByDate.set(dateKey, {
+                                        date: dateValue,
+                                        vendors: [],
+                                        totalUSD: 0,
+                                        ourAvgRate: ourRate,  // 첫 번째 행의 당사 평균단가 저장
+                                        dailyRate: dailyRate  // 첫 번째 행의 당일환율 저장
+                                    });
+                                }
+                                
+                                const dayData = paymentsByDate.get(dateKey);
+                                dayData.vendors.push({
+                                    vendor: vendor,
+                                    amountUSD: amountUSD,
+                                    vendorRate: vendorRate
+                                });
+                                dayData.totalUSD += amountUSD;
+                            });
+                            
+                            // Map을 배열로 변환
+                            dashboardData.payments = Array.from(paymentsByDate.values())
+                                .map(p => {
+                                    // 당사 평균단가 - 외상대금 상세 시트에서 가져온 값 (날짜별 첫 행)
+                                    const ourAvgRate = p.ourAvgRate;
+                                    
+                                    // 당일환율 - 외상대금 상세 시트에서 가져온 값 (날짜별 첫 행)
+                                    const dailyRate = p.dailyRate;
+                                    
+                                    // 업체 청구 평균환율 (가중평균)
+                                    const vendorAvgRate = p.vendors.reduce((sum, v) => 
+                                        sum + v.vendorRate * v.amountUSD, 0
+                                    ) / p.totalUSD;
+                                    
+                                    // 외환차손익 = (당일환율 × 외상대) - (당사평균단가 × 외상대)
+                                    // 양수(+) = 외환차익 (당일환율 > 당사평균, 우리가 싸게 샀음)
+                                    // 음수(-) = 외환차손 (당일환율 < 당사평균, 우리가 비싸게 샀음)
+                                    const fxGainLoss = (p.totalUSD * dailyRate) - (p.totalUSD * ourAvgRate);
+                                    
+                                    return {
+                                        date: p.date,
+                                        totalUSD: p.totalUSD,
+                                        ourAvgRate: ourAvgRate,
+                                        dailyRate: dailyRate,
+                                        vendorAvgRate: vendorAvgRate,
+                                        fxGainLoss: fxGainLoss,
+                                        vendorCount: p.vendors.length,
+                                        vendors: p.vendors.sort((a, b) => b.amountUSD - a.amountUSD)
+                                    };
+                                })
+                                .sort((a, b) => a.date - b.date);
+                            
+                            console.log('Loaded payments:', dashboardData.payments.length, 'days');
+                            if (dashboardData.payments.length > 0) {
+                                console.log('Sample payment:', dashboardData.payments[0]);
                             }
                         }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: (value) => value.toFixed(0) + '백만원'
-                            },
-                            grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
-                            }
+                        
+                        if (dashboardData.dailyBalance.length > 0 || dashboardData.fxPosition.length > 0) {
+                            renderDashboard();
+                            const updateTime = jsonData.lastUpdated || new Date().toLocaleString('ko-KR');
+                            document.getElementById('updateTime').textContent = '최종 업데이트: ' + updateTime;
                         }
+                        
+                        showLoading(false);
+                        return true;
                     }
+                } catch (err) {
+                    console.log('❌ Failed to load from:', dataUrl, err.message);
                 }
-            });
-            
-            console.log('월별 대출 차트 생성 완료');
-        }
-
-        // 투자 탭 업데이트
-        function updateInvestmentTab() {
-            const data = globalData.mmt;
-            if (!data || data.length === 0) return;
-
-            // MMT 테이블
-            let html = '<table><thead><tr><th>입금일</th><th>입금액</th></tr></thead><tbody>';
-            let total = 0;
-            data.forEach(item => {
-                const amount = item['금액'] * 100; // 백만원 단위로 변환
-                html += `<tr><td>${item['입금일']}</td><td style="color: #10b981; font-weight: 600;">+${amount.toFixed(0)}만원</td></tr>`;
-                total += amount;
-            });
-            html += `<tr style="background: #f8f9fa; font-weight: 700;"><td>합계</td><td style="color: #10b981;">${total.toFixed(0)}만원</td></tr>`;
-            html += '</tbody></table>';
-            document.getElementById('mmtTable').innerHTML = html;
-
-            // 인사이트
-            document.getElementById('mmtInsights').innerHTML = `
-                <h3>💡 MMT 수익 분석</h3>
-                <p>Q3 대비 Q4 이자수익이 ${((data[1]['금액'] / data[0]['금액'])).toFixed(1)}배 증가.</p>
-                <p>가용자금 증가에 따른 MMT 예치 증가 효과.</p>
-            `;
-        }
-
-        // 레버리지 시뮬레이터 업데이트
-        function updateLeverageDisplay() {
-            const value = document.getElementById('leverageAmount').value;
-            document.getElementById('leverageAmountDisplay').textContent = parseFloat(value).toFixed(1);
-        }
-
-        function updateRateDisplay() {
-            const value = document.getElementById('leverageRate').value;
-            document.getElementById('leverageRateDisplay').textContent = parseFloat(value).toFixed(2);
-        }
-
-        function updateReturnDisplay() {
-            const value = document.getElementById('investmentReturn').value;
-            document.getElementById('investmentReturnDisplay').textContent = parseFloat(value).toFixed(2);
-        }
-
-        function calculateLeverage() {
-            const amount = parseFloat(document.getElementById('leverageAmount').value) * 100000000; // 억원 to 원
-            const rate = parseFloat(document.getElementById('leverageRate').value) / 100;
-            const returnRate = parseFloat(document.getElementById('investmentReturn').value) / 100;
-
-            const investProfit = amount * returnRate;
-            const interestCost = amount * rate;
-            const netProfit = investProfit - interestCost;
-
-            document.getElementById('investProfit').textContent = `+${(investProfit / 10000).toFixed(0)}만원`;
-            document.getElementById('interestCost').textContent = `-${(interestCost / 10000).toFixed(0)}만원`;
-            document.getElementById('netProfit').textContent = netProfit >= 0 ? `+${(netProfit / 10000).toFixed(0)}만원` : `-${Math.abs(netProfit / 10000).toFixed(0)}만원`;
-            document.getElementById('netProfit').className = netProfit >= 0 ? 'result-value positive' : 'result-value negative';
-
-            // 권장사항
-            let recommendation = '';
-            if (netProfit > 0) {
-                recommendation = `✅ 마이너스 평균 금리(${(rate*100).toFixed(2)}%)를 고려했을 때 투자수익(${(returnRate*100).toFixed(2)}%)이 유리합니다.<br>국채보다 +${((returnRate - 0.038) * 100).toFixed(1)}%p 높은 수익률을 기대할 수 있습니다.`;
-            } else {
-                recommendation = `⚠️ 투자수익률(${(returnRate*100).toFixed(2)}%)이 마이너스 금리(${(rate*100).toFixed(2)}%)보다 낮아 레버리지 투자는 적절하지 않습니다.`;
             }
-            document.getElementById('leverageRecommendation').innerHTML = recommendation;
+            
+            console.log('⚠️ All data.json URLs failed, waiting for manual upload');
+            showLoading(false);
+            return false;
         }
 
-        // 초기화
-        window.onload = () => {
-            updateLeverageDisplay();
-            updateRateDisplay();
-            updateReturnDisplay();
-            calculateLeverage();
-        };
+        function setYesterdayDate() {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 1);
+            const year = yesterday.getFullYear();
+            const month = yesterday.getMonth() + 1;
+            const day = yesterday.getDate();
+            document.getElementById('todayDate').textContent = `기준일: ${year}년 ${month}월 ${day}일`;
+        }
 
-    
+        setYesterdayDate();
+        autoLoadData();
     </script>
 </body>
 </html>
